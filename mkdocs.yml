@@ -1,0 +1,59 @@
+site_name: Arrietty's Blog
+site_url: https://sitename.example
+theme:
+  
+  name: material
+  
+  font: 
+    text: Red Hat Text
+    code: Red Hat Mono
+  
+  logo: assets/android-chrome-512x512.png
+  favicon: assets/favicon.ico
+
+  palette:
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/lightbulb-on-30
+        name: Dark Mode
+      primary: purple
+      accent: deep purple
+
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/lightbulb-night-outline
+        name: Light Mode
+      primary: orange
+      accent: deep orange
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ArriettyCh
+    - icon: fontawesome/solid/at
+      link: mailto:<arriettychen@zju.edu.cn>
+      
+copyright: Copyright &copy 2025 Arrietty's Blog
