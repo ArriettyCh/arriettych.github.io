@@ -23,6 +23,6 @@ function concatenateStrings(str1, str2) {
 }
 
 // Example usage
-const result = concatenateStrings("Hello, ", "World!");
+const result = concatenateStrings("Hello, ", "World");
 console.log("The concatenated string is:", result);
 ```
