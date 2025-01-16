@@ -1,22 +1,29 @@
-site_name: Arrietty's Website
+site_name: Arrietty's Universe
 site_url: https://arriettych.github.io
 
 nav:
   - 主页: Home_Page.html
   - 计算机课程:
     - ADS:
-      - 课程介绍: ADS.md
-      - 期中考前内容: ADS_Part1.pdf
-      - 期中考后内容: ADS_Part2.pdf
-    - 计算机组成: 计算机组成.md
+      - 课程介绍: ADS/ADS.md
+      - 期中考前内容: ADS/ADS_Part1.pdf
+      - 期中考后内容: ADS/ADS_Part2.pdf
+    - 计算机组成: 
+      - 课程介绍: 计组/计组.md
+      - 期中考前内容: 计组/计组_Part1.pdf
+      - 期中考后内容: 计组/计组_Part2.pdf
+    - 量子计算自学:
+      - 前置知识: 量子/导论.md
   - 金融学课程:
-    - 会计学: 会计学.md
-  - 关于作者: About_Me.md
+    - 计量经济学:
+      - 课程介绍: 计量/计量.md
+      - 课程笔记: 计量/计量.pdf
+      - 放宽条件的模型汇总: 计量/放宽条件的模型汇总.pdf
 
 theme:
   
   name: material
-
+  language: zh
   features:
     - navigation.tabs
     - navigation.expand
@@ -27,6 +34,7 @@ theme:
     - search.highlight
     - content.tabs.link
     - content.code.copy
+    - header.autohide
 
   font: 
     text: Red Hat Text
@@ -94,4 +102,4 @@ extra:
     - icon: fontawesome/solid/at
       link: mailto:<arriettychen@zju.edu.cn>
     
-copyright: Copyright &copy 2025 Arrietty's Blog
+copyright: Copyright &copy 2025 Arrietty Chen
