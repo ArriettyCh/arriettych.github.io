@@ -5,7 +5,10 @@
     === "**官方PPT**"
         [:material-folder-download-outline:](PPT_1.zip) 课程组官方PPT
     === "**补充PPT**"
-        [:material-folder-download-outline:](PPT_2.zip) 来自丁尧相老师
+        来自丁尧相老师
+
+        - [:material-folder-download-outline:](PPT_2_1.zip) 前半部分（对应Part 1）
+        - [:material-folder-download-outline:](PPT_2_2.zip) 后半部分（对应Part 2）
     === "**历年卷整理**"
         [:material-folder-download-outline:](历年卷.zip) 来自PTA
 
