@@ -21,14 +21,14 @@
 !!! note ""    
     
     === "**官方PPT**"
-        [:material-folder-download-outline:](PPT_1.zip) 课程组官方PPT
+        [:material-folder-download-outline:](ADS_官方PPT.zip) 课程组官方PPT
     === "**补充PPT**"
         来自丁尧相老师
 
-        - [:material-folder-download-outline:](PPT_2_1.zip) 前半部分（对应Part 1）
-        - [:material-folder-download-outline:](PPT_2_2.zip) 后半部分（对应Part 2）
+        - [:material-folder-download-outline:](ADS_补充PPT_1.zip) 前半部分（对应Part 1）
+        - [:material-folder-download-outline:](ADS_补充PPT_2.zip) 后半部分（对应Part 2）
     === "**历年卷整理**"
-        [:material-folder-download-outline:](历年卷.zip) 来自PTA
+        [:material-folder-download-outline:](ADS_历年卷.zip) 来自PTA
 
 这份笔记分为2个部分，分别对应期中考前（贪心及以前）和期中考后（NP及以后）的内容。因为期中考是老师自己出卷的，所以不同老师的考试时间和范围可能会略有差别，但总体而言。
 

@@ -2,7 +2,8 @@ site_name: Arrietty's Universe
 site_url: https://arriettych.github.io
 
 nav:
-  - 主页: index.md
+  - 主页:
+    - index.html
   - 计算机课程:
     - 计算机/index.md
     - ADS:
@@ -26,7 +27,10 @@ nav:
       - 金融/量化/index.md
       - 作业一：因子复现: 金融/量化/量化_1.md
       - 作业二：研究报告: 金融/量化/量化_2.md
-  - 关于作者: about.md
+  - 关于我:
+    - about.html
+  - 友情链接:
+    - link.html
         
 plugins:
   - search

@@ -3,11 +3,11 @@
 !!! note ""    
     
     === "**教材**"
-        [:material-folder-download-outline:](教材.zip) *Computer Organization and Design*
+        [:material-folder-download-outline:](计组_教材.zip) *Computer Organization and Design*
     === "**课后题参考答案**"
-        [:material-folder-download-outline:](答案.zip) 第5章答案的错误较多，我将自己的作答也放在压缩包中，以供参考
+        [:material-folder-download-outline:](计组_教材参考答案.zip) 第5章答案的错误较多，我将自己的作答也放在压缩包中，以供参考
     === "**PPT**"
-        [:material-folder-download-outline:](PPT.zip) 来自赵莎老师
+        [:material-folder-download-outline:](计组_PPT.zip) 来自赵莎老师
     === "**回忆卷整理**"
         - [:material-link-variant:](https://www.cc98.org/topic/5922030) 23-24春夏（98链接，需要校网）
         - [:material-file-download-outline:](https://file.cc98.org/v2-upload/2023-06-28/v0r120pk.pdf) 22-23春夏（98链接，需要校网）

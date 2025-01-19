@@ -5,7 +5,7 @@
     === "**教材**"
         [:material-folder-download-outline:](教材.zip) 教材课上其实并不会用到，就当课外读物吧
     === "**PPT**"
-        [:material-folder-download-outline:](PPT.zip) 因为涉及到合规性问题，所以这里只提供曾涛老师的PPT
+        [:material-folder-download-outline:](PPT.zip) 因为涉及到合规性问题，这里只提供曾涛老师的PPT
         
 
 !!! abstract inline end "**内容速览**"

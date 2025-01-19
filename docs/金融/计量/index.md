@@ -3,13 +3,13 @@
 !!! note ""    
     
     === "**教材**"
-        [:material-file-download-outline:](教材.pdf) 李子奈《计量经济学（第5版）》
+        [:material-file-download-outline:](计量_教材.pdf) 李子奈《计量经济学（第5版）》
     === "**PPT**"
-        [:material-folder-download-outline:](PPT.zip) 来自孔伟杰老师
+        [:material-folder-download-outline:](计量_PPT.zip) 来自孔伟杰老师
     === "**我的课程大作业**"
-        [:material-folder-download-outline:](Proj.zip) 如果你是孔伟杰老师班的，会有一个Stata大作业 :octicons-alert-16:
+        [:material-folder-download-outline:](计量_Proj.zip) 如果你是孔伟杰老师班的，会有一个Stata大作业 :octicons-alert-16:
     === "**回忆卷整理**"
-        [:material-folder-download-outline:](历年卷.zip) 来自cc98
+        [:material-folder-download-outline:](计量_历年卷.zip) 来自cc98
 
 !!! abstract inline end "**内容速览**"
     - [**Chapter 1**](计量.pdf)：导论
