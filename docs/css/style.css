@@ -40,6 +40,28 @@
 
 /* ================================================== */
 
+/* 限制图片的容器尺寸 */
+.single-story-box .img {
+	width: 100%;
+	/* 保持图片容器与父元素宽度一致 */
+	height: 100%;
+	/* 固定高度，依据设计需求调整 */
+	overflow: hidden;
+	/* 防止图片超出容器范围 */
+}
+
+/* 设置图片适应规则 */
+.single-story-box .img img {
+	width: 100%;
+	/* 图片宽度占满容器 */
+	height: 100%;
+	/* 图片高度填满容器 */
+	object-fit: cover;
+	/* 裁剪图片，确保其充满容器 */
+	object-position: center;
+	/* 居中显示 */
+}
+
 html {
 	overflow-x: hidden;
 	padding: 0;
