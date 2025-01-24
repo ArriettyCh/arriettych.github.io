@@ -1675,7 +1675,7 @@ a.btn-link {
 
 /* ------------------------------ */
 #section-fun-facts {
-	background: var(--primary-color);
+	background: #f2f2f2;
 	position: relative;
 }
 
@@ -2732,7 +2732,49 @@ testimonial
 	font-weight: normal;
 }
 
-.test-auth {
+.test-auth1 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+
+.test-auth2 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+
+.test-auth3 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+
+.test-auth4 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+.test-auth5 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+.test-auth6 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+.test-auth7 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}
+.test-auth8 {
+	margin-top: -10px;
+	font-style: normal;
+	font-size: 12px;
+}.test-auth9 {
 	margin-top: -10px;
 	font-style: normal;
 	font-size: 12px;
@@ -2743,16 +2785,15 @@ testimonial
 	border: none;
 	color: #35404e;
 	font-weight: 300;
-	padding: 0px;
-	background: rgba(132, 94, 194, 0.1) !important;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	padding: 0px 0px 0px !important;
+	background: #f2f2f2 !important;
+	border-radius: 20px !important;
+	-moz-border-radius: 20px !important;
+	-webkit-border-radius: 20px !important;
 }
 
 .cz_testi.opt-2 blockquote .test-auth:before {
 	font-family: 'boxicons' !important;
-	content: "\ea46";
 	position: absolute;
 	z-index: 100;
 	font-size: 30px;
@@ -2771,15 +2812,89 @@ testimonial
 	padding: 20px 20px 10px;
 }
 
-.cz_testi.opt-2 .test-auth {
+.cz_testi.opt-2 .test-auth1 {
 	font-size: 14px;
 	font-weight: normal;
 	text-align: right;
-	background-image: url(../images/testi-wave.svg);
+	background-image: url(../images/1.svg);
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth2 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/2-1.svg);
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth3 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/3.svg);
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth4 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/4.svg);
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth5 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/5.svg);
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth6 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/6.svg);
 	background-repeat: no-repeat;
 	background-position: bottom center;
-	padding: 40px 20px 10px;
-	background-size: 100%;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth7 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/7.svg);
+	background-repeat: no-repeat;
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth8 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/8.svg);
+	background-repeat: no-repeat;
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
+}
+.cz_testi.opt-2 .test-auth9 {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: right;
+	background-image: url(../images/9.svg);
+	background-position: bottom center;
+	padding: 220px 20px 10px;
+	background-size: 105%;
 }
 
 .cz_testi.opt-2 .test-auth img {
@@ -2789,11 +2904,61 @@ testimonial
 	margin-top: 40px;
 }
 
-blockquote .test-auth span {
+blockquote .test-auth1 span {
 	margin-top: 0px;
-	color: #ffffff;
+	color: #FED35A;
 	font-size: 16px;
+	font-weight: bold;
 }
+blockquote .test-auth2 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth3 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth4 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth5 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth6 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth7 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth8 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+blockquote .test-auth9 span {
+	margin-top: 0px;
+	color: #FED35A;
+	font-size: 16px;
+	font-weight: bold;
+}
+
 
 #testimonial-masonry .item {
 	margin-bottom: 30px;
@@ -5126,9 +5291,9 @@ img {
 
 	.header-col-mid {
 		position: absolute;
-		top: 90px;
+		top: 100px;
 		width: 100%;
-		padding: 0 0 0 0;
+		padding: 100 0 0 0;
 	}
 
 	header div#logo {
