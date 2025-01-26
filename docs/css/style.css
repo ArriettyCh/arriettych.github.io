@@ -2877,6 +2877,9 @@ testimonial
 	padding: 220px 20px 10px;
 	background-size: 105%;
 }
+html {
+	scroll-behavior: smooth;
+}
 .cz_testi.opt-2 .test-auth8 {
 	font-size: 14px;
 	font-weight: normal;
