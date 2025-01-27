@@ -3,7 +3,7 @@ site_url: https://arriettych.github.io
 
 nav:
   - 主页:
-    - https://arriettych.github.io
+    - index.html
   - 计算机课程:
     - 计算机/index.md
     - ADS:
@@ -28,9 +28,9 @@ nav:
       - 作业一：因子复现: 金融/量化/量化_1.md
       - 作业二：研究报告: 金融/量化/量化_2.md
   - 关于我:
-    - https://arriettych.github.io#about
+    - about.md
   - 友情链接:
-    - https://arriettych.github.io#link
+    - link.md
         
 plugins:
   - search
