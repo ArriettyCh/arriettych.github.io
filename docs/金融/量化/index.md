@@ -19,4 +19,4 @@
 
 ****
 
-:material-pencil-box-multiple-outline: 更新中……
+:material-checkbox-multiple-outline: 笔记已完善
