@@ -10,10 +10,25 @@ nav:
       - 计算机/ADS/index.md
       - Part 1: 计算机/ADS/ADS_Part1.pdf
       - Part 2: 计算机/ADS/ADS_Part2.pdf
+    - OOP:
+      - 计算机/OOP/index.md
+      - Lecture 1: 计算机/OOP/OOP_L1.md
     - 计算机组成: 
       - 计算机/计组/index.md
       - Part 1: 计算机/计组/计组_Part1.pdf
       - Part 2: 计算机/计组/计组_Part2.pdf
+    - 计算机体系结构:
+      - 计算机/体系结构/index.md
+      - 第一章：Introduction: 计算机/体系结构/体系结构_L1.md  
+    - 数据库系统:
+      - 计算机/数据库/index.md
+      - 第一章：Prelude: 计算机/数据库/数据库_L1.md
+    - 隐私计算与数据合规:
+      - 计算机/隐私计算/index.md
+      - 第一节：Introduction: 计算机/隐私计算/隐私计算_L1.md
+    - 区块链技术应用实践:
+      - 计算机/区块链/index.md
+      - 第一章：Introduction: 计算机/区块链/区块链_L1.md
     - 量子计算:
       - 计算机/量子/index.md
       - 导论: 计算机/量子/导论.md
@@ -23,6 +38,9 @@ nav:
       - 金融/计量/index.md
       - 课程笔记: 金融/计量/计量.pdf
       - 放宽条件的模型汇总: 金融/计量/放宽条件的模型汇总.pdf
+    - 国际金融学:
+      - 金融/国际金融学/index.md
+      - 第一章: 金融/国际金融学/国际金融学_1.md
     - 量化投资:
       - 金融/量化/index.md
       - 因子复现: 金融/量化/量化_1.md
@@ -33,6 +51,8 @@ nav:
       - 竞赛/灵均2502/index.md
       - 项目描述: 竞赛/灵均2502/项目描述.md
       - 数据分析: 竞赛/灵均2502/数据分析.md
+      - 特征工程: 竞赛/灵均2502/特征工程.md
+      - 模型训练: 竞赛/灵均2502/模型训练.md
   - 关于我:
     - about.md
         
