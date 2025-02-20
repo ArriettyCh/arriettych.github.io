@@ -3,7 +3,7 @@
 !!! note ""    
     
     === "**教材和参考答案**"
-        [:material-folder-download-outline:](体系结构.zip) 《计算机体系结构量化研究方法》
+        [:material-link-variant-plus:](https://pan.baidu.com/s/1MXHturxXli9Z5t4g-Md3sg?pwd=6rkd) 《计算机体系结构量化研究方法》
     === "**PPT**"
         [:material-folder-download-outline:]() 在修，暂无PPT，欢迎补充
 
