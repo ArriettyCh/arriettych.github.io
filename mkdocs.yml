@@ -22,7 +22,8 @@ nav:
       - 第一章：Introduction: 计算机/体系结构/体系结构_L1.md  
     - 数据库系统:
       - 计算机/数据库/index.md
-      - 第一章：Prelude: 计算机/数据库/数据库_L1.md
+      - Lecture 1：Introduction: 计算机/数据库/数据库_1.md
+      - Lecture 2：Relational Model: 计算机/数据库/数据库_2.md
     - 隐私计算与数据合规:
       - 计算机/隐私计算/index.md
       - 第一节：Introduction: 计算机/隐私计算/隐私计算_L1.md
