@@ -10,6 +10,7 @@
 !!! abstract inline end "**课程速览**"
     - [**Lecture 1**](数据库_1.md)：Introduction
     - [**Lecture 2**](数据库_2.md)：Relational Model
+    - [**Lecture 3**](数据库_3.md)：SQL
 
 ## **课程介绍**
 

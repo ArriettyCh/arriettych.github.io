@@ -3,7 +3,7 @@
 !!! note ""    
     
     === "**教材**"
-        [:material-file-download-outline:](计量_教材.pdf) 李子奈《计量经济学（第5版）》
+        [:material-folder-download-outline:](计量_教材.pdf.zip) 李子奈《计量经济学（第5版）》
     === "**PPT**"
         [:material-folder-download-outline:](计量_PPT.zip) 来自孔伟杰老师
     === "**我的课程大作业**"
