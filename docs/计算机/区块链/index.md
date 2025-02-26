@@ -6,7 +6,7 @@
         [:material-link-variant-plus:](https://github.com/bitcoinbook/bitcoinbook) *Bit Coin Book*
 
 !!! abstract inline end "**课程速览**"
-    - [**Lecture 1**](区块链_L1.md)：Introduction
+        - [**Lecture 1**](区块链_1.md)：Get Ready
 
 ## **课程介绍**
 
