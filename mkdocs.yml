@@ -87,7 +87,6 @@ theme:
     - navigation.tabs
     - navigation.instant
     - navigation.indexes
-    - navigation.instant.prefetch
     - navigation.instant.progress
     - navigation.tracking
     - toc.follow
