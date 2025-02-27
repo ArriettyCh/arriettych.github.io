@@ -85,7 +85,6 @@ theme:
   language: zh
   features:
     - navigation.tabs
-    - navigation.instant
     - navigation.indexes
     - navigation.instant.progress
     - navigation.tracking
