@@ -25,9 +25,6 @@ nav:
       - Lecture 1：Introduction: 计算机/数据库/数据库_1.md
       - Lecture 2：Relational Model: 计算机/数据库/数据库_2.md
       - Lecture 3：SQL: 计算机/数据库/数据库_3.md
-    - 隐私计算与数据合规:
-      - 计算机/隐私计算/index.md
-      - 第一节：Introduction: 计算机/隐私计算/隐私计算_L1.md
     - 区块链技术应用实践:
       - 计算机/区块链/index.md
       - Get Rerady: 计算机/区块链/区块链_1.md
@@ -85,7 +82,9 @@ theme:
   language: zh
   features:
     - navigation.tabs
+    - navigation.instant
     - navigation.indexes
+    - navigation.instant.prefetch
     - navigation.instant.progress
     - navigation.tracking
     - toc.follow
