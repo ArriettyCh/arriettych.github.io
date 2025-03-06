@@ -12,14 +12,14 @@ nav:
       - Part 2: 计算机/ADS/ADS_Part2.pdf
     - OOP:
       - 计算机/OOP/index.md
-      - Lecture 1: 计算机/OOP/OOP_L1.md
+      - Lecture 1：STL: 计算机/OOP/OOP_1.md
     - 计算机组成: 
       - 计算机/计组/index.md
       - Part 1: 计算机/计组/计组_Part1.pdf
       - Part 2: 计算机/计组/计组_Part2.pdf
     - 计算机体系结构:
       - 计算机/体系结构/index.md
-      - 第一章：Introduction: 计算机/体系结构/体系结构_L1.md  
+      - 第一章：一些基本概念: 计算机/体系结构/体系结构_1.md  
     - 数据库系统:
       - 计算机/数据库/index.md
       - Lecture 1：Introduction: 计算机/数据库/数据库_1.md

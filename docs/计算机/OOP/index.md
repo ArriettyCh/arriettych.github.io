@@ -6,7 +6,7 @@
         [:material-folder-download-outline:](OOP_PPT.zip) 在修，欢迎补充
 
 !!! abstract inline end "**课程速览**"
-    - [**Lecture 1**](OOP_L1.md)：Introduction
+    - [**Lecture 1**](OOP_1.md)：STL
 
 ## **课程介绍**
 

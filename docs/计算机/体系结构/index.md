@@ -8,7 +8,7 @@
         [:material-folder-download-outline:]() 在修，暂无PPT，欢迎补充
 
 !!! abstract inline end "**课程速览**"
-    - [**Lecture 1**](体系结构_L1.md)：Introduction
+    - [**第一章**](体系结构_1.md)：一些基本概念
 
 ## **课程介绍**
 
