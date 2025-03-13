@@ -3,7 +3,7 @@
 !!! note ""    
     
     === "**PPT**"
-        [:material-folder-download-outline:](OOP_PPT.zip) 在修，欢迎补充
+        [:material-folder-download-outline:]() 在修，欢迎补充
 
 !!! abstract inline end "**课程速览**"
     - [**Lecture 1**](OOP_1.md)：STL
