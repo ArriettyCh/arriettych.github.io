@@ -6,7 +6,10 @@
         [:material-folder-download-outline:]() 在修，欢迎补充
 
 !!! abstract inline end "**课程速览**"
-    - [**Lecture 1**](OOP_1.md)：STL
+    - [**Lecture 1**](OOP_1.md)：Using Objects
+    - [**Lecture 2**](OOP_2.md)：STL
+    - [**Lecture 3**](OOP_3.md)：Memory Model
+    - [**Lecture 4**](OOP_4.md)：Class
 
 ## **课程介绍**
 

@@ -12,7 +12,10 @@ nav:
       - Part 2: 计算机/ADS/ADS_Part2.pdf
     - OOP:
       - 计算机/OOP/index.md
-      - Lecture 1：STL: 计算机/OOP/OOP_1.md
+      - Lecture 1：Using Objects: 计算机/OOP/OOP_1.md
+      - Lecture 2：STL: 计算机/OOP/OOP_2.md
+      - Lecture 3：Memory Model: 计算机/OOP/OOP_3.md
+      - Lecture 4：Class: 计算机/OOP/OOP_4.md
     - 计算机组成: 
       - 计算机/计组/index.md
       - Part 1: 计算机/计组/计组_Part1.pdf
@@ -40,9 +43,6 @@ nav:
     - 国际金融学:
       - 金融/国际金融学/index.md
       - 第一章: 金融/国际金融学/国际金融学_1.md
-    - 金融工程:
-      - 金融/金融工程/index.md
-      - 第一章: 金融/金融工程/金融工程_1.md
     - 量化投资:
       - 金融/量化/index.md
       - 因子复现: 金融/量化/量化_1.md
@@ -123,9 +123,11 @@ theme:
       accent: cyan
 
 extra_javascript:
-  - javascripts/katex.js
-  - https://unpkg.com/katex@0/dist/katex.min.js
-  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+#  - javascripts/katex.js
+#  - https://unpkg.com/katex@0/dist/katex.min.js
+#  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 extra_css:
   - https://unpkg.com/katex@0/dist/katex.min.css
@@ -135,15 +137,15 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - md_in_html
   - pymdownx.blocks.caption
   - pymdownx.critic
   - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -154,7 +156,6 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - admonition
