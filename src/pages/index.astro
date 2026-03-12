@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import Postscript from '../components/Postscript.astro';
+import BeyondWork from '../components/BeyondWork.astro';
+import Signals from '../components/Signals.astro';
+import NowNext from '../components/NowNext.astro';
+---
+
+<Layout title="Arriettych | Product & Research">
+  <div class="content-wrapper">
+    <Hero />
+    <SelectedWork />
+    <Postscript />
+    <BeyondWork />
+    <Signals />
+    <NowNext />
+  </div>
+</Layout>
+
+<style>
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding-bottom: var(--space-xl); /* Add some padding before footer */
+  }
+</style>

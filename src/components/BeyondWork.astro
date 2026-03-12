@@ -1,0 +1,115 @@
+---
+// Beyond Work Section (Asymmetric Magazine Layout)
+---
+
+<section id="beyond-work" class="beyond-work">
+  <div class="sticky-header">
+    <div class="section-header fade-in-up">
+      <h2 class="section-title">Beyond Work</h2>
+      <p>审美与能量的来源</p>
+    </div>
+  </div>
+
+  <div class="magazine-grid">
+    <!-- Aesthetics (Photography/Art) -->
+    <div class="grid-item aesthetics fade-in-up">
+      <div class="image-wrapper bg-placeholder liquid-glass">
+        <!-- Image placeholder -->
+      </div>
+      <div class="caption">
+        <h3>Lens & Canvas</h3>
+        <p>捕捉光线与构图的平衡。长期的视觉训练让我对克制感、材质与排版更敏感，这直接影响了我对产品体验的判断。</p>
+      </div>
+    </div>
+
+    <!-- Energy (Running/Cycling) -->
+    <div class="grid-item energy fade-in-up" style="transition-delay: 0.2s;">
+      <div class="text-block liquid-glass">
+        <h3>100km & 800m</h3>
+        <p>
+          曾把共享单车从紫金港骑到海宁（100公里），也拿过校运会800米冠军。
+          运动对我来说不是“标签”，而是一种建立耐心、输出稳定性的长期主义训练。
+        </p>
+      </div>
+      <div class="image-wrapper small bg-placeholder liquid-glass mt-sm">
+        <!-- Image placeholder -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .beyond-work {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .sticky-header {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 10;
+    /* Optional slight background blur so text is readable over scrolling images */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: linear-gradient(to bottom, var(--color-bg) 60%, transparent);
+    margin: 0 calc(var(--space-md) * -1); /* Pull out to edge to cover */
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+  }
+
+  .section-title {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .magazine-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+    align-items: center; /* Asymmetric alignment */
+  }
+
+  .image-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-color: var(--color-border);
+    transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+  }
+
+  .image-wrapper:hover, .text-block:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 
+      inset 0 1px 1px var(--color-glass-highlight),
+      inset 0 0 0 1px var(--color-glass-edge),
+      0 12px 24px var(--color-glass-shadow),
+      0 24px 48px var(--color-glass-shadow-deep);
+  }
+
+  .image-wrapper.small {
+    aspect-ratio: 1/1;
+    width: 80%;
+    margin-left: auto;
+  }
+
+  .caption, .text-block {
+    margin-top: var(--space-sm);
+  }
+
+  .text-block {
+    padding: var(--space-md);
+    transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+  }
+
+  @media (max-width: 768px) {
+    .magazine-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    
+    .image-wrapper.small {
+      width: 100%;
+    }
+  }
+</style>

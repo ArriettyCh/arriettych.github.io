@@ -1,0 +1,142 @@
+---
+// Header component
+---
+
+<header class="header liquid-glass" id="main-header">
+  <div class="header-inner">
+    <div class="logo">
+      <a href="#">ARRIETTYCH</a>
+    </div>
+    
+    <nav class="nav-menu" id="header-nav">
+      <!-- 只有在未收起时才显示的完整导航 -->
+      <a href="#selected-work">Work</a>
+      <a href="#beyond-work">Beyond</a>
+      <a href="#signals">Signals</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#contact" class="contact-btn pill liquid-glass">Contact</a>
+      <button class="under-the-hood pill liquid-glass" id="geek-toggle">Under the Hood</button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    z-index: 100;
+    padding: 0 var(--space-md);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-glass-border);
+    transition: height var(--transition-smooth), padding var(--transition-smooth);
+    /* 通栏，不留四面空隙 */
+  }
+
+  /* 当向下滚动时，Header 添加 .compact 类 */
+  .header.compact {
+    height: var(--header-compact-height);
+  }
+
+  .header-inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo a {
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    font-size: 1.1rem;
+    transition: font-size var(--transition-smooth);
+  }
+
+  .header.compact .logo a {
+    font-size: 1rem;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: var(--space-md);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .nav-menu a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .nav-menu a:hover {
+    color: var(--color-text);
+  }
+
+  /* 压缩时隐藏中间的导航项 */
+  .header.compact .nav-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .contact-btn, .under-the-hood {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    color: var(--color-text);
+  }
+
+  .contact-btn:hover, .under-the-hood:hover {
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  @media (max-width: 1024px) {
+    .nav-menu {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Geek Mode toggle logic
+  const toggle = document.getElementById('geek-toggle');
+  toggle?.addEventListener('click', () => {
+    const isDetail = document.body.getAttribute('data-view') === 'detail';
+    document.body.setAttribute('data-view', isDetail ? 'default' : 'detail');
+    toggle.textContent = isDetail ? 'Under the Hood' : 'Exit Hood';
+  });
+
+  // Header Scroll Shrink Logic
+  const header = document.getElementById('main-header');
+  let lastScroll = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    
+    // 如果向下滚动超过 100px，压缩 header
+    if (currentScroll > 100) {
+      header?.classList.add('compact');
+    } else {
+      // 回到顶部时展开
+      header?.classList.remove('compact');
+    }
+    
+    lastScroll = currentScroll;
+  }, { passive: true });
+</script>

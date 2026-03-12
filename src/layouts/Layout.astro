@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import TableOfContents from '../components/TableOfContents.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="arriettych personal portfolio" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- TOC is now floating, no longer part of a flex wrapper -->
+    <TableOfContents />
+    
+    <main class="main-content">
+      <Header />
+      <slot />
+      <Footer />
+    </main>
+
+    <script>
+      // Global intersection observer for smooth fade-in-up animations
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px', // Trigger slightly before it comes into full view
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Stop observing once animated in to keep it visible
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Initialize all fade-in elements
+      const initAnimations = () => {
+        document.querySelectorAll('.fade-in-up').forEach((el, index) => {
+          observer.observe(el);
+        });
+      };
+
+      // Run on load
+      initAnimations();
+    </script>
+  </body>
+</html>
+
+<style>
+  .main-content {
+    min-width: 0; /* Prevents overflow */
+    display: flex;
+    flex-direction: column;
+  }
+</style>

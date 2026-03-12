@@ -1,0 +1,40 @@
+---
+// Postscript Card (Failure/Memo)
+---
+
+<section id="postscript" class="fade-in-up">
+  <div class="postscript-card liquid-glass">
+    <div class="label">Postscript</div>
+    <h3>A project I’m glad failed</h3>
+    <p>
+      曾尝试做一个校园外卖拼单产品。当时以为最大的挑战是需求匹配算法与高并发。但最终发现，真正的难点在于“信任建立、支付清算与供给侧的冷启动”。
+    </p>
+    <p class="mt-md">
+      <strong>Learning:</strong> 真实世界里，最难的问题经常不是“怎么做出来”，而是“为什么用户真的会用、会信、会留下来”。
+    </p>
+  </div>
+</section>
+
+<style>
+  #postscript {
+    padding-top: 0; /* Attach closely to Selected Work */
+    display: flex;
+    justify-content: flex-end; /* Align right to show it's a footnote */
+  }
+
+  .postscript-card {
+    max-width: 600px;
+    padding: var(--space-md);
+    /* 偏移感，不同于主卡片 */
+    transform: translateY(-2rem);
+  }
+
+  @media (max-width: 1023px) {
+    #postscript {
+      justify-content: flex-start;
+    }
+    .postscript-card {
+      transform: none;
+    }
+  }
+</style>

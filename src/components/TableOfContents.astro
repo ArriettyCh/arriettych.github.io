@@ -1,0 +1,97 @@
+---
+// Table of Contents (Floating Sidebar)
+---
+
+<aside class="toc liquid-glass" id="floating-toc">
+  <nav class="toc-nav flex flex-col gap-sm">
+    <a href="#hero" class="toc-link label">Index</a>
+    <a href="#selected-work" class="toc-link label">Work</a>
+    <a href="#beyond-work" class="toc-link label">Beyond</a>
+    <a href="#signals" class="toc-link label">Signals</a>
+    <a href="#now-next" class="toc-link label">Now</a>
+  </nav>
+</aside>
+
+<style>
+  .toc {
+    position: fixed;
+    top: 50%;
+    left: var(--space-md);
+    transform: translateY(-50%) translateX(-150%);
+    z-index: 90;
+    padding: var(--space-sm) var(--space-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--transition-bounce), opacity var(--transition-smooth);
+    border-radius: 12px; /* Slight pill shape for floating widget looks better, but we can keep it square if strictly required. Let's make it sharp to follow rules */
+    border-radius: 0;
+  }
+
+  .toc.visible {
+    transform: translateY(-50%) translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .toc-nav {
+    width: max-content;
+  }
+
+  .toc-link {
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast), transform var(--transition-bounce);
+    display: inline-block;
+    transform-origin: left center;
+  }
+
+  .toc-link:hover, .toc-link.active {
+    color: var(--color-text);
+    transform: translateX(8px);
+  }
+
+  @media (max-width: 1024px) {
+    .toc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Active state manager and visibility toggle for TOC
+  const toc = document.getElementById('floating-toc');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.toc-link');
+  const workSection = document.getElementById('selected-work');
+  const contactSection = document.getElementById('contact');
+
+  window.addEventListener('scroll', () => {
+    // 1. Visibility Logic
+    if (workSection && contactSection && toc) {
+      const workTop = workSection.offsetTop - window.innerHeight / 2;
+      // We want to hide it before footer is fully in view, or we can just hide it based on scrollY
+      const contactTop = contactSection.offsetTop - window.innerHeight; 
+
+      if (window.scrollY > workTop && window.scrollY < contactTop) {
+        toc.classList.add('visible');
+      } else {
+        toc.classList.remove('visible');
+      }
+    }
+
+    // 2. Active State Logic
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (scrollY >= sectionTop - window.innerHeight / 2) {
+        current = section.getAttribute('id') || '';
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  }, { passive: true });
+</script>

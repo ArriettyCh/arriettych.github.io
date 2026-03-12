@@ -1,0 +1,74 @@
+---
+// Hero Section
+---
+
+<section id="hero" class="hero">
+  <div class="hero-content">
+    <div class="label pill liquid-glass fade-in-up" style="display: inline-block; padding: 0.25rem 0.75rem; margin-bottom: var(--space-md);">
+      Research × Product × Taste
+    </div>
+    
+    <h1 class="fade-in-up" style="transition-delay: 0.1s;">
+      我想把前沿 AI 的能力，<br/>做成真正有感觉、有价值的产品。
+    </h1>
+    
+    <p class="subtitle fade-in-up" style="transition-delay: 0.2s;">
+      浙江大学计算机在读，辅修金融。正在生成式模型、扩散语言模型与智能体持续学习的交叉地带工作，也持续通过项目、写作与设计练习产品判断和体验表达。
+    </p>
+
+    <div class="tags flex gap-sm fade-in-up" style="transition-delay: 0.3s;">
+      <span class="tag liquid-glass pill">理解模型</span>
+      <span class="tag liquid-glass pill">产品判断</span>
+      <span class="tag liquid-glass pill">审美表达</span>
+    </div>
+  </div>
+
+  <div class="quick-facts flex justify-between fade-in-up" style="transition-delay: 0.4s;">
+    <span>Zhejiang University, CS & Finance</span>
+    <span>Class of 2027</span>
+    <span>UCLA / NUS Collaboration</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  .hero-content {
+    max-width: 900px;
+    margin-bottom: auto;
+  }
+
+  .subtitle {
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-lg);
+    max-width: 700px;
+  }
+
+  .tag {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .quick-facts {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-family: monospace;
+  }
+
+  @media (max-width: 768px) {
+    .quick-facts {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

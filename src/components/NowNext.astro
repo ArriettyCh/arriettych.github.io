@@ -1,0 +1,45 @@
+---
+// Now & Next Section
+---
+
+<section id="now-next" class="now-next fade-in-up">
+  <div class="grid cols-2 gap-lg">
+    <div class="col liquid-glass p-md">
+      <div class="label mb-md">Now</div>
+      <p>
+        目前正在深入优化 Discrete Flow Matching 的 coupling 策略，试图在语言模型中找到更优雅的生成路径。<br/><br/>
+        同时在准备半马，目标 130。<br/>
+        阅读：《Gödel, Escher, Bach》
+      </p>
+    </div>
+
+    <div class="col liquid-glass p-md">
+      <div class="label mb-md">Next</div>
+      <p>
+        我希望先进入全球最前沿的技术与产品环境（赴美读硕/工作），把判断力磨得更扎实一些。<br/><br/>
+        长期希望站在技术、产品与用户之间，理解模型能力边界如何演变成新的体验范式。
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid.cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .p-md {
+    padding: var(--space-md);
+  }
+
+  .mb-md {
+    margin-bottom: var(--space-md);
+  }
+
+  @media (max-width: 768px) {
+    .grid.cols-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
