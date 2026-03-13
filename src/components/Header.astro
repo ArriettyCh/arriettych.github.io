@@ -9,10 +9,32 @@
     </div>
     
     <nav class="nav-menu" id="header-nav">
-      <!-- 只有在未收起时才显示的完整导航 -->
       <a href="#selected-work">Work</a>
       <a href="#beyond-work">Beyond</a>
       <a href="#signals">Signals</a>
+    </nav>
+
+    <nav class="progress-map" id="progress-map" aria-label="页面进度">
+      <a href="#selected-work" class="progress-step" data-target="selected-work">
+        <span class="step-dot"></span>
+        <span class="step-label">Selected Work</span>
+        <span class="step-line"><span class="step-line-fill"></span></span>
+      </a>
+      <a href="#beyond-work" class="progress-step" data-target="beyond-work">
+        <span class="step-dot"></span>
+        <span class="step-label">Beyond Work</span>
+        <span class="step-line"><span class="step-line-fill"></span></span>
+      </a>
+      <a href="#signals" class="progress-step" data-target="signals">
+        <span class="step-dot"></span>
+        <span class="step-label">Signals</span>
+        <span class="step-line"><span class="step-line-fill"></span></span>
+      </a>
+      <a href="#now-next" class="progress-step" data-target="now-next">
+        <span class="step-dot"></span>
+        <span class="step-label">Now & Next</span>
+        <span class="step-line"><span class="step-line-fill"></span></span>
+      </a>
     </nav>
 
     <div class="header-actions">
@@ -69,6 +91,102 @@
     transition: opacity var(--transition-fast), transform var(--transition-fast);
   }
 
+  .progress-map {
+    display: flex;
+    align-items: center;
+    width: min(52vw, 46rem);
+    opacity: 0;
+    transform: translateY(-0.4rem);
+    pointer-events: none;
+    transition: opacity var(--transition-fast), transform var(--transition-smooth);
+  }
+
+  .progress-step {
+    --step-progress: 0;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: center;
+    gap: 0.55rem;
+    min-width: 0;
+    flex: 1;
+    color: color-mix(
+      in srgb,
+      var(--color-text) calc(18% + (var(--step-progress) * 82%)),
+      var(--color-text-muted)
+    );
+    transition: color 0.18s linear;
+  }
+
+  .progress-step:last-child {
+    flex: 0 auto;
+  }
+
+  .step-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: color-mix(
+      in srgb,
+      var(--color-text) calc(12% + (var(--step-progress) * 88%)),
+      var(--color-bg)
+    );
+    border: 1px solid color-mix(
+      in srgb,
+      var(--color-text) calc(22% + (var(--step-progress) * 58%)),
+      transparent
+    );
+    transition:
+      transform var(--transition-bounce),
+      background var(--transition-fast),
+      border-color var(--transition-fast);
+  }
+
+  .step-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .step-line {
+    position: relative;
+    display: block;
+    height: 1px;
+    background: color-mix(
+      in srgb,
+      var(--color-text) calc(10% + (var(--step-progress) * 60%)),
+      transparent
+    );
+    overflow: hidden;
+  }
+
+  .progress-step:last-child .step-line {
+    display: none;
+  }
+
+  .step-line-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(var(--line-progress, 0) * 100%);
+    background: var(--color-text);
+    transition: width 0.18s linear;
+  }
+
+  .progress-step[data-state="active"],
+  .progress-step[data-state="complete"] {
+    color: var(--color-text);
+  }
+
+  .progress-step[data-state="active"] .step-dot {
+    transform: scale(1.22);
+  }
+
+  .progress-step[data-state="complete"] .step-dot {
+    background: var(--color-text);
+    border-color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  }
+
   .nav-menu a {
     font-size: 0.9rem;
     font-weight: 500;
@@ -85,6 +203,12 @@
     opacity: 0;
     transform: translateY(-10px);
     pointer-events: none;
+  }
+
+  .header.compact .progress-map {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .header-actions {
@@ -110,11 +234,14 @@
     .nav-menu {
       display: none;
     }
+
+    .progress-map {
+      display: none;
+    }
   }
 </style>
 
 <script>
-  // Geek Mode toggle logic
   const toggle = document.getElementById('geek-toggle');
   toggle?.addEventListener('click', () => {
     const isDetail = document.body.getAttribute('data-view') === 'detail';
@@ -122,21 +249,110 @@
     toggle.textContent = isDetail ? 'Under the Hood' : 'Exit Hood';
   });
 
-  // Header Scroll Shrink Logic
   const header = document.getElementById('main-header');
-  let lastScroll = window.scrollY;
+  const progressSteps = Array.from(document.querySelectorAll('.progress-step')) as HTMLAnchorElement[];
+  const progressSections = progressSteps
+    .map((step) => {
+      const id = step.dataset.target;
+      const section = id ? document.getElementById(id) : null;
+      return { step, section };
+    })
+    .filter((item): item is { step: HTMLAnchorElement; section: HTMLElement } => Boolean(item.section));
 
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.scrollY;
-    
-    // 如果向下滚动超过 100px，压缩 header
-    if (currentScroll > 100) {
-      header?.classList.add('compact');
-    } else {
-      // 回到顶部时展开
-      header?.classList.remove('compact');
+  let currentProgress = 0;
+  let targetProgress = 0;
+  let ticking = false;
+
+  const setHeaderState = () => {
+    if (!header) {
+      return;
     }
-    
-    lastScroll = currentScroll;
-  }, { passive: true });
+
+    if (window.scrollY > 100) {
+      header.classList.add('compact');
+    } else {
+      header.classList.remove('compact');
+    }
+  };
+
+  const updateProgressMap = (progress: number) => {
+    const totalSegments = Math.max(progressSections.length - 1, 1);
+
+    progressSections.forEach(({ step }, index) => {
+      const segmentValue = progress * totalSegments - index;
+      const lineProgress = Math.max(0, Math.min(1, segmentValue));
+      const stepProgress = Math.max(0, Math.min(1, segmentValue + 0.35));
+      step.style.setProperty('--line-progress', String(lineProgress));
+      step.style.setProperty('--step-progress', String(stepProgress));
+
+      let state = 'upcoming';
+      if (segmentValue >= 1) {
+        state = 'complete';
+      } else if (segmentValue > 0 || (index === 0 && progress <= 0.02)) {
+        state = 'active';
+      }
+
+      step.dataset.state = state;
+    });
+  };
+
+  const measureSectionProgress = () => {
+    if (progressSections.length < 2) {
+      targetProgress = 0;
+      return;
+    }
+
+    const marker = window.scrollY + window.innerHeight * 0.42;
+    const sectionTops = progressSections.map(({ section }) => section.offsetTop);
+    const firstTop = sectionTops[0];
+    const lastTop = sectionTops[sectionTops.length - 1];
+
+    if (marker <= firstTop) {
+      targetProgress = 0;
+      return;
+    }
+
+    if (marker >= lastTop) {
+      targetProgress = 1;
+      return;
+    }
+
+    for (let index = 0; index < sectionTops.length - 1; index += 1) {
+      const start = sectionTops[index];
+      const end = sectionTops[index + 1];
+
+      if (marker >= start && marker < end) {
+        const local = (marker - start) / Math.max(end - start, 1);
+        targetProgress = (index + local) / (sectionTops.length - 1);
+        return;
+      }
+    }
+  };
+
+  const animate = () => {
+    currentProgress += (targetProgress - currentProgress) * 0.14;
+    updateProgressMap(currentProgress);
+
+    if (Math.abs(targetProgress - currentProgress) > 0.001) {
+      window.requestAnimationFrame(animate);
+    } else {
+      currentProgress = targetProgress;
+      updateProgressMap(currentProgress);
+      ticking = false;
+    }
+  };
+
+  const handleScroll = () => {
+    setHeaderState();
+    measureSectionProgress();
+
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(animate);
+    }
+  };
+
+  handleScroll();
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleScroll);
 </script>

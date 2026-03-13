@@ -1,0 +1,316 @@
+# .agent
+
+> This document defines the development principles, code conventions, and design standards for this project.
+> Any AI agent or collaborator working on this codebase **must** follow these rules strictly.
+
+---
+
+## Project Overview
+
+This is a **personal portfolio website** built with **Astro**, deployed to **GitHub Pages**.
+It is a lightweight, static site showcasing the developer's bio and selected works and so on.
+
+- **Framework**: Astro (latest stable)
+- **Styling**: Pure CSS (Scoped + Global CSS Custom Properties). No Tailwind, no CSS-in-JS, no UI library.
+- **JavaScript**: Vanilla JS only, minimal usage. No React, Vue, or any frontend runtime.
+- **Content**: Hardcoded in `.astro` components. No CMS, no Markdown, no external data source.
+- **Deployment**: GitHub Pages via GitHub Actions. Push-to-deploy.
+
+---
+
+## Core Principles
+
+### 1. Less is More
+
+This is a portfolio for a developer with taste. Every line of code, every pixel, every animation must earn its place.
+
+- If a feature can be removed without hurting the experience, remove it.
+- If an animation doesn't serve a clear purpose, don't add it. (The user will ask you to add it if he wants to, but you should not add it yourself)
+- If a dependency can be avoided, avoid it.
+- Prefer 10 lines of elegant code over 50 lines of "flexible" code.
+
+### 2. The Website IS the Portfolio
+
+The code quality, design decisions, and architecture of this site are themselves a demonstration of the developer's ability. Treat every commit as if a senior engineer and a design director will review it together.
+
+### 3. Performance is Non-Negotiable
+
+Target: **Lighthouse 95+ on all four metrics** (Performance, Accessibility, Best Practices, SEO).
+Astro's zero-JS-by-default is our foundation — do not break it without an extremely good reason.
+
+---
+
+## Code Conventions
+
+### General
+
+- **Language**: All code, comments, and commit messages in **English**. All user-facing content (displayed on the website) in **Chinese** unless contextually appropriate to use English (e.g., technical terms, project names). **Do not use English punctuation if both the preceding and following text are in Chinese**.
+
+- **Indentation**: 2 spaces. No tabs.
+- **Quotes**: Single quotes in JS/TS. Double quotes in HTML attributes.
+- **Semicolons**: No semicolons in JS/TS (unless the grammar needs to).
+- **Trailing commas**: Always (ES5+ style).
+- **File naming**: `kebab-case` for all files and folders. e.g., `hero-section.astro`, `global-styles.css`.
+- **Component naming**: `PascalCase` when referenced in code. File name remains `kebab-case`. e.g., `<HeroSection />` from `hero-section.astro`.
+
+### Astro Components (`.astro` files)
+
+```astro
+---
+// 1. Imports (if any)
+// 2. Props interface (if any)
+// 3. Data/logic (if any)
+// Keep this section as short as possible. Prefer zero logic.
+---
+
+<!-- Template: clean, semantic HTML5 -->
+<section class="hero">
+  <h1>...</h1>
+</section>
+
+<style>
+  /* Scoped styles for this component only */
+  /* Use CSS Custom Properties from global.css for theming */
+</style>
+```
+
+Rules:
+- **No `<script>` tags unless necessary.** If JS is needed, use Intersection Observer or similar lightweight patterns. Never import a library for a single interaction.
+- **Semantic HTML is mandatory.** Use `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, `<main>` appropriately. A `<div>` should be a last resort for layout wrappers only.
+- **No inline styles.** All styling goes in `<style>` (scoped) or `global.css`.
+- **Props should be typed** even in `.astro` files using the frontmatter `interface Props {}` pattern.
+- Each component should be **self-contained and single-responsibility**. If a component file exceeds ~80 lines, consider splitting it.
+
+### CSS
+
+```css
+/* ✅ Good */
+.hero {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding-inline: var(--space-lg);
+}
+
+/* ❌ Bad */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-left: 48px;
+  padding-right: 48px;
+}
+```
+
+Rules:
+
+- **Use CSS Custom Properties (variables) for ALL design tokens.** Colors, spacing, font sizes, border radii, transitions — everything goes through variables defined in `global.css`.
+- **Use modern CSS features aggressively:**
+  - `dvh` / `svh` over `vh`
+  - `color-mix()` for color variations
+  - `clamp()` for fluid typography and spacing
+  - `grid` and `subgrid` for layout
+  - `@container` queries where useful
+  - logical properties (`padding-inline`, `margin-block`) over physical ones
+  - `has()`, `is()`, `where()` selectors to reduce duplication
+- **No magic numbers.** Every value should either come from a CSS variable or have a comment explaining why.
+- **Animation & Transition:**
+  - Default easing: `cubic-bezier(0.16, 1, 0.3, 1)` (smooth ease-out).
+  - Default duration: `0.4s`–`0.6s` for entrances, `0.2s`–`0.3s` for hover/micro-interactions.
+  - Always respect `prefers-reduced-motion`. Wrap animations in `@media (prefers-reduced-motion: no-preference)`.
+  - Prefer `transform` and `opacity` for animations (GPU-accelerated).
+- **Mobile-first responsive design.** Base styles = mobile. Use `min-width` media queries to scale up.
+- **No `!important`. Ever.**
+- **Class naming:** Simple, flat, descriptive. `.hero`, `.hero-title`, `.project-card`. No BEM. No utility classes. Keep it readable.
+
+### JavaScript (if used)
+
+- **Total JS shipped to client should stay under 5KB** (ideally under 2KB).
+- Allowed use cases:
+  - Dark/light mode toggle (with `localStorage` persistence)
+  - Scroll-triggered entrance animations via `IntersectionObserver`
+  - Minor interactive enhancements (custom cursor, magnetic buttons, etc.)
+- **Forbidden:**
+  - Any npm package that ships to the client
+  - `document.querySelectorAll` loops that could be replaced by CSS
+  - jQuery-style DOM manipulation patterns
+  - Any analytics or tracking scripts (unless explicitly requested)
+- Use modern APIs: `IntersectionObserver`, `matchMedia`, `requestAnimationFrame`.
+- All client-side JS must be in a single `<script>` tag in `base-layout.astro` or loaded as a tiny standalone module.
+
+---
+
+## Design System
+
+### Color Tokens
+
+Define a minimal palette in `global.css` using CSS Custom Properties. Must support both light and dark modes.
+
+```css
+:root {
+  /* Backgrounds */
+  --color-bg-primary: ...;
+  --color-bg-secondary: ...;
+
+  /* Text */
+  --color-text-primary: ...;
+  --color-text-secondary: ...;
+  --color-text-muted: ...;
+
+  /* Accent (ONE accent color only) */
+  --color-accent: ...;
+  --color-accent-hover: ...;
+
+  /* Borders & Dividers */
+  --color-border: ...;
+}
+
+[data-theme="dark"] {
+  /* Override all the above */
+}
+```
+
+Rules:
+- **Maximum 2–3 hues total.** Variations come from lightness/opacity, not new hues.
+- Ensure **WCAG AA contrast ratio** (4.5:1 for body text, 3:1 for large text).
+- Dark mode is not optional. It must feel intentional, not auto-inverted.
+
+### Typography
+
+- **One font family only.** Choose a high-quality sans-serif (Inter, Satoshi, Plus Jakarta Sans, or similar).
+- Self-host the font in `/public/fonts/` using `.woff2` format. No Google Fonts CDN (privacy + performance).
+- Define a type scale using `clamp()` for fluid sizing:
+
+```css
+:root {
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --text-lg: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  --text-3xl: clamp(2.5rem, 1.8rem + 3.5vw, 5rem);
+}
+```
+
+### Spacing
+
+Use a consistent spacing scale based on a base unit:
+
+```css
+:root {
+  --space-xs: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+  --space-md: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  --space-xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  --space-2xl: clamp(3rem, 2rem + 5vw, 8rem);
+  --space-section: clamp(4rem, 3rem + 6vw, 10rem);
+}
+```
+
+### Motion
+
+```css
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.6s;
+  --duration-entrance: 0.8s;
+}
+```
+
+---
+
+## Visual & Interaction Polish Checklist
+
+Before considering any section "done", verify:
+
+- [ ] Smooth scroll-triggered entrance animation (fade + slight translate)
+- [ ] Hover states on ALL interactive elements (links, buttons, cards)
+- [ ] Focus-visible styles for keyboard navigation (accessibility)
+- [ ] Proper cursor changes (`pointer`, `default`, etc.)
+- [ ] Text selection color matches the accent color
+- [ ] Smooth color transition on theme toggle (not an instant flash)
+- [ ] No layout shift during page load (fonts, images properly sized)
+- [ ] Images use appropriate format (WebP/AVIF with fallback) and are lazy-loaded
+- [ ] Scrollbar is styled or hidden if contextually appropriate
+- [ ] Footer doesn't float in mid-page on short content (sticky footer pattern)
+- [ ] Interactive elements must have explicit `aria-label` attributes, and all images must include `alt` text to ensure seamless screen reader navigation.
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── header.astro          # Navigation + theme toggle
+│   ├── hero.astro            # Full-viewport intro section
+│   ├── about.astro           # Bio / skills summary
+│   ├── ...
+│   └── footer.astro          # Minimal footer
+├── layouts/
+│   └── base-layout.astro     # HTML head, body wrapper, global scripts
+├── styles/
+│   └── global.css            # CSS reset, custom properties, base styles
+├── pages/
+│   └── index.astro           # Single page — imports & composes all sections
+public/
+├── fonts/
+│   └── *.woff2
+├── images/
+│   └── projects/
+│       └── *.webp
+├── favicon.svg
+└── og-image.png              # Open Graph image for social sharing
+```
+
+Rules:
+- **`pages/` should only contain `index.astro`**. This is a single-page site.
+- **No nested component folders.** The site is too small to need them. Flat is better.
+- **All images must be optimized** before committing. Use WebP/AVIF. No PNGs over 200KB.
+
+---
+
+## Git Conventions
+
+- **Branch**: Work on `main` directly (solo project, no need for branch workflow).
+- **Commits**: Use [Conventional Commits](https://www.conventionalcommits.org/).
+  - `feat: add hero section with scroll animation`
+  - `style: refine project card hover transition`
+  - `fix: correct color contrast in dark mode`
+  - `chore: optimize font subset`
+- **Commit often, commit small.** Each commit should represent one logical change.
+
+---
+
+## Forbidden Patterns
+
+| Pattern | Reason |
+|---------|--------|
+| Installing npm packages for client-side features | Defeats the zero-JS philosophy |
+| Using `<div>` soup without semantic tags | Inaccessible, unprofessional |
+| Copy-pasting CSS animation code from CodePen | Often unoptimized, inconsistent with our easing/duration system |
+| Adding a "scroll to top" button | Lazy UX crutch. If the page is well-designed, it's not needed |
+| Using `px` for font sizes or spacing | Use `rem` + `clamp()` for fluid scaling |
+| Placeholder content ("Lorem ipsum") | Every piece of text should be real or clearly marked as `TODO` |
+| Comments that describe *what* code does | Only comment *why*. The code itself should be readable enough to explain what |
+
+---
+
+## Reminder to AI Agent
+
+When generating or modifying code for this project:
+
+1. **Think before you write.** Propose the approach first if the change is non-trivial.
+2. **Write the minimum amount of code** that achieves the goal beautifully.
+3. **Always consider the visual result.** You are not just writing code — you are crafting an experience.
+4. **Test in your mind**: "Would a design-conscious hiring manager be impressed by this?" If no, iterate.
+5. **Never add complexity to show off.** Sophistication is in restraint, not in features.
+6. When in doubt, refer back to the core principle: **Less is more.**

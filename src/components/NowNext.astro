@@ -2,44 +2,94 @@
 // Now & Next Section
 ---
 
-<section id="now-next" class="now-next fade-in-up">
-  <div class="grid cols-2 gap-lg">
-    <div class="col liquid-glass p-md">
-      <div class="label mb-md">Now</div>
-      <p>
-        目前正在深入优化 Discrete Flow Matching 的 coupling 策略，试图在语言模型中找到更优雅的生成路径。<br/><br/>
-        同时在准备半马，目标 130。<br/>
-        阅读：《Gödel, Escher, Bach》
-      </p>
+<section id="now-next" class="now-next">
+  <div class="section-layout">
+    <div class="section-sidebar">
+      <div class="sticky-title fade-in-up">
+        <h2 class="section-title">Now & Next</h2>
+        <p>状态更新与方向</p>
+      </div>
     </div>
 
-    <div class="col liquid-glass p-md">
-      <div class="label mb-md">Next</div>
-      <p>
-        我希望先进入全球最前沿的技术与产品环境（赴美读硕/工作），把判断力磨得更扎实一些。<br/><br/>
-        长期希望站在技术、产品与用户之间，理解模型能力边界如何演变成新的体验范式。
-      </p>
+    <div class="section-content">
+      <div class="text-grid fade-in-up">
+        <div class="text-col">
+          <h3>Now</h3>
+          <div class="prose">
+            <p>目前正在深入优化 Discrete Flow Matching 的 coupling 策略，试图在语言模型中找到更优雅的生成路径。</p>
+            <p>同时在准备半马，目标 130。</p>
+            <p>正在读《Gödel, Escher, Bach》。</p>
+          </div>
+        </div>
+
+        <div class="text-col">
+          <h3>Next</h3>
+          <div class="prose">
+            <p>我希望先进入全球最前沿的技术与产品环境（赴美读硕/工作），把判断力磨得更扎实一些。</p>
+            <p>长期希望站在技术、产品与用户之间，理解模型能力边界如何演变成新的体验范式。</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .grid.cols-2 {
+  .now-next {
+    display: block;
+  }
+
+  .section-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 1024px) {
+    .section-layout {
+      grid-template-columns: 300px 1fr;
+      gap: var(--space-xl);
+    }
+    
+    .sticky-title {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-xl));
+    }
+  }
+
+  .section-title {
+    margin-bottom: 0.5rem;
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .text-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    padding-top: var(--space-md);
   }
 
-  .p-md {
-    padding: var(--space-md);
-  }
-
-  .mb-md {
+  .text-col h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
     margin-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.5rem;
+  }
+
+  .prose p {
+    margin-bottom: 1rem;
+    font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+    color: var(--color-text);
   }
 
   @media (max-width: 768px) {
-    .grid.cols-2 {
+    .text-grid {
       grid-template-columns: 1fr;
+      gap: var(--space-lg);
     }
   }
 </style>

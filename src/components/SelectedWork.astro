@@ -1,8 +1,4 @@
 ---
-// Selected Work Section with Horizontal Scroll
----
-
----
 // Selected Work Section with Horizontal Scroll & Parallax Mask
 ---
 
@@ -10,7 +6,7 @@
   <div class="h-scroll-sticky">
     <div class="section-header fade-in-up">
       <h2 class="section-title">
-        <span class="bracket">[</span> Selected Work <span class="bracket">]</span>
+        <span id="work-title">Selected Work</span>
       </h2>
       <p>在模型边界与真实价值之间</p>
     </div>
@@ -20,58 +16,66 @@
         
         <!-- Card 1 -->
         <article class="work-card">
-          <div class="card-image-container liquid-glass parallax-mask">
-            <div class="card-image bg-placeholder inner-img"></div>
-          </div>
-          <div class="card-content liquid-glass mt-sm">
-            <h3>重新理解语言生成</h3>
-            <p>Discrete Flow Matching Language Model (UCLA). 探索不依赖传统自回归范式的语言生成路径。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Problem:</strong> Coupling strategy efficiency.</p>
-              <p><strong>Method:</strong> Optimizing target distributions for smoother flow.</p>
+          <div class="work-card-inner liquid-glass">
+            <div class="card-image-container parallax-mask">
+              <div class="card-image bg-placeholder inner-img"></div>
+            </div>
+            <div class="card-content">
+              <h3>重新理解语言生成</h3>
+              <p>Discrete Flow Matching Language Model (UCLA). 探索不依赖传统自回归范式的语言生成路径。</p>
+              <div class="hood-details hidden" data-hood>
+                <p><strong>Problem:</strong> Coupling strategy efficiency.</p>
+                <p><strong>Method:</strong> Optimizing target distributions for smoother flow.</p>
+              </div>
             </div>
           </div>
         </article>
 
         <!-- Card 2 -->
         <article class="work-card">
-          <div class="card-image-container liquid-glass parallax-mask">
-            <div class="card-image bg-placeholder inner-img"></div>
-          </div>
-          <div class="card-content liquid-glass mt-sm">
-            <h3>让照片被自然找回</h3>
-            <p>AI-Native Photo Album. 基于 CLIP 和自然语言搜索的下一代相册体验。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Trade-off:</strong> Latency vs. Embedding precision.</p>
-              <p><strong>Constraint:</strong> Client-side storage limitations.</p>
+          <div class="work-card-inner liquid-glass">
+            <div class="card-image-container parallax-mask">
+              <div class="card-image bg-placeholder inner-img"></div>
+            </div>
+            <div class="card-content">
+              <h3>让照片被自然找回</h3>
+              <p>AI-Native Photo Album. 基于 CLIP 和自然语言搜索的下一代相册体验。</p>
+              <div class="hood-details hidden" data-hood>
+                <p><strong>Trade-off:</strong> Latency vs. Embedding precision.</p>
+                <p><strong>Constraint:</strong> Client-side storage limitations.</p>
+              </div>
             </div>
           </div>
         </article>
 
         <!-- Card 3 -->
         <article class="work-card">
-          <div class="card-image-container liquid-glass parallax-mask">
-            <div class="card-image bg-placeholder inner-img"></div>
-          </div>
-          <div class="card-content liquid-glass mt-sm">
-            <h3>让先进模型走向可用</h3>
-            <p>并行视频采样与流匹配加速 (ZJU). 解决生成模型的工程化与成本瓶颈。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Focus:</strong> Inference speed optimization without degrading FID.</p>
+          <div class="work-card-inner liquid-glass">
+            <div class="card-image-container parallax-mask">
+              <div class="card-image bg-placeholder inner-img"></div>
+            </div>
+            <div class="card-content">
+              <h3>让先进模型走向可用</h3>
+              <p>并行视频采样与流匹配加速 (ZJU). 解决生成模型的工程化与成本瓶颈。</p>
+              <div class="hood-details hidden" data-hood>
+                <p><strong>Focus:</strong> Inference speed optimization without degrading FID.</p>
+              </div>
             </div>
           </div>
         </article>
 
         <!-- Card 4 -->
         <article class="work-card">
-          <div class="card-image-container liquid-glass parallax-mask">
-            <div class="card-image bg-placeholder inner-img"></div>
-          </div>
-          <div class="card-content liquid-glass mt-sm">
-            <h3>建立可靠评估方式</h3>
-            <p>Continual Learning of Agent Benchmark (NUS). 定义如何测量智能体的持续进化能力。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Framework:</strong> Multi-environment sequential tasks avoiding catastrophic forgetting.</p>
+          <div class="work-card-inner liquid-glass">
+            <div class="card-image-container parallax-mask">
+              <div class="card-image bg-placeholder inner-img"></div>
+            </div>
+            <div class="card-content">
+              <h3>建立可靠评估方式</h3>
+              <p>Continual Learning of Agent Benchmark (NUS). 定义如何测量智能体的持续进化能力。</p>
+              <div class="hood-details hidden" data-hood>
+                <p><strong>Framework:</strong> Multi-environment sequential tasks avoiding catastrophic forgetting.</p>
+              </div>
             </div>
           </div>
         </article>
@@ -88,25 +92,29 @@
   */
   @media (min-width: 1024px) {
     .h-scroll-section {
-      height: 400vh; 
+      height: 220vh;
       padding-block: 0;
       position: relative;
     }
 
     .h-scroll-sticky {
       position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
+      top: var(--header-compact-height);
+      height: calc(100dvh - var(--header-compact-height));
+      overflow: hidden; /* Prevent horizontal overflow from breaking layout */
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding-left: var(--space-md);
+      padding-top: var(--space-lg);
+      padding-bottom: var(--space-md);
     }
 
     .h-scroll-container {
       width: 100%;
-      overflow: visible; /* Changed to visible so shadows aren't clipped */
+      overflow: visible;
+      /* 向上一点以避免居中时被 header 遮挡 */
+      transform: translateY(1rem);
     }
 
     .h-scroll-track {
@@ -121,7 +129,7 @@
 
   @media (max-width: 1023px) {
     .h-scroll-section {
-      padding-block: var(--space-xl);
+      padding-block: var(--space-lg);
     }
     .h-scroll-track {
       display: flex;
@@ -131,8 +139,20 @@
   }
 
   .section-header {
-    margin-bottom: var(--space-md);
-    padding-left: var(--space-xs);
+    position: absolute;
+    top: calc(var(--header-compact-height) + var(--space-sm));
+    left: var(--space-md);
+    z-index: 10;
+    pointer-events: none; /* 让鼠标事件穿透，避免遮挡下方卡片 */
+  }
+
+  @media (max-width: 1023px) {
+    .section-header {
+      position: relative;
+      top: 0;
+      left: 0;
+      margin-bottom: var(--space-md);
+    }
   }
 
   .section-title {
@@ -144,43 +164,30 @@
     gap: 0.5rem;
   }
 
-  /* Parallax Brackets for Title */
-  .bracket {
-    font-weight: 300;
-    color: var(--color-text-muted);
-    transition: transform 0.8s var(--ease-spring);
+  #work-title {
     display: inline-block;
-  }
-
-  /* When scrolling active, the JS will add a class to spread the brackets */
-  .h-scroll-sticky.scrolling-active .bracket:first-child {
-    transform: translateX(-15px);
-  }
-  .h-scroll-sticky.scrolling-active .bracket:last-child {
-    transform: translateX(15px);
+    will-change: transform;
   }
 
   /* 拆分后的卡片，图片和内容分离成两块玻璃 */
   .work-card {
     width: clamp(400px, 40vw, 600px); /* 响应式宽度 */
-    height: clamp(550px, 70vh, 800px); /* 响应式高度 */
+    /* 移除定死的高度限制，让卡片高度自适应内容，同时通过 flex 保证本排等高 */
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
   }
 
   .card-image-container {
-    flex: 0 0 65%; /* 图片占大部分 */
+    height: 350px; /* 固定图片高度 */
     position: relative;
     overflow: hidden;
-    transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
   }
 
   /* Parallax Mask Magic */
-  /* The container acts as a mask (clip-path). The inner image is slightly larger. */
   .parallax-mask {
     clip-path: inset(0% 0% 0% 0%);
-    transition: clip-path 0.5s ease-out, transform var(--transition-bounce), box-shadow var(--transition-fast);
+    transition: clip-path 0.5s ease-out;
   }
 
   .inner-img {
@@ -194,25 +201,17 @@
   }
 
   .work-card:hover .card-image-container {
-    transform: translateY(-8px);
-    clip-path: inset(2% 2% 2% 2%); /* 窗口稍微收缩，产生视差遮罩感 */
-    box-shadow: 
-      inset 0 1px 1px var(--color-glass-highlight),
-      inset 0 0 0 1px var(--color-glass-edge),
-      0 12px 24px var(--color-glass-shadow),
-      0 24px 48px var(--color-glass-shadow-deep);
+    clip-path: inset(2% 2% 2% 2%);
   }
 
   .work-card:hover .inner-img {
-    transform: scale(0.95); /* 图片本体不仅不缩小，反而相对外框变大（反向缩放） */
+    transform: scale(0.95);
   }
 
   @media (max-width: 1023px) {
     .work-card {
       width: 100%;
       min-width: unset;
-      height: auto;
-      min-height: 400px;
     }
     .card-image-container {
       height: 300px;
@@ -225,11 +224,23 @@
     display: flex;
     flex-direction: column;
     overflow: hidden; 
-    transition: transform var(--transition-bounce);
   }
 
-  .work-card:hover .card-content {
-    transform: translateY(-4px);
+  /* 统一卡片 hover 状态（图文合并在一起作为整体交互，不再拆分背景） */
+  .work-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+  }
+
+  .work-card:hover .work-card-inner {
+    transform: translateY(-8px);
+    box-shadow: 
+      inset 0 1px 1px var(--color-glass-highlight),
+      inset 0 0 0 1px var(--color-glass-edge),
+      0 12px 24px var(--color-glass-shadow),
+      0 24px 48px var(--color-glass-shadow-deep);
   }
 
   .card-content h3 {
@@ -257,24 +268,30 @@
 </style>
 
 <script>
-  // Smoother Horizontal Scroll logic + Parallax
+  // Smoother Horizontal Scroll logic + title progress
   const section = document.querySelector('.h-scroll-section') as HTMLElement;
-  const sticky = document.querySelector('.h-scroll-sticky') as HTMLElement;
   const track = document.getElementById('h-track') as HTMLElement;
+  const title = document.getElementById('work-title') as HTMLElement;
 
   if (section && track && window.innerWidth >= 1024) {
     let currentX = 0;
     let targetX = 0;
     let isAnimating = false;
 
+    let currentTitleX = 0;
+    let targetTitleX = 0;
+
     const animate = () => {
-      // Lerp function: move 8% of the remaining distance per frame
       currentX += (targetX - currentX) * 0.08;
-      
-      if (Math.abs(targetX - currentX) > 0.1) {
+      currentTitleX += (targetTitleX - currentTitleX) * 0.08;
+
+      if (title) {
+        title.style.transform = `translateX(${currentTitleX}px)`;
+      }
+
+      if (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetTitleX - currentTitleX) > 0.1) {
         track.style.transform = `translate3d(${-currentX}px, 0, 0)`;
         
-        // Also apply a very slight skew based on scroll velocity for organic feel
         const velocity = targetX - currentX;
         const skew = Math.max(-2, Math.min(2, velocity * 0.01));
         const cards = track.querySelectorAll('.work-card');
@@ -285,7 +302,6 @@
         requestAnimationFrame(animate);
       } else {
         isAnimating = false;
-        // Reset skew when stopped
         track.querySelectorAll('.work-card').forEach(card => {
           (card as HTMLElement).style.transform = `skewX(0deg)`;
         });
@@ -299,17 +315,12 @@
       const scrollableDistance = rect.height - viewportHeight;
       let progress = -rect.top / scrollableDistance;
       
-      // Trigger active state for brackets animation
-      if (progress > 0 && progress < 1) {
-        sticky.classList.add('scrolling-active');
-      } else {
-        sticky.classList.remove('scrolling-active');
-      }
-
-      progress = Math.max(0, Math.min(1, progress));
+      // Allow progress to go slightly out of bounds before clamping to trigger animation smoothly at edges
+      let clampedProgress = Math.max(0, Math.min(1, progress));
       
       const maxScroll = track.scrollWidth - window.innerWidth + 150; // padding
-      targetX = progress * maxScroll;
+      targetX = clampedProgress * maxScroll;
+      targetTitleX = clampedProgress * Math.min(maxScroll, 360);
       
       if (!isAnimating) {
         isAnimating = true;

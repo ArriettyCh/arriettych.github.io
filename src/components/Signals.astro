@@ -1,108 +1,138 @@
 ---
-// Signals Section (Compact Glass Panel)
+// Signals Section (Word Cloud & Magazine Typography)
 ---
 
-<section id="signals" class="signals fade-in-up">
-  <div class="sticky-header">
-    <div class="section-header">
-      <h2 class="section-title">Signals</h2>
-      <p>保持敏锐，持续输入</p>
-    </div>
-  </div>
-
-  <div class="signals-panel liquid-glass">
-    <div class="signal-col">
-      <h3>Thinking</h3>
-      <ul class="signal-list">
-        <li><span>《Vibe Coding 改变的不是效率，而是接口》</span></li>
-        <li><span>《从 prompt 到 directing：交互范式的转移》</span></li>
-      </ul>
+<section id="signals" class="signals">
+  <div class="section-layout">
+    <div class="section-sidebar">
+      <div class="sticky-title fade-in-up">
+        <h2 class="section-title">Signals</h2>
+        <p>保持敏锐，持续输入</p>
+      </div>
     </div>
 
-    <div class="signal-col">
-      <h3>Following</h3>
-      <ul class="signal-list">
-        <li><span>Acquired (Podcast)</span></li>
-        <li><span>Lex Fridman (Podcast)</span></li>
-        <li><span>Andrej Karpathy</span></li>
-      </ul>
-    </div>
+    <div class="section-content">
+      <div class="signals-typography fade-in-up">
+        
+        <div class="typography-block">
+          <h3>On My Mind</h3>
+          <p class="insight-text">
+            《Vibe Coding 改变的不是效率，而是接口》<br/>
+            从 prompt 到 directing：AIGC 交互范式的转移。<br/>
+            当 Agent 具备 Continual Learning 能力时，产品形态会发生什么根本性变化？
+          </p>
+        </div>
 
-    <div class="signal-col">
-      <h3>Using</h3>
-      <ul class="signal-list">
-        <li><span>Cursor & Arc Browser</span></li>
-        <li><span>Figma & Linear</span></li>
-        <li><span>PyTorch & Astro</span></li>
-      </ul>
+        <div class="typography-block mt-lg">
+          <h3>Information Diet</h3>
+          <div class="word-cloud">
+            <span class="cloud-item large">Acquired</span>
+            <span class="cloud-item medium">Lex Fridman</span>
+            <span class="cloud-item small">Stratechery</span>
+            <span class="cloud-item large">Andrej Karpathy</span>
+            <span class="cloud-item medium">Lenny's Podcast</span>
+            <span class="cloud-item small">The Verge</span>
+            <span class="cloud-item medium">Not Boring</span>
+          </div>
+        </div>
+
+        <div class="typography-block mt-lg">
+          <h3>Daily Stack</h3>
+          <div class="word-cloud tool-cloud">
+            <span class="cloud-item">Cursor</span>
+            <span class="cloud-item">Arc Browser</span>
+            <span class="cloud-item">Figma</span>
+            <span class="cloud-item">Linear</span>
+            <span class="cloud-item">PyTorch</span>
+            <span class="cloud-item">Astro</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .signals {
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    display: block;
   }
 
-  .sticky-header {
-    position: sticky;
-    top: var(--header-height);
-    z-index: 10;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    background: linear-gradient(to bottom, var(--color-bg) 60%, transparent);
-    margin: 0 calc(var(--space-md) * -1);
-    padding: var(--space-md) var(--space-md) var(--space-lg);
-  }
-
-  .section-title {
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    font-size: clamp(2.5rem, 4vw, 4rem);
-  }
-
-  .signals-panel {
-    margin-top: var(--space-md);
-    padding: var(--space-lg);
+  .section-layout {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: var(--space-md);
   }
 
-  .signal-col h3 {
-    margin-bottom: var(--space-sm);
-    font-size: 1rem;
+  @media (min-width: 1024px) {
+    .section-layout {
+      grid-template-columns: 300px 1fr;
+      gap: var(--space-xl);
+    }
+    
+    .sticky-title {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-xl));
+    }
+  }
+
+  .section-title {
+    margin-bottom: 0.5rem;
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.1;
+  }
+
+  /* Typography Style */
+  .signals-typography {
+    padding-top: var(--space-md);
+  }
+
+  .typography-block h3 {
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-muted);
-  }
-
-  .signal-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .signal-list li {
-    font-size: 0.95rem;
+    margin-bottom: var(--space-sm);
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 0.5rem;
-    transition: transform var(--transition-fast), color var(--transition-fast);
-    cursor: default;
+    width: max-content;
   }
 
-  .signal-list li:hover {
-    transform: translateX(8px);
+  .insight-text {
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    line-height: 1.6;
     color: var(--color-text);
+    font-weight: 400;
   }
 
-  @media (max-width: 768px) {
-    .signals-panel {
-      grid-template-columns: 1fr;
-      padding: var(--space-md);
-    }
+  /* Word Cloud */
+  .word-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
+    align-items: baseline;
+  }
+
+  .cloud-item {
+    color: var(--color-text);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+    cursor: default;
+    display: inline-block;
+  }
+
+  .cloud-item:hover {
+    color: var(--color-text-muted);
+    transform: scale(0.98);
+  }
+
+  .cloud-item.large { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 500; letter-spacing: -0.02em; }
+  .cloud-item.medium { font-size: clamp(1.5rem, 2vw, 2.5rem); font-weight: 400; }
+  .cloud-item.small { font-size: clamp(1rem, 1.2vw, 1.5rem); font-weight: 300; color: var(--color-text-muted); }
+
+  .tool-cloud .cloud-item {
+    font-family: monospace;
+    font-size: clamp(1.2rem, 1.5vw, 2rem);
+    text-transform: lowercase;
+    opacity: 0.8;
   }
 </style>
