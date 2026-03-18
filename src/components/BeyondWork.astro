@@ -14,7 +14,7 @@
     <div class="section-content">
       <div class="magazine-grid">
         <!-- Aesthetics (Photography/Art) -->
-        <div class="grid-item aesthetics fade-in-up">
+        <div class="grid-item aesthetics fade-in-up" data-tone="beyond-aesthetics">
           <div class="image-wrapper bg-placeholder liquid-glass">
             <!-- Image placeholder -->
           </div>
@@ -25,7 +25,7 @@
         </div>
 
         <!-- Energy (Running/Cycling) -->
-        <div class="grid-item energy fade-in-up" style="transition-delay: 0.2s;">
+        <div class="grid-item energy fade-in-up" data-tone="beyond-energy">
           <div class="text-block">
             <h3>100km & 800m</h3>
             <p>
@@ -100,13 +100,29 @@
     margin-left: auto;
   }
 
+  .grid-item[data-tone] .caption h3,
+  .grid-item[data-tone] .text-block h3 {
+    color: var(--tone-strong);
+  }
+
+  .grid-item[data-tone] .caption p,
+  .grid-item[data-tone] .text-block p {
+    color: var(--tone-muted);
+  }
+
   .caption, .text-block {
     margin-top: var(--space-sm);
   }
 
   .text-block {
     padding: var(--space-md);
+    border-left: 1px solid var(--tone-border);
+    background: color-mix(in srgb, var(--tone-solid) 10%, transparent);
     transition: transform var(--transition-bounce), box-shadow var(--transition-fast);
+  }
+
+  .energy.fade-in-up {
+    transition-delay: 0.2s;
   }
 
   @media (max-width: 768px) {

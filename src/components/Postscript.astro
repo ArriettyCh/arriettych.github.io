@@ -3,7 +3,7 @@
 ---
 
 <section id="postscript" class="fade-in-up">
-  <div class="postscript-shell">
+  <div class="postscript-shell" data-tone="postscript">
     <div class="postscript-meta">
       <p class="label">Postscript</p>
       <p class="postscript-series">失败博物馆 01</p>
@@ -35,7 +35,7 @@
     max-width: 1040px;
     margin-left: auto;
     padding-top: var(--space-sm);
-    border-top: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--tone-border) 85%, transparent);
   }
 
   .postscript-meta {
@@ -43,11 +43,17 @@
     gap: 0.4rem;
   }
 
+  .postscript-shell[data-tone] .label,
+  .postscript-shell[data-tone] .postscript-series,
+  .postscript-shell[data-tone] .postscript-note h3 {
+    color: var(--tone-strong);
+  }
+
   .postscript-series {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: var(--tone-muted);
   }
 
   .postscript-note {
@@ -66,8 +72,8 @@
     width: 1px;
     background: linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--color-text) 65%, transparent),
-      color-mix(in srgb, var(--color-border) 80%, transparent)
+      color-mix(in srgb, var(--tone-solid) 70%, transparent),
+      color-mix(in srgb, var(--tone-border) 85%, transparent)
     );
   }
 

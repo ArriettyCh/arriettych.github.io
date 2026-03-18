@@ -12,7 +12,7 @@ It is a lightweight, static site showcasing the developer's bio and selected wor
 
 - **Framework**: Astro (latest stable)
 - **Styling**: Pure CSS (Scoped + Global CSS Custom Properties). No Tailwind, no CSS-in-JS, no UI library.
-- **JavaScript**: Vanilla JS only, minimal usage. No React, Vue, or any frontend runtime.
+- **JavaScript**: Use only when necessary. Prefer Astro- and CSS-first solutions, keep client code minimal, and default to vanilla JS for lightweight interactions. React, Vue, or another frontend runtime is acceptable only when a real requirement cannot be met cleanly otherwise.
 - **Content**: Hardcoded in `.astro` components. No CMS, no Markdown, no external data source.
 - **Deployment**: GitHub Pages via GitHub Actions. Push-to-deploy.
 
@@ -126,18 +126,22 @@ Rules:
 
 ### JavaScript (if used)
 
+- Prefer **no client JS** when static Astro or CSS can solve the problem cleanly.
 - **Total JS shipped to client should stay under 5KB** (ideally under 2KB).
-- Allowed use cases:
+- Typical use cases:
   - Dark/light mode toggle (with `localStorage` persistence)
   - Scroll-triggered entrance animations via `IntersectionObserver`
   - Minor interactive enhancements (custom cursor, magnetic buttons, etc.)
-- **Forbidden:**
-  - Any npm package that ships to the client
+- Runtime guidance:
+  - Prefer vanilla JS for small interactions.
+  - React or another frontend runtime is allowed only when it is clearly necessary and the bundle cost is justified.
+- Avoid by default:
+  - Unnecessary npm packages that ship to the client
   - `document.querySelectorAll` loops that could be replaced by CSS
   - jQuery-style DOM manipulation patterns
   - Any analytics or tracking scripts (unless explicitly requested)
 - Use modern APIs: `IntersectionObserver`, `matchMedia`, `requestAnimationFrame`.
-- All client-side JS must be in a single `<script>` tag in `base-layout.astro` or loaded as a tiny standalone module.
+- Keep client-side code isolated and minimal. Prefer a single `<script>` tag in `base-layout.astro`, or a tiny standalone module / island only when the interaction genuinely requires it.
 
 ---
 

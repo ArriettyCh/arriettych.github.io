@@ -4,6 +4,21 @@
   --color-text: #111111;
   --color-text-muted: #666666;
   --color-border: #E5E5E5;
+
+  /* Content tones */
+  --content-tone-default: #5f6777;
+  --content-tone-work-research: #5b6fe5;
+  --content-tone-work-product: #1b9b86;
+  --content-tone-work-systems: #b67a26;
+  --content-tone-work-benchmark: #875bd4;
+  --content-tone-beyond-aesthetics: #b6627b;
+  --content-tone-beyond-energy: #c96f32;
+  --content-tone-signals-mind: #2c8aa4;
+  --content-tone-signals-diet: #768d3b;
+  --content-tone-signals-stack: #6270d8;
+  --content-tone-now: #2b8a70;
+  --content-tone-next: #8b5dbc;
+  --content-tone-postscript: #a06c45;
   
   /* Colors - Liquid Glass (iOS 26 Style) */
   /* 半透明底色，带一点点光泽 */
@@ -11,6 +26,7 @@
   /* 模拟玻璃边缘折射的内外高光 */
   --color-glass-highlight: rgba(255, 255, 255, 0.9);
   --color-glass-edge: rgba(255, 255, 255, 0.4);
+  --color-glass-border: rgba(255, 255, 255, 0.24);
   /* 玻璃的投影，带有体积感 */
   --color-glass-shadow: rgba(0, 0, 0, 0.04);
   --color-glass-shadow-deep: rgba(0, 0, 0, 0.08);
@@ -44,11 +60,26 @@
     --color-text: #EDEDED;
     --color-text-muted: #888888;
     --color-border: #222222;
+
+    --content-tone-default: #8d97aa;
+    --content-tone-work-research: #91a1ff;
+    --content-tone-work-product: #6fd7bf;
+    --content-tone-work-systems: #e0ab63;
+    --content-tone-work-benchmark: #c09aff;
+    --content-tone-beyond-aesthetics: #e39ab1;
+    --content-tone-beyond-energy: #ef9a67;
+    --content-tone-signals-mind: #7bc7df;
+    --content-tone-signals-diet: #b2cb72;
+    --content-tone-signals-stack: #9ea6ff;
+    --content-tone-now: #79d0b7;
+    --content-tone-next: #c59df3;
+    --content-tone-postscript: #d6a17a;
     
     /* Dark Mode Glass */
     --color-glass-bg: rgba(20, 20, 20, 0.5);
     --color-glass-highlight: rgba(255, 255, 255, 0.12);
     --color-glass-edge: rgba(255, 255, 255, 0.05);
+    --color-glass-border: rgba(255, 255, 255, 0.08);
     --color-glass-shadow: rgba(0, 0, 0, 0.3);
     --color-glass-shadow-deep: rgba(0, 0, 0, 0.6);
   }
@@ -149,6 +180,27 @@ p {
   color: var(--color-text-muted);
 }
 
+[data-tone] {
+  --tone-solid: var(--content-tone-default);
+  --tone-strong: color-mix(in srgb, var(--tone-solid) 76%, var(--color-text));
+  --tone-muted: color-mix(in srgb, var(--tone-solid) 52%, var(--color-text-muted));
+  --tone-border: color-mix(in srgb, var(--tone-solid) 26%, var(--color-border));
+  --tone-surface: color-mix(in srgb, var(--tone-solid) 14%, var(--color-bg));
+}
+
+[data-tone='work-research'] { --tone-solid: var(--content-tone-work-research); }
+[data-tone='work-product'] { --tone-solid: var(--content-tone-work-product); }
+[data-tone='work-systems'] { --tone-solid: var(--content-tone-work-systems); }
+[data-tone='work-benchmark'] { --tone-solid: var(--content-tone-work-benchmark); }
+[data-tone='beyond-aesthetics'] { --tone-solid: var(--content-tone-beyond-aesthetics); }
+[data-tone='beyond-energy'] { --tone-solid: var(--content-tone-beyond-energy); }
+[data-tone='signals-mind'] { --tone-solid: var(--content-tone-signals-mind); }
+[data-tone='signals-diet'] { --tone-solid: var(--content-tone-signals-diet); }
+[data-tone='signals-stack'] { --tone-solid: var(--content-tone-signals-stack); }
+[data-tone='now'] { --tone-solid: var(--content-tone-now); }
+[data-tone='next'] { --tone-solid: var(--content-tone-next); }
+[data-tone='postscript'] { --tone-solid: var(--content-tone-postscript); }
+
 .label {
   font-size: 0.875rem;
   text-transform: uppercase;
@@ -194,7 +246,18 @@ section {
 }
 
 .bg-placeholder {
-  background: var(--color-border);
+  --placeholder-tone: var(--tone-solid, var(--content-tone-default));
+  background:
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--placeholder-tone) 16%, white),
+      transparent 50%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--placeholder-tone) 16%, var(--color-bg)) 0%,
+      color-mix(in srgb, var(--placeholder-tone) 42%, var(--color-border)) 100%
+    );
   position: relative;
   overflow: hidden;
 }
