@@ -3,46 +3,68 @@
 ---
 
 <section id="hero" class="hero">
-  <div class="hero-content">
-    <div class="hero-kicker label fade-in-up">
-      Research × Product × Taste
-    </div>
-    
-    <h1 class="hero-title fade-in-up">
-      我想把前沿 AI 的能力，<br/>做成真正有感觉、有价值的产品。
-    </h1>
-    
-    <p class="subtitle fade-in-up hero-subtitle">
-      浙江大学计算机在读，辅修金融。正在生成式模型、扩散语言模型与智能体持续学习的交叉地带工作，也持续通过项目、写作与设计练习产品判断和体验表达。
-    </p>
+  <div class="hero-layout">
+    <div class="hero-sidebar" aria-hidden="true"></div>
 
-    <div class="tags flex gap-md fade-in-up hero-tags">
-      <span class="tag">理解模型</span>
-      <span class="tag">产品判断</span>
-      <span class="tag">审美表达</span>
-    </div>
-  </div>
+    <div class="hero-main">
+      <div class="hero-content">
+        <div class="hero-kicker label fade-in-up">
+          Research × Product × Taste
+        </div>
+        
+        <h1 class="hero-title fade-in-up">
+          我想把前沿 AI 的能力，<br/>做成真正有感觉、有价值的产品。
+        </h1>
+        
+        <p class="subtitle fade-in-up hero-subtitle">
+          浙江大学计算机在读，辅修金融。正在生成式模型、扩散语言模型与智能体持续学习的交叉地带工作，也持续通过项目、写作与设计练习产品判断和体验表达。
+        </p>
 
-  <div class="quick-facts flex justify-between fade-in-up hero-facts">
-    <span>Zhejiang University, CS & Finance</span>
-    <span>Class of 2027</span>
-    <span>UCLA / NUS Collaboration</span>
+        <div class="tags flex gap-md fade-in-up hero-tags">
+          <span class="tag">理解模型</span>
+          <span class="tag">产品判断</span>
+          <span class="tag">审美表达</span>
+        </div>
+      </div>
+
+      <div class="quick-facts flex justify-between fade-in-up hero-facts">
+        <span>Zhejiang University, CS & Finance</span>
+        <span>Class of 2027</span>
+        <span>UCLA / NUS Collaboration</span>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
-    min-height: min(100dvh, 56rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: calc(var(--header-height) + var(--space-md));
-    padding-bottom: var(--space-md);
+    min-height: 100dvh;
+    padding-top: calc(var(--header-height) + var(--space-sm));
+    padding-bottom: 0;
+  }
+
+  @supports not (height: 100dvh) {
+    .hero {
+      min-height: 100vh;
+    }
+  }
+
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .hero-main {
+    display: grid;
+    align-content: start;
+    gap: var(--space-md);
   }
 
   .hero-content {
-    max-width: 900px;
-    margin-bottom: auto;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: left;
   }
 
   .hero-kicker {
@@ -57,8 +79,8 @@
 
   .subtitle {
     margin-top: var(--space-sm);
-    margin-bottom: var(--space-md);
-    max-width: 700px;
+    margin-bottom: var(--space-sm);
+    max-width: 100%;
     font-size: 1.1rem;
   }
 
@@ -67,7 +89,7 @@
   }
 
   .tags {
-    font-weight: 500;
+    font-weight: 400;
     color: var(--color-text);
   }
 
@@ -87,18 +109,25 @@
   }
 
   .quick-facts {
-    margin-top: var(--space-lg);
     padding-top: var(--space-sm);
     border-top: 1px solid var(--color-border);
     font-size: 0.85rem;
     color: var(--color-text-muted);
-    font-family: monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    text-align: left;
   }
 
   .hero-facts {
     transition-delay: 0.4s;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-layout {
+      grid-template-columns: 300px 1fr;
+      gap: var(--space-xl);
+    }
   }
 
   @media (max-width: 768px) {

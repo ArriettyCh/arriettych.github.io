@@ -1,9 +1,17 @@
+@import "@fontsource/libre-baskerville/400.css";
+@import "@fontsource/libre-baskerville/500.css";
+@import "@fontsource/libre-baskerville/600.css";
+@import "@fontsource/libre-baskerville/700.css";
+@import "@fontsource-variable/noto-serif-sc/wght.css";
+
 :root {
   /* Colors - Base (Grayscale for now) */
-  --color-bg: #FAFAFA;
+  --color-bg: #F6F1E6;
   --color-text: #111111;
   --color-text-muted: #666666;
-  --color-border: #E5E5E5;
+  --color-border: #e2dbd0;
+    --color-bg-accent-warm: rgba(214, 186, 153, 0.14);
+    --color-bg-accent-cool: rgba(165, 188, 198, 0.1);
 
   /* Content tones */
   --content-tone-default: #5f6777;
@@ -20,19 +28,34 @@
   --content-tone-next: #8b5dbc;
   --content-tone-postscript: #a06c45;
   
-  /* Colors - Liquid Glass (iOS 26 Style) */
-  /* 半透明底色，带一点点光泽 */
-  --color-glass-bg: rgba(255, 255, 255, 0.4);
-  /* 模拟玻璃边缘折射的内外高光 */
-  --color-glass-highlight: rgba(255, 255, 255, 0.9);
-  --color-glass-edge: rgba(255, 255, 255, 0.4);
-  --color-glass-border: rgba(255, 255, 255, 0.24);
-  /* 玻璃的投影，带有体积感 */
-  --color-glass-shadow: rgba(0, 0, 0, 0.04);
-  --color-glass-shadow-deep: rgba(0, 0, 0, 0.08);
+  /* Liquid glass tokens */
+    --color-glass-bg: rgba(255, 255, 255, 0.12);
+    --color-glass-surface: rgba(255, 255, 255, 0.08);
+    --color-glass-frost-strong: rgba(255, 255, 255, 0.18);
+    --color-glass-frost-soft: rgba(255, 255, 255, 0.09);
+    --color-glass-bevel-highlight: rgba(255, 255, 255, 0.78);
+    --color-glass-bevel-soft: rgba(255, 255, 255, 0.28);
+    --color-glass-bevel-shadow: rgba(126, 141, 163, 0.24);
+    --color-glass-caustic: rgba(255, 255, 255, 0.56);
+    --color-glass-depth: rgba(98, 114, 142, 0.18);
+    --glass-core-blur: 18px;
+    --glass-core-saturation: 154%;
+    --glass-core-contrast: 110%;
+    --glass-core-brightness: 104%;
+    --glass-edge-blur: 28px;
+    --glass-edge-saturation: 186%;
+    --glass-edge-contrast: 112%;
+    --glass-edge-brightness: 108%;
+    --glass-edge-opacity: 0.88;
+    --glass-sheen-opacity: 0.44;
+    --glass-bevel-size: 8px;
+    --glass-inner-stroke: 1.25px;
+    --glass-edge-feather: 24px;
+    --glass-sheen-feather: 14px;
 
   /* Typography */
-  --font-main: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-main: "Libre Baskerville", "Noto Serif SC Variable", "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   
   /* Dimensions */
   --toc-width: 240px;
@@ -56,10 +79,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0A0A0A;
+    --color-bg: #101216;
     --color-text: #EDEDED;
     --color-text-muted: #888888;
-    --color-border: #222222;
+    --color-border: #242830;
+      --color-bg-accent-warm: rgba(110, 92, 72, 0.18);
+      --color-bg-accent-cool: rgba(69, 96, 116, 0.16);
 
     --content-tone-default: #8d97aa;
     --content-tone-work-research: #91a1ff;
@@ -75,13 +100,25 @@
     --content-tone-next: #c59df3;
     --content-tone-postscript: #d6a17a;
     
-    /* Dark Mode Glass */
-    --color-glass-bg: rgba(20, 20, 20, 0.5);
-    --color-glass-highlight: rgba(255, 255, 255, 0.12);
-    --color-glass-edge: rgba(255, 255, 255, 0.05);
-    --color-glass-border: rgba(255, 255, 255, 0.08);
-    --color-glass-shadow: rgba(0, 0, 0, 0.3);
-    --color-glass-shadow-deep: rgba(0, 0, 0, 0.6);
+    --color-glass-bg: rgba(16, 18, 22, 0.26);
+      --color-glass-surface: rgba(255, 255, 255, 0.04);
+      --color-glass-frost-strong: rgba(255, 255, 255, 0.09);
+      --color-glass-frost-soft: rgba(8, 10, 14, 0.18);
+      --color-glass-bevel-highlight: rgba(255, 255, 255, 0.22);
+      --color-glass-bevel-soft: rgba(255, 255, 255, 0.1);
+      --color-glass-bevel-shadow: rgba(0, 0, 0, 0.32);
+      --color-glass-caustic: rgba(255, 255, 255, 0.18);
+      --color-glass-depth: rgba(0, 0, 0, 0.3);
+      --glass-core-blur: 20px;
+      --glass-core-saturation: 168%;
+      --glass-core-contrast: 108%;
+      --glass-core-brightness: 106%;
+      --glass-edge-blur: 30px;
+      --glass-edge-saturation: 176%;
+      --glass-edge-contrast: 110%;
+      --glass-edge-brightness: 106%;
+      --glass-edge-opacity: 0.8;
+      --glass-sheen-opacity: 0.34;
   }
 }
 
@@ -99,8 +136,12 @@ html {
   color: var(--color-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  /* Add subtle grain/noise overlay to the whole site for texture */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  background-image:
+      radial-gradient(120% 120% at 8% 0%, var(--color-bg-accent-warm) 0%, transparent 42%),
+      radial-gradient(96% 112% at 100% 10%, var(--color-bg-accent-cool) 0%, transparent 40%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
 body {
@@ -112,53 +153,257 @@ a {
   text-decoration: none;
 }
 
-/* 
-  Liquid Glass Utility 
-  无边液态玻璃：
-  1. backdrop-filter 产生核心毛玻璃效果
-  2. box-shadow 产生立体感：
-     - 第一个 inset 模拟顶部受光面的高光折射
-     - 第二个 inset 模拟四周边缘的微弱反光（代替生硬的 border）
-     - 第三个/四个 drop-shadow 模拟玻璃板浮在背景上的投影
+/*
+  Liquid Glass Utility
 */
 .liquid-glass {
-  background: var(--color-glass-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: 
-    inset 0 1px 1px var(--color-glass-highlight),
-    inset 0 0 0 1px var(--color-glass-edge),
-    0 4px 12px var(--color-glass-shadow),
-    0 16px 32px var(--color-glass-shadow-deep);
-  /* 严格遵循非圆角设定 */
-  border-radius: 0;
   position: relative;
+  isolation: isolate;
   overflow: hidden;
+  border: 0;
+    border-radius: var(--glass-radius, inherit);
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--color-glass-frost-soft) 66%, var(--color-glass-bg)) 0%,
+        color-mix(in srgb, var(--color-glass-frost-soft) 66%, var(--color-glass-bg)) 100%),
+      var(--glass-underlay,
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--color-glass-bg) 96%, transparent) 0%,
+          color-mix(in srgb, var(--color-glass-bg) 84%, transparent) 100%));
+    backdrop-filter:
+      blur(var(--glass-core-blur)) saturate(var(--glass-core-saturation)) contrast(var(--glass-core-contrast)) brightness(var(--glass-core-brightness));
+    -webkit-backdrop-filter:
+      blur(var(--glass-core-blur)) saturate(var(--glass-core-saturation)) contrast(var(--glass-core-contrast)) brightness(var(--glass-core-brightness));
+    transform: translateZ(0);
+    --glass-edge-layer-top:
+      linear-gradient(to bottom,
+        color-mix(in srgb, var(--color-glass-bevel-highlight) 92%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-highlight) 84%, transparent) 5%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 56%, transparent) 14%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 24%, transparent) 28%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 8%, transparent) 42%,
+        transparent 66%) top / 100% var(--glass-edge-feather) no-repeat;
+    --glass-edge-layer-bottom:
+      linear-gradient(to top,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 68%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 54%, transparent) 6%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 34%, transparent) 14%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 14%, transparent) 28%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 6%, transparent) 42%,
+        transparent 66%) bottom / 100% var(--glass-edge-feather) no-repeat;
+    --glass-edge-layer-left:
+      linear-gradient(to right,
+        color-mix(in srgb, var(--color-glass-bevel-highlight) 68%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 38%, transparent) 8%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 18%, transparent) 18%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 8%, transparent) 32%,
+        transparent 62%) left / var(--glass-edge-feather) 100% no-repeat;
+    --glass-edge-layer-right:
+      linear-gradient(to left,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 48%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 28%, transparent) 10%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 12%, transparent) 20%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 4%, transparent) 34%,
+        transparent 62%) right / var(--glass-edge-feather) 100% no-repeat;
+    --glass-edge-layer-corner-top-left:
+      radial-gradient(92% 92% at 0% 0%,
+        color-mix(in srgb, var(--color-glass-bevel-highlight) 64%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 16%, transparent) 38%,
+        transparent 68%) top left / 28px 28px no-repeat;
+    --glass-edge-layer-corner-bottom-right:
+      radial-gradient(92% 92% at 100% 100%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 34%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-shadow) 10%, transparent) 38%,
+        transparent 68%) bottom right / 28px 28px no-repeat;
+    --glass-edge-mask-top:
+      linear-gradient(to bottom,
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.98) 8%,
+        rgba(0, 0, 0, 0.9) 18%,
+        rgba(0, 0, 0, 0.56) 34%,
+        rgba(0, 0, 0, 0.16) 52%,
+        transparent 76%) top / 100% var(--glass-edge-feather) no-repeat;
+    --glass-edge-mask-bottom:
+      linear-gradient(to top,
+        rgba(0, 0, 0, 0.92) 0%,
+        rgba(0, 0, 0, 0.86) 8%,
+        rgba(0, 0, 0, 0.68) 18%,
+        rgba(0, 0, 0, 0.34) 34%,
+        rgba(0, 0, 0, 0.12) 52%,
+        transparent 76%) bottom / 100% var(--glass-edge-feather) no-repeat;
+    --glass-edge-mask-left:
+      linear-gradient(to right,
+        rgba(0, 0, 0, 0.92) 0%,
+        rgba(0, 0, 0, 0.86) 8%,
+        rgba(0, 0, 0, 0.66) 18%,
+        rgba(0, 0, 0, 0.32) 34%,
+        rgba(0, 0, 0, 0.12) 52%,
+        transparent 76%) left / var(--glass-edge-feather) 100% no-repeat;
+    --glass-edge-mask-right:
+      linear-gradient(to left,
+        rgba(0, 0, 0, 0.92) 0%,
+        rgba(0, 0, 0, 0.86) 8%,
+        rgba(0, 0, 0, 0.66) 18%,
+        rgba(0, 0, 0, 0.32) 34%,
+        rgba(0, 0, 0, 0.12) 52%,
+        transparent 76%) right / var(--glass-edge-feather) 100% no-repeat;
+    --glass-edge-background-full:
+      var(--glass-edge-layer-top),
+      var(--glass-edge-layer-bottom),
+      var(--glass-edge-layer-left),
+      var(--glass-edge-layer-right),
+      var(--glass-edge-layer-corner-top-left),
+      var(--glass-edge-layer-corner-bottom-right);
+    --glass-edge-mask-full:
+      var(--glass-edge-mask-top),
+      var(--glass-edge-mask-bottom),
+      var(--glass-edge-mask-left),
+      var(--glass-edge-mask-right);
+    --glass-edge-layer-bottom-left-lit:
+      linear-gradient(to top,
+        color-mix(in srgb, var(--color-glass-bevel-highlight) 76%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-highlight) 62%, transparent) 8%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 24%, transparent) 20%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 8%, transparent) 34%,
+        transparent 60%) bottom / 100% var(--glass-edge-feather) no-repeat,
+      radial-gradient(92% 120% at 0% 100%,
+        color-mix(in srgb, var(--color-glass-caustic) 84%, transparent) 0%,
+        color-mix(in srgb, var(--color-glass-bevel-soft) 18%, transparent) 28%,
+        transparent 64%) bottom left / 40px 24px no-repeat;
+    --glass-edge-background-bottom-only:
+      var(--glass-edge-layer-bottom-left-lit);
+    --glass-edge-mask-bottom-only:
+      var(--glass-edge-mask-bottom);
+    --glass-sheen-layer-top:
+      linear-gradient(to bottom,
+        color-mix(in srgb, var(--color-glass-caustic) 84%, transparent) 0%,
+        rgba(255, 255, 255, 0.14) 12%,
+        rgba(255, 255, 255, 0.04) 26%,
+        transparent 48%) top / 100% var(--glass-sheen-feather) no-repeat;
+    --glass-sheen-layer-left:
+      linear-gradient(to right,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(255, 255, 255, 0.05) 14%,
+        transparent 36%) left / var(--glass-sheen-feather) 100% no-repeat;
+    --glass-sheen-layer-bottom:
+      linear-gradient(to top,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.08) 10%,
+        rgba(255, 255, 255, 0.03) 22%,
+        transparent 44%) bottom / 100% var(--glass-sheen-feather) no-repeat;
+    --glass-sheen-layer-bottom-left-lit:
+      linear-gradient(to top,
+        rgba(255, 255, 255, 0.24) 0%,
+        rgba(255, 255, 255, 0.14) 10%,
+        rgba(255, 255, 255, 0.04) 22%,
+        transparent 44%) bottom / 100% var(--glass-sheen-feather) no-repeat,
+      radial-gradient(84% 120% at 0% 100%,
+        color-mix(in srgb, var(--color-glass-caustic) 90%, transparent) 0%,
+        rgba(255, 255, 255, 0.08) 24%,
+        transparent 60%) bottom left / 34px 16px no-repeat;
+    --glass-sheen-layer-corner-top-left:
+      radial-gradient(74% 74% at 14% 4%,
+        color-mix(in srgb, var(--color-glass-caustic) 84%, transparent) 0%,
+        rgba(255, 255, 255, 0.06) 30%,
+        transparent 62%) top left / 18px 18px no-repeat;
+    --glass-sheen-mask-top:
+      linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.84) 0%,
+        rgba(0, 0, 0, 0.66) 10%,
+        rgba(0, 0, 0, 0.28) 28%,
+        transparent 62%) top / 100% var(--glass-sheen-feather) no-repeat;
+    --glass-sheen-mask-bottom:
+      linear-gradient(to top,
+        rgba(0, 0, 0, 0.66) 0%,
+        rgba(0, 0, 0, 0.36) 16%,
+        transparent 52%) bottom / 100% var(--glass-sheen-feather) no-repeat;
+    --glass-sheen-mask-left:
+      linear-gradient(to right,
+        rgba(0, 0, 0, 0.66) 0%,
+        rgba(0, 0, 0, 0.3) 16%,
+        transparent 52%) left / var(--glass-sheen-feather) 100% no-repeat;
+    --glass-sheen-mask-right:
+      linear-gradient(to left,
+        rgba(0, 0, 0, 0.58) 0%,
+        rgba(0, 0, 0, 0.26) 16%,
+        transparent 52%) right / var(--glass-sheen-feather) 100% no-repeat;
+    --glass-sheen-background-full:
+      var(--glass-sheen-layer-top),
+      var(--glass-sheen-layer-left),
+      var(--glass-sheen-layer-bottom),
+      var(--glass-sheen-layer-corner-top-left);
+    --glass-sheen-mask-full:
+      var(--glass-sheen-mask-top),
+      var(--glass-sheen-mask-bottom),
+      var(--glass-sheen-mask-left),
+      var(--glass-sheen-mask-right);
+    --glass-sheen-background-bottom-only:
+      var(--glass-sheen-layer-bottom-left-lit);
+    --glass-sheen-mask-bottom-only:
+      var(--glass-sheen-mask-bottom);
+    --glass-edge-background: var(--glass-edge-background-full);
+    --glass-edge-mask: var(--glass-edge-mask-full);
+    --glass-sheen-background: var(--glass-sheen-background-full);
+    --glass-sheen-mask: var(--glass-sheen-mask-full);
 }
 
-/* 为玻璃增加一点内部光泽渐变，让它看起来不是一块死板的颜色 */
 .liquid-glass::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: var(--glass-edge-background);
+    opacity: var(--glass-edge-opacity);
+    backdrop-filter:
+      blur(var(--glass-edge-blur)) saturate(var(--glass-edge-saturation)) contrast(var(--glass-edge-contrast)) brightness(var(--glass-edge-brightness));
+    -webkit-backdrop-filter:
+      blur(var(--glass-edge-blur)) saturate(var(--glass-edge-saturation)) contrast(var(--glass-edge-contrast)) brightness(var(--glass-edge-brightness));
+    -webkit-mask: var(--glass-edge-mask);
+    mask: var(--glass-edge-mask);
+    pointer-events: none;
+  }
+  
+  .liquid-glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: var(--glass-sheen-background);
+    opacity: var(--glass-sheen-opacity);
+    mix-blend-mode: screen;
+    -webkit-mask: var(--glass-sheen-mask);
+    mask: var(--glass-sheen-mask);
   pointer-events: none;
 }
 
-@media (prefers-color-scheme: dark) {
+.liquid-glass>* {
+  position: relative;
+  z-index: 1;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .liquid-glass {
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--color-glass-frost-soft) 72%, var(--color-bg)) 0%,
+        color-mix(in srgb, var(--color-glass-frost-soft) 72%, var(--color-bg)) 100%),
+      var(--glass-underlay, transparent);
+  }
   .liquid-glass::before {
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
+    backdrop-filter: none;
+      -webkit-backdrop-filter: none;
   }
 }
 
 .pill {
   border-radius: 9999px;
-  /* 即使是 pill，也维持玻璃的光泽感 */
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.02em;
 }
 
@@ -205,7 +450,7 @@ p {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Section base */
@@ -247,32 +492,22 @@ section {
 
 .bg-placeholder {
   --placeholder-tone: var(--tone-solid, var(--content-tone-default));
-  background:
+  --glass-underlay:
     radial-gradient(
-      circle at top left,
+      132% 108% at 12% 12%,
       color-mix(in srgb, var(--placeholder-tone) 16%, white),
-      transparent 50%
+      transparent 44%),
+        radial-gradient(78% 62% at 68% 74%,
+          color-mix(in srgb, var(--placeholder-tone) 22%, transparent),
+          transparent 58%
     ),
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--placeholder-tone) 16%, var(--color-bg)) 0%,
-      color-mix(in srgb, var(--placeholder-tone) 42%, var(--color-border)) 100%
+      color-mix(in srgb, var(--placeholder-tone) 14%, var(--color-bg)) 0%,
+        color-mix(in srgb, var(--placeholder-tone) 34%, var(--color-border)) 48%,
+        color-mix(in srgb, var(--placeholder-tone) 20%, var(--color-bg)) 100%
     );
+  background: var(--glass-underlay);
   position: relative;
   overflow: hidden;
-}
-.bg-placeholder::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%; right: 0; bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  animation: shimmer 2s infinite;
-}
-@media (prefers-color-scheme: dark) {
-  .bg-placeholder::after {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-  }
-}
-@keyframes shimmer {
-  100% { left: 100%; }
 }

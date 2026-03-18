@@ -16,14 +16,19 @@
     </nav>
 
     <div class="header-actions">
-      <a href="#contact" class="contact-btn pill liquid-glass">Contact</a>
-      <button class="under-the-hood pill liquid-glass" id="geek-toggle">Under the Hood</button>
+      <a href="#contact" class="contact-link">contact()</a>
     </div>
   </div>
 </header>
 
 <style>
   .header {
+    --header-content-scale: 1;
+    --header-content-shift-y: 0px;
+    --glass-edge-background: var(--glass-edge-background-bottom-only);
+    --glass-edge-mask: var(--glass-edge-mask-bottom-only);
+    --glass-sheen-background: var(--glass-sheen-background-bottom-only);
+    --glass-sheen-mask: var(--glass-sheen-mask-bottom-only);
     position: fixed;
     top: 0;
     left: 0;
@@ -33,12 +38,13 @@
     padding: 0 var(--space-md);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--color-glass-border);
     transition: height var(--transition-smooth), padding var(--transition-smooth);
   }
 
   .header.compact {
     height: var(--header-compact-height);
+    --header-content-scale: 0.92;
+    --header-content-shift-y: -0.5px;
   }
 
   .header-inner {
@@ -50,10 +56,11 @@
   }
 
   .logo a {
-    font-weight: 600;
+    display: inline-block;
+    font-weight: 500;
     letter-spacing: 0.05em;
     font-size: 1.1rem;
-    transition: font-size var(--transition-smooth);
+    will-change: transform;
   }
 
   .logo,
@@ -61,15 +68,11 @@
     flex-shrink: 0;
   }
 
-  .header.compact .logo a {
-    font-size: 1rem;
-  }
-
   .section-nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(0.8rem, 1.4vw, 1.35rem);
+    gap: clamp(0.92rem, 1.55vw, 1.5rem);
     flex: 1;
     min-width: 0;
   }
@@ -80,16 +83,20 @@
     text-transform: uppercase;
     white-space: nowrap;
     color: var(--color-text-muted);
-    transition: color var(--transition-fast);
+  }
+
+  .logo a,
+  .section-nav a,
+  .contact-link {
+    transform-origin: center;
+    transform: translateY(var(--header-content-shift-y)) scale(var(--header-content-scale));
+    transition: transform var(--transition-smooth), color var(--transition-fast);
   }
 
   .section-nav a:hover,
-  .section-nav a[data-state='active'] {
+  .section-nav a[data-state='active'],
+  .contact-link:hover {
     color: var(--color-text);
-  }
-
-  .header.compact .section-nav a {
-    font-size: 0.68rem;
   }
 
   .header-actions {
@@ -97,18 +104,17 @@
     gap: var(--space-sm);
   }
 
-  .contact-btn, .under-the-hood {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    color: var(--color-text);
-  }
-
-  .contact-btn:hover, .under-the-hood:hover {
-    background: var(--color-text);
-    color: var(--color-bg);
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: clamp(0.64rem, 0.58rem + 0.2vw, 0.72rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+    font-variant-ligatures: none;
   }
 
   @media (max-width: 1024px) {
@@ -119,13 +125,6 @@
 </style>
 
 <script>
-  const toggle = document.getElementById('geek-toggle');
-  toggle?.addEventListener('click', () => {
-    const isDetail = document.body.getAttribute('data-view') === 'detail';
-    document.body.setAttribute('data-view', isDetail ? 'default' : 'detail');
-    toggle.textContent = isDetail ? 'Under the Hood' : 'Exit Hood';
-  });
-
   const header = document.getElementById('main-header');
   const sectionLinks = Array.from(document.querySelectorAll('.section-nav a')) as HTMLAnchorElement[];
   const trackedSections = sectionLinks
