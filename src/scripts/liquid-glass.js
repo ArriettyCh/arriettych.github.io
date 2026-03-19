@@ -34,6 +34,8 @@ export class LiquidGlassEffect {
     this.fragment = options.fragment || ((uv) => texture(uv.x, uv.y));
     this.canvasDPI = options.canvasDPI || 1;
     this.filterStrength = options.filterStrength || 'blur(0.25px) contrast(1.2) brightness(1.05) saturate(1.1)';
+    // Optional frosted glass setting
+    this.frosted = options.frosted || false;
     this.id = generateId();
 
     this.mouse = { x: 0.5, y: 0.5 };
@@ -49,6 +51,19 @@ export class LiquidGlassEffect {
     const rect = this.container.getBoundingClientRect();
     this.width = Math.max(1, Math.round(rect.width));
     this.height = Math.max(1, Math.round(rect.height));
+  }
+
+  updateFilterRegion() {
+    // Determine the required filter padding based on effect
+    // Frosted glass requires extra padding to prevent blur clipping at the edges
+    const padding = this.frosted ? 50 : 0;
+
+    // We adjust both x/y (offset) and width/height to center the filter over the element
+    // Using pixels (not percentages) to maintain physical scale regardless of container shape
+    this.filter.setAttribute('x', (-padding).toString());
+    this.filter.setAttribute('y', (-padding).toString());
+    this.filter.setAttribute('width', (this.width + padding * 2).toString());
+    this.filter.setAttribute('height', (this.height + padding * 2).toString());
   }
 
   createElement() {
@@ -69,10 +84,7 @@ export class LiquidGlassEffect {
     this.filter.setAttribute('id', `${this.id}_filter`);
     this.filter.setAttribute('filterUnits', 'userSpaceOnUse');
     this.filter.setAttribute('colorInterpolationFilters', 'sRGB');
-    this.filter.setAttribute('x', '0');
-    this.filter.setAttribute('y', '0');
-    this.filter.setAttribute('width', this.width.toString());
-    this.filter.setAttribute('height', this.height.toString());
+    this.updateFilterRegion();
 
     this.feImage = document.createElementNS('http://www.w3.org/2000/svg', 'feImage');
     this.feImage.setAttribute('id', `${this.id}_map`);
@@ -84,9 +96,74 @@ export class LiquidGlassEffect {
     this.feDisplacementMap.setAttribute('in2', `${this.id}_map`);
     this.feDisplacementMap.setAttribute('xChannelSelector', 'R');
     this.feDisplacementMap.setAttribute('yChannelSelector', 'G');
+    this.feDisplacementMap.setAttribute('result', 'displaced');
 
     this.filter.appendChild(this.feImage);
     this.filter.appendChild(this.feDisplacementMap);
+
+    if (this.frosted) {
+      // 1. Noise generation for micro-surface (Grain & Refraction)
+      this.feTurbulence = document.createElementNS('http://www.w3.org/2000/svg', 'feTurbulence');
+      this.feTurbulence.setAttribute('type', 'fractalNoise');
+      this.feTurbulence.setAttribute('baseFrequency', '1.2'); // Higher frequency for tighter, finer grain
+      this.feTurbulence.setAttribute('numOctaves', '2');
+      this.feTurbulence.setAttribute('result', 'noise');
+
+      // 2. Base scatter (Macro-level volume diffusion)
+      // This spreads the incoming light over a wide area, causing the heavy blur.
+      this.feGaussianBlurBase = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+      this.feGaussianBlurBase.setAttribute('in', 'displaced');
+      this.feGaussianBlurBase.setAttribute('stdDeviation', '6'); // Strong base blur
+      this.feGaussianBlurBase.setAttribute('edgeMode', 'duplicate'); // Pull pixels from edges instead of black
+      this.feGaussianBlurBase.setAttribute('result', 'macro_blur');
+
+      // 3. Grain refraction (Micro-level structural displacement)
+      // This uses the noise to slightly distort the blurred background, giving it volume/texture
+      this.feDisplacementMapFrost = document.createElementNS('http://www.w3.org/2000/svg', 'feDisplacementMap');
+      this.feDisplacementMapFrost.setAttribute('in', 'macro_blur');
+      this.feDisplacementMapFrost.setAttribute('in2', 'noise');
+      this.feDisplacementMapFrost.setAttribute('scale', '8'); // Mild refraction to maintain the shape
+      this.feDisplacementMapFrost.setAttribute('xChannelSelector', 'R');
+      this.feDisplacementMapFrost.setAttribute('yChannelSelector', 'G');
+      this.feDisplacementMapFrost.setAttribute('result', 'micro_scatter');
+
+      // 4. Subsurface softening (Smoothing the harsh refraction artifacts)
+      // Real frosted glass isn't completely sharp at the microscopic level; light bleeds through the grain
+      this.feGaussianBlurSoft = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+      this.feGaussianBlurSoft.setAttribute('in', 'micro_scatter');
+      this.feGaussianBlurSoft.setAttribute('stdDeviation', '0.5'); // Very light feathering to soften the noise
+      this.feGaussianBlurSoft.setAttribute('edgeMode', 'duplicate');
+      this.feGaussianBlurSoft.setAttribute('result', 'softened_volume');
+
+      // 5. Surface Specular Grain
+      // Instead of relying purely on refraction, we create actual tiny bright/dark spots from the noise
+      this.feColorMatrixSparkle = document.createElementNS('http://www.w3.org/2000/svg', 'feColorMatrix');
+      this.feColorMatrixSparkle.setAttribute('in', 'noise');
+      this.feColorMatrixSparkle.setAttribute('type', 'matrix');
+      // Convert RGB noise to monochrome and reduce alpha heavily so it's just a whisper of texture
+      this.feColorMatrixSparkle.setAttribute('values', `
+        0.33 0.33 0.33 0 0 
+        0.33 0.33 0.33 0 0 
+        0.33 0.33 0.33 0 0 
+        0    0    0    0.08 0
+      `);
+      this.feColorMatrixSparkle.setAttribute('result', 'sparkle_layer');
+
+      // 6. Final composite (Combine volume refraction + surface grain)
+      // Over (alpha blending) the specular grain onto the blurred/refracted volume
+      this.feCompositeGrain = document.createElementNS('http://www.w3.org/2000/svg', 'feComposite');
+      this.feCompositeGrain.setAttribute('in', 'sparkle_layer');
+      this.feCompositeGrain.setAttribute('in2', 'softened_volume');
+      this.feCompositeGrain.setAttribute('operator', 'over'); // Use alpha blending instead of arithmetic addition
+
+      this.filter.appendChild(this.feTurbulence);
+      this.filter.appendChild(this.feGaussianBlurBase);
+      this.filter.appendChild(this.feDisplacementMapFrost);
+      this.filter.appendChild(this.feGaussianBlurSoft);
+      this.filter.appendChild(this.feColorMatrixSparkle);
+      this.filter.appendChild(this.feCompositeGrain);
+    }
+
     defs.appendChild(this.filter);
     this.svg.appendChild(defs);
     document.body.appendChild(this.svg);
@@ -99,6 +176,63 @@ export class LiquidGlassEffect {
 
     this.container.style.backdropFilter = `url(#${this.id}_filter) ${this.filterStrength}`;
     this.container.style.webkitBackdropFilter = `url(#${this.id}_filter) ${this.filterStrength}`;
+
+    // Add Edge Lighting
+    const computedStyle = window.getComputedStyle(this.container);
+    if (computedStyle.position === 'static') {
+      this.container.style.position = 'relative';
+    }
+
+    this.lightingGroup = document.createElement('div');
+    this.lightingGroup.className = 'liquid-glass-lighting';
+    this.lightingGroup.style.cssText = `
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 0;
+    `;
+
+    // Base contour and soft inner grazing light
+    this.ambientEdge = document.createElement('div');
+    this.ambientEdge.style.cssText = `
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 
+        inset 0 0 0 1px rgba(255, 255, 255, 0.2), 
+        inset 1.5px 1.5px 6px rgba(255, 255, 255, 0.4), 
+        inset -1.5px -1.5px 6px rgba(255, 255, 255, 0.2);
+    `;
+
+    // Sharp directional highlights on the corners/edges
+    this.directionalEdge = document.createElement('div');
+    this.directionalEdge.style.cssText = `
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding:1.2px;
+      background: 
+        radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 70%),
+        radial-gradient(120% 120% at 100% 100%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 50%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    `;
+
+    // Inner glow volume to give the glass physical depth
+    this.innerGlow = document.createElement('div');
+    this.innerGlow.style.cssText = `
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 90%);
+    `;
+
+    this.lightingGroup.appendChild(this.ambientEdge);
+    this.lightingGroup.appendChild(this.directionalEdge);
+    this.lightingGroup.appendChild(this.innerGlow);
+    this.container.appendChild(this.lightingGroup);
   }
 
   resize() {
@@ -114,8 +248,7 @@ export class LiquidGlassEffect {
     this.canvas.width = this.width * this.canvasDPI;
     this.canvas.height = this.height * this.canvasDPI;
 
-    this.filter.setAttribute('width', this.width.toString());
-    this.filter.setAttribute('height', this.height.toString());
+    this.updateFilterRegion();
     this.feImage.setAttribute('width', this.width.toString());
     this.feImage.setAttribute('height', this.height.toString());
 
@@ -207,6 +340,10 @@ export class LiquidGlassEffect {
 
     if (this.handleMouseMove) {
       document.removeEventListener('mousemove', this.handleMouseMove);
+    }
+
+    if (this.lightingGroup) {
+      this.lightingGroup.remove();
     }
 
     this.svg.remove();

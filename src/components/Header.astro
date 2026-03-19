@@ -46,7 +46,7 @@
   }
 
   .header.compact {
-    transform: translateX(-50%) translateY(-4px);
+    transform: translateX(-50%) translateY(-18px);
   }
 
   .header-inner {
@@ -144,6 +144,7 @@
     const header = document.getElementById("main-header");
     if (header) {
       new LiquidGlassEffect(header, {
+        frosted: true, // Enable the frosted grain effect
         fragment: (uv) => {
           const ix = uv.x - 0.5;
           const iy = uv.y - 0.5;
