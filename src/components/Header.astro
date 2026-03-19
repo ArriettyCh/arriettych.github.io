@@ -5,7 +5,7 @@
 <header class="header" id="main-header">
   <div class="header-inner">
     <div class="logo">
-      <a href="#">ARRIETTYCH</a>
+      <a href="#">HOME</a>
     </div>
 
     <nav class="section-nav" aria-label="页面导航">
@@ -135,11 +135,22 @@
   import { LiquidGlassEffect } from "../scripts/liquid-glass.js";
   import { getTransparentHeaderGlassOptions } from "../scripts/liquid-glass-presets.js";
 
+  const HEADER_LENS_XYR = {
+    x: 0.5,
+    y: 0.2,
+    r: 0.5,
+  };
+
   // Initialize
   const initHeader = () => {
     const header = document.getElementById("main-header");
     if (header && header.dataset.liquidGlassReady !== "true") {
-      new LiquidGlassEffect(header, getTransparentHeaderGlassOptions());
+      new LiquidGlassEffect(
+        header,
+        getTransparentHeaderGlassOptions({
+          xyr: HEADER_LENS_XYR,
+        }),
+      );
       header.dataset.liquidGlassReady = "true";
     }
 

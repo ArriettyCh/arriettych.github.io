@@ -3,17 +3,18 @@
   class="glass-cursor"
   data-active="false"
   aria-hidden="true"
-></div>
+>
+</div>
 
 <style>
   .glass-cursor {
     --glass-cursor-x: -200px;
     --glass-cursor-y: -200px;
-    --glass-cursor-width: 240px;
-    --glass-cursor-height: 180px;
+    --glass-cursor-width: 200px;
+    --glass-cursor-height: 160px;
     position: fixed;
-    left: var(--glass-cursor-x);
-    top: var(--glass-cursor-y);
+    left: 0;
+    top: 0;
     width: var(--glass-cursor-width);
     height: var(--glass-cursor-height);
     border-radius: 999px;
@@ -22,11 +23,11 @@
       0 4px 12px rgba(0, 0, 0, 0.1),
       0 -4px 16px inset rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(calc(var(--glass-cursor-x) - 50%), calc(var(--glass-cursor-y) - 50%), 0);
     pointer-events: none;
     opacity: 0;
     z-index: 9999;
-    will-change: left, top, opacity;
+    will-change: transform, opacity;
     transition: opacity var(--transition-fast);
   }
 
@@ -43,6 +44,14 @@
     :global(body.glass-cursor-enabled [data-glass-cursor-target]) {
       cursor: none;
     }
+
+    :global(body.glass-cursor-enabled #main-header a[href]),
+    :global(body.glass-cursor-enabled #main-header button),
+    :global(body.glass-cursor-enabled #main-header input[type="button"]),
+    :global(body.glass-cursor-enabled #main-header input[type="submit"]),
+    :global(body.glass-cursor-enabled #main-header [role="button"]) {
+      cursor: pointer;
+    }
   }
 </style>
 
@@ -50,13 +59,19 @@
   import { LiquidGlassEffect } from "../scripts/liquid-glass.js";
   import { getTransparentHeaderGlassOptions } from "../scripts/liquid-glass-presets.js";
 
+  const CURSOR_LENS_XYR = {
+    x: 0.4,
+    y: 0.2,
+    r: 0.65,
+  };
+
   const INTERACTIVE_SELECTOR = [
-    'a[href]',
-    'button:not([disabled])',
+    "a[href]",
+    "button:not([disabled])",
     'input[type="button"]:not([disabled])',
     'input[type="submit"]:not([disabled])',
     '[role="button"]:not([aria-disabled="true"])',
-    '[data-glass-cursor-target]',
+    "[data-glass-cursor-target]",
   ].join(", ");
 
   const initGlassCursor = () => {
@@ -66,7 +81,8 @@
     }
 
     const supportsHoverCursor =
-      window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches ?? false;
+      window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches ??
+      false;
     if (!supportsHoverCursor) {
       return;
     }
@@ -74,16 +90,89 @@
     cursor.dataset.glassCursorReady = "true";
     document.body.classList.add("glass-cursor-enabled");
 
-    new LiquidGlassEffect(cursor, getTransparentHeaderGlassOptions());
+    new LiquidGlassEffect(
+      cursor,
+      getTransparentHeaderGlassOptions({
+        xyr: CURSOR_LENS_XYR,
+      }),
+    );
+
+    const ENTER_DELAY_MS = 70;
+    const LEAVE_DELAY_MS = 45;
 
     let lastPointerX = -200;
     let lastPointerY = -200;
+    let targetX = -200;
+    let targetY = -200;
+    let currentX = -200;
+    let currentY = -200;
+    let velocityX = 0;
+    let velocityY = 0;
+    let lastTime = 0;
+
+    let cursorVisible = false;
+    let shouldShowCursor = false;
+    let enterTimer = 0;
+    let leaveTimer = 0;
+    let rafId = 0;
+
+    const writeCursorPosition = (x, y) => {
+      cursor.style.setProperty("--glass-cursor-x", `${x}px`);
+      cursor.style.setProperty("--glass-cursor-y", `${y}px`);
+    };
+
+    const animateCursorPosition = (time) => {
+      if (!lastTime) lastTime = time;
+      // Cap dt to prevent massive jumps on tab switch
+      const dt = Math.min(time - lastTime, 32) / 1000;
+      lastTime = time;
+
+      // Spring physics config
+      const stiffness = 160;
+      const damping = 18; // Slightly under-damped for a microscopic bounce, or use 24 for critical
+
+      const ax = (targetX - currentX) * stiffness - velocityX * damping;
+      const ay = (targetY - currentY) * stiffness - velocityY * damping;
+
+      velocityX += ax * dt;
+      velocityY += ay * dt;
+
+      currentX += velocityX * dt;
+      currentY += velocityY * dt;
+
+      const dx = targetX - currentX;
+      const dy = targetY - currentY;
+      const hasMotion = Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1 || Math.abs(velocityX) > 0.1 || Math.abs(velocityY) > 0.1;
+
+      if (hasMotion) {
+        writeCursorPosition(currentX, currentY);
+        rafId = window.requestAnimationFrame(animateCursorPosition);
+        return;
+      }
+
+      currentX = targetX;
+      currentY = targetY;
+      velocityX = 0;
+      velocityY = 0;
+      lastTime = 0;
+      writeCursorPosition(currentX, currentY);
+      rafId = 0;
+    };
+
+    const ensureCursorAnimation = () => {
+      if (rafId) {
+        return;
+      }
+      lastTime = 0;
+      rafId = window.requestAnimationFrame(animateCursorPosition);
+    };
 
     const setCursorPosition = (x, y) => {
       lastPointerX = x;
       lastPointerY = y;
-      cursor.style.setProperty("--glass-cursor-x", `${x}px`);
-      cursor.style.setProperty("--glass-cursor-y", `${y}px`);
+      targetX = x;
+      targetY = y;
+      ensureCursorAnimation();
     };
 
     const resolveInteractiveTarget = (source) => {
@@ -91,15 +180,60 @@
         return null;
       }
 
-      return source.closest(INTERACTIVE_SELECTOR);
+      const target = source.closest(INTERACTIVE_SELECTOR);
+      if (!target) {
+        return null;
+      }
+
+      if (target.closest("#main-header")) {
+        return null;
+      }
+
+      return target;
     };
 
-    const setCursorVisibility = (active) => {
+    const applyCursorVisibility = (active) => {
+      cursorVisible = active;
       cursor.dataset.active = active ? "true" : "false";
     };
 
+    const scheduleCursorVisibility = (nextVisible) => {
+      shouldShowCursor = nextVisible;
+
+      if (nextVisible) {
+        if (leaveTimer) {
+          window.clearTimeout(leaveTimer);
+          leaveTimer = 0;
+        }
+        if (cursorVisible || enterTimer) {
+          return;
+        }
+        enterTimer = window.setTimeout(() => {
+          enterTimer = 0;
+          if (shouldShowCursor) {
+            applyCursorVisibility(true);
+          }
+        }, ENTER_DELAY_MS);
+        return;
+      }
+
+      if (enterTimer) {
+        window.clearTimeout(enterTimer);
+        enterTimer = 0;
+      }
+      if (!cursorVisible || leaveTimer) {
+        return;
+      }
+      leaveTimer = window.setTimeout(() => {
+        leaveTimer = 0;
+        if (!shouldShowCursor) {
+          applyCursorVisibility(false);
+        }
+      }, LEAVE_DELAY_MS);
+    };
+
     const updateHoverState = (source) => {
-      setCursorVisibility(Boolean(resolveInteractiveTarget(source)));
+      scheduleCursorVisibility(Boolean(resolveInteractiveTarget(source)));
     };
 
     const refreshHoverStateFromPoint = () => {
@@ -122,7 +256,7 @@
 
     window.addEventListener("mouseout", (event) => {
       if (!event.relatedTarget) {
-        setCursorVisibility(false);
+        scheduleCursorVisibility(false);
       }
     });
 
@@ -135,12 +269,12 @@
     );
 
     window.addEventListener("blur", () => {
-      setCursorVisibility(false);
+      scheduleCursorVisibility(false);
     });
 
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        setCursorVisibility(false);
+        scheduleCursorVisibility(false);
       }
     });
   };

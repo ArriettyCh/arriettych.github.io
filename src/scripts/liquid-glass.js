@@ -34,6 +34,7 @@ export class LiquidGlassEffect {
     this.fragment = options.fragment || ((uv) => texture(uv.x, uv.y));
     this.canvasDPI = options.canvasDPI || 1;
     this.filterStrength = options.filterStrength || 'blur(0.25px) contrast(1.2) brightness(1.05) saturate(1.1)';
+    this.chromaticAberration = options.chromaticAberration || false;
     // Optional frosted glass setting
     this.frosted = options.frosted || false;
     this.id = generateId();
@@ -220,6 +221,26 @@ export class LiquidGlassEffect {
       mask-composite: exclude;
     `;
 
+    if (this.chromaticAberration) {
+      // Subtle chromatic fringe to mimic real glass dispersion at grazing angles.
+      this.chromaticEdge = document.createElement('div');
+      this.chromaticEdge.style.cssText = `
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1.1px;
+        background:
+          radial-gradient(140% 130% at -6% 0%, rgba(255, 122, 122, 0.2) 0%, rgba(255, 122, 122, 0.08) 26%, transparent 54%),
+          radial-gradient(140% 130% at 106% 100%, rgba(140, 186, 255, 0.22) 0%, rgba(140, 186, 255, 0.09) 28%, transparent 56%);
+        mix-blend-mode: screen;
+        opacity: 0.6;
+        filter: saturate(1.08) blur(0.35px);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      `;
+    }
+
     // Inner glow volume to give the glass physical depth
     this.innerGlow = document.createElement('div');
     this.innerGlow.style.cssText = `
@@ -231,6 +252,9 @@ export class LiquidGlassEffect {
 
     this.lightingGroup.appendChild(this.ambientEdge);
     this.lightingGroup.appendChild(this.directionalEdge);
+    if (this.chromaticEdge) {
+      this.lightingGroup.appendChild(this.chromaticEdge);
+    }
     this.lightingGroup.appendChild(this.innerGlow);
     this.container.appendChild(this.lightingGroup);
   }

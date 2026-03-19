@@ -29,6 +29,38 @@ const { title } = Astro.props;
     <GlassCursor />
 
     <script>
+      import Lenis from 'lenis';
+
+      // Initialize Lenis
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+
+      // Handle anchor links for smooth scrolling with Lenis
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          if (href && href !== '#') {
+            const target = document.querySelector(href);
+            if (target) {
+              lenis.scrollTo(target, { offset: -100 }); // adjust offset if needed
+            }
+          } else if (href === '#') {
+            lenis.scrollTo(0);
+          }
+        });
+      });
+
       // Global intersection observer for smooth fade-in-up animations
       const observerOptions = {
         root: null,
