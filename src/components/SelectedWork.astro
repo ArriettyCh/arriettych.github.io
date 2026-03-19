@@ -13,7 +13,7 @@
 
     <div class="section-content">
       <div class="work-grid">
-        <article class="work-item fade-in-up" data-tone="work-research">
+        <a class="work-item fade-in-up" data-tone="work-research" href="/detail/work-research/">
           <div class="image-wrapper bg-placeholder"></div>
           <div class="caption">
             <h3>重新理解语言生成</h3>
@@ -23,9 +23,9 @@
               <p><strong>Method:</strong> Optimizing target distributions for smoother flow.</p>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="work-item fade-in-up" data-tone="work-product">
+        <a class="work-item fade-in-up" data-tone="work-product" href="/detail/work-product/">
           <div class="image-wrapper bg-placeholder"></div>
           <div class="caption">
             <h3>让照片被自然找回</h3>
@@ -35,9 +35,9 @@
               <p><strong>Constraint:</strong> Client-side storage limitations.</p>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="work-item fade-in-up" data-tone="work-systems">
+        <a class="work-item fade-in-up" data-tone="work-systems" href="/detail/work-systems/">
           <div class="image-wrapper bg-placeholder"></div>
           <div class="caption">
             <h3>让先进模型走向可用</h3>
@@ -46,9 +46,9 @@
               <p><strong>Focus:</strong> Inference speed optimization without degrading FID.</p>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="work-item fade-in-up" data-tone="work-benchmark">
+        <a class="work-item fade-in-up" data-tone="work-benchmark" href="/detail/work-benchmark/">
           <div class="image-wrapper bg-placeholder"></div>
           <div class="caption">
             <h3>建立可靠评估方式</h3>
@@ -57,7 +57,7 @@
               <p><strong>Framework:</strong> Multi-environment sequential tasks avoiding catastrophic forgetting.</p>
             </div>
           </div>
-        </article>
+        </a>
       </div>
 
       <div class="work-postscript fade-in-up" data-tone="postscript">
@@ -127,16 +127,13 @@
     display: grid;
     grid-template-rows: auto 1fr;
     align-content: start;
+    text-decoration: none;
+    color: inherit;
   }
 
   .image-wrapper {
     width: 100%;
     aspect-ratio: 4/3;
-    transition: transform var(--transition-bounce);
-  }
-
-  .work-item:hover .image-wrapper {
-    transform: translateY(-4px) scale(1.01);
   }
 
   .caption {

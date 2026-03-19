@@ -1,0 +1,149 @@
+<div
+  id="glass-cursor"
+  class="glass-cursor"
+  data-active="false"
+  aria-hidden="true"
+></div>
+
+<style>
+  .glass-cursor {
+    --glass-cursor-x: -200px;
+    --glass-cursor-y: -200px;
+    --glass-cursor-width: 240px;
+    --glass-cursor-height: 180px;
+    position: fixed;
+    left: var(--glass-cursor-x);
+    top: var(--glass-cursor-y);
+    width: var(--glass-cursor-width);
+    height: var(--glass-cursor-height);
+    border-radius: 999px;
+    background: transparent;
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.1),
+      0 -4px 16px inset rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transform: translate3d(-50%, -50%, 0);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 9999;
+    will-change: left, top, opacity;
+    transition: opacity var(--transition-fast);
+  }
+
+  .glass-cursor[data-active="true"] {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    :global(body.glass-cursor-enabled a[href]),
+    :global(body.glass-cursor-enabled button),
+    :global(body.glass-cursor-enabled input[type="button"]),
+    :global(body.glass-cursor-enabled input[type="submit"]),
+    :global(body.glass-cursor-enabled [role="button"]),
+    :global(body.glass-cursor-enabled [data-glass-cursor-target]) {
+      cursor: none;
+    }
+  }
+</style>
+
+<script>
+  import { LiquidGlassEffect } from "../scripts/liquid-glass.js";
+  import { getTransparentHeaderGlassOptions } from "../scripts/liquid-glass-presets.js";
+
+  const INTERACTIVE_SELECTOR = [
+    'a[href]',
+    'button:not([disabled])',
+    'input[type="button"]:not([disabled])',
+    'input[type="submit"]:not([disabled])',
+    '[role="button"]:not([aria-disabled="true"])',
+    '[data-glass-cursor-target]',
+  ].join(", ");
+
+  const initGlassCursor = () => {
+    const cursor = document.getElementById("glass-cursor");
+    if (!cursor || cursor.dataset.glassCursorReady === "true") {
+      return;
+    }
+
+    const supportsHoverCursor =
+      window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches ?? false;
+    if (!supportsHoverCursor) {
+      return;
+    }
+
+    cursor.dataset.glassCursorReady = "true";
+    document.body.classList.add("glass-cursor-enabled");
+
+    new LiquidGlassEffect(cursor, getTransparentHeaderGlassOptions());
+
+    let lastPointerX = -200;
+    let lastPointerY = -200;
+
+    const setCursorPosition = (x, y) => {
+      lastPointerX = x;
+      lastPointerY = y;
+      cursor.style.setProperty("--glass-cursor-x", `${x}px`);
+      cursor.style.setProperty("--glass-cursor-y", `${y}px`);
+    };
+
+    const resolveInteractiveTarget = (source) => {
+      if (!(source instanceof Element)) {
+        return null;
+      }
+
+      return source.closest(INTERACTIVE_SELECTOR);
+    };
+
+    const setCursorVisibility = (active) => {
+      cursor.dataset.active = active ? "true" : "false";
+    };
+
+    const updateHoverState = (source) => {
+      setCursorVisibility(Boolean(resolveInteractiveTarget(source)));
+    };
+
+    const refreshHoverStateFromPoint = () => {
+      const hovered = document.elementFromPoint(lastPointerX, lastPointerY);
+      updateHoverState(hovered);
+    };
+
+    document.addEventListener(
+      "pointermove",
+      (event) => {
+        if (event.pointerType && event.pointerType !== "mouse") {
+          return;
+        }
+
+        setCursorPosition(event.clientX, event.clientY);
+        updateHoverState(event.target);
+      },
+      { passive: true },
+    );
+
+    window.addEventListener("mouseout", (event) => {
+      if (!event.relatedTarget) {
+        setCursorVisibility(false);
+      }
+    });
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        refreshHoverStateFromPoint();
+      },
+      { passive: true },
+    );
+
+    window.addEventListener("blur", () => {
+      setCursorVisibility(false);
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        setCursorVisibility(false);
+      }
+    });
+  };
+
+  initGlassCursor();
+</script>

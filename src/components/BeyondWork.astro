@@ -14,16 +14,16 @@
     <div class="section-content">
       <div class="magazine-grid">
         <!-- Aesthetics (Photography/Art) -->
-        <div class="grid-item aesthetics fade-in-up" data-tone="beyond-aesthetics">
+        <a class="grid-item aesthetics fade-in-up" data-tone="beyond-aesthetics" href="/detail/beyond-aesthetics/">
           <div class="image-wrapper bg-placeholder"></div>
           <div class="caption">
             <h3>Lens & Canvas</h3>
             <p>捕捉光线与构图的平衡。长期的视觉训练让我对克制感、材质与排版更敏感，这直接影响了我对产品体验的判断。</p>
           </div>
-        </div>
+        </a>
 
         <!-- Energy (Running/Cycling) -->
-        <div class="grid-item energy fade-in-up" data-tone="beyond-energy">
+        <a class="grid-item energy fade-in-up" data-tone="beyond-energy" href="/detail/beyond-energy/">
           <div class="image-wrapper small bg-placeholder"></div>
           <div class="caption">
             <h3>100km & 800m</h3>
@@ -32,7 +32,7 @@
               运动对我来说不是“标签”，而是一种建立耐心、输出稳定性的长期主义训练。
             </p>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -78,11 +78,6 @@
     width: 100%;
     aspect-ratio: 4/3;
     background-color: var(--color-border);
-    transition: transform var(--transition-bounce);
-  }
-
-  .image-wrapper:hover {
-    transform: translateY(-4px) scale(1.01);
   }
 
   .image-wrapper.small {
@@ -95,6 +90,8 @@
     grid-template-rows: auto 1fr;
     align-content: start;
     min-height: 100%;
+    text-decoration: none;
+    color: inherit;
   }
 
   .grid-item[data-tone] .caption h3 {

@@ -1,0 +1,39 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'work-research' } },
+    { params: { slug: 'work-product' } },
+    { params: { slug: 'work-systems' } },
+    { params: { slug: 'work-benchmark' } },
+    { params: { slug: 'beyond-aesthetics' } },
+    { params: { slug: 'beyond-energy' } }
+  ];
+}
+
+const { slug } = Astro.params;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="detail page" />
+    <title>{slug}</title>
+  </head>
+  <body>
+    <main class="detail-blank" aria-label="detail page"></main>
+  </body>
+</html>
+
+<style>
+  :global(html),
+  :global(body) {
+    margin: 0;
+    padding: 0;
+  }
+
+  .detail-blank {
+    min-height: 100vh;
+  }
+</style>
