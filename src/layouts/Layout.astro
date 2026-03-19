@@ -20,37 +20,6 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <svg class="glass-defs" aria-hidden="true" focusable="false" width="0" height="0">
-      <defs>
-        <filter
-          id="liquid-glass-distortion"
-          x="-30%"
-          y="-30%"
-          width="160%"
-          height="160%"
-          color-interpolation-filters="sRGB"
-        >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.014 0.022"
-            numOctaves="1"
-            seed="27"
-            result="glass-noise"
-          />
-          <feGaussianBlur in="glass-noise" stdDeviation="0.8" result="glass-noise-soft" />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="glass-noise-soft"
-            scale="6"
-            xChannelSelector="R"
-            yChannelSelector="G"
-            result="glass-distorted"
-          />
-          <feGaussianBlur in="glass-distorted" stdDeviation="0.24" />
-        </filter>
-      </defs>
-    </svg>
-
     <main class="main-content">
       <Header />
       <slot />
