@@ -201,24 +201,23 @@ export class LiquidGlassEffect {
       inset: 0;
       border-radius: inherit;
       box-shadow: 
-        inset 0 0 0 1px rgba(255, 255, 255, 0.2), 
+        inset 0 0 1px rgba(255, 255, 255, 0.3), 
         inset 1.5px 1.5px 6px rgba(255, 255, 255, 0.4), 
         inset -1.5px -1.5px 6px rgba(255, 255, 255, 0.2);
     `;
 
-    // Sharp directional highlights on the corners/edges
+    // Sharp directional highlights on the corners/edges, now fading smoothly inward instead of a hard line
     this.directionalEdge = document.createElement('div');
     this.directionalEdge.style.cssText = `
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      padding:1.2px;
-      background: 
-        radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 70%),
-        radial-gradient(120% 120% at 100% 100%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 50%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
+      box-shadow: 
+        inset 0 0 1px rgba(255, 255, 255, 0.9),
+        inset 0 0 3px rgba(255, 255, 255, 0.7);
+      -webkit-mask: 
+        radial-gradient(120% 120% at 0% 0%, #000 0%, rgba(0,0,0,0.4) 40%, transparent 70%),
+        radial-gradient(120% 120% at 100% 100%, rgba(0,0,0,0.6) 0%, transparent 50%);
     `;
 
     if (this.chromaticAberration) {
