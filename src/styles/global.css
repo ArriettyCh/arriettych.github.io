@@ -63,6 +63,7 @@
   --toc-width: 240px;
   --header-height: 80px;
   --header-compact-height: 60px;
+  --layout-sidebar-columns: 12% minmax(0, 1fr);
 
   /* Spacing */
   --space-xs: clamp(0.35rem, 0.2rem + 0.35vw, 0.65rem);
@@ -74,7 +75,12 @@
   /* Animations */
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-color: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --duration-color-fast: 0.2s;
   --transition-fast: 0.2s var(--ease-smooth);
+  --transition-color-fast: color var(--duration-color-fast) var(--ease-color),
+      border-color var(--duration-color-fast) var(--ease-color),
+      text-decoration-color var(--duration-color-fast) var(--ease-color);
   --transition-smooth: 0.6s var(--ease-smooth);
   --transition-bounce: 0.6s var(--ease-spring);
 }
@@ -504,13 +510,18 @@ section {
 
 /* Animation Utility - Smooth & Springy */
 .fade-in-up {
+  opacity: 1;
+    transform: translateY(0);
+  }
+  
+  html.has-js .fade-in-up {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity var(--transition-smooth), 
               transform var(--transition-bounce);
 }
 
-.fade-in-up.visible {
+html.has-js .fade-in-up.visible {
   opacity: 1;
   transform: translateY(0);
 }

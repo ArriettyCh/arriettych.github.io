@@ -4,7 +4,12 @@
 
 <section id="hero" class="hero">
   <div class="hero-layout">
-    <div class="hero-sidebar" aria-hidden="true"></div>
+    <div class="hero-sidebar">
+      <div class="sticky-title fade-in-up">
+        <h2 class="section-title">About Me</h2>
+        <p>状态更新与方向</p>
+      </div>
+    </div>
 
     <div class="hero-main">
       <div class="hero-content">
@@ -13,8 +18,8 @@
         </div>
 
         <h1 class="hero-title fade-in-up">
-          网站开发中，内容是 AI 随便生成的<br />仅作占位，与本人无关<br /><br />我想把前沿
-          AI 的能力，<br />做成真正有感觉、有价值的产品。
+          网站开发中，内容是 AI 随便生成的<br />仅作占位，与本人无关<br /><br
+          />我想把前沿 AI 的能力，<br />做成真正有感觉、有价值的产品。
         </h1>
 
         <p class="subtitle fade-in-up hero-subtitle">
@@ -54,6 +59,22 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-md);
+  }
+
+  .hero-sidebar {
+    min-width: 0;
+  }
+
+  .hero-sidebar-probe {
+    width: max-content;
+    padding: 0.2rem 0.55rem;
+    border: 1px dashed var(--color-border);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: var(--font-weight-ui);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
   }
 
   .hero-main {
@@ -127,7 +148,7 @@
 
   @media (min-width: 1024px) {
     .hero-layout {
-      grid-template-columns: 300px 1fr;
+      grid-template-columns: var(--layout-sidebar-columns);
       gap: var(--space-xl);
     }
   }

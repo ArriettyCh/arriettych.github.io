@@ -13,12 +13,11 @@
 
     <div class="section-content">
       <div class="signals-typography fade-in-up">
-        
         <div class="typography-block" data-tone="signals-mind">
           <h3>On My Mind</h3>
           <p class="insight-text">
-            《Vibe Coding 改变的不是效率，而是接口》<br/>
-            从 prompt 到 directing：AIGC 交互范式的转移。<br/>
+            《Vibe Coding 改变的不是效率，而是接口》<br />
+            从 prompt 到 directing：AIGC 交互范式的转移。<br />
             当 Agent 具备 Continual Learning 能力时，产品形态会发生什么根本性变化？
           </p>
         </div>
@@ -47,7 +46,6 @@
             <span class="cloud-item">Astro</span>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -66,10 +64,10 @@
 
   @media (min-width: 1024px) {
     .section-layout {
-      grid-template-columns: 300px 1fr;
+      grid-template-columns: var(--layout-sidebar-columns);
       gap: var(--space-xl);
     }
-    
+
     .sticky-title {
       position: sticky;
       top: calc(var(--header-height) + var(--space-xl));
@@ -102,7 +100,11 @@
   .insight-text {
     font-size: clamp(1.1rem, 1.5vw, 1.5rem);
     line-height: 1.6;
-    color: color-mix(in srgb, var(--tone-solid, var(--content-tone-default)) 20%, var(--color-text));
+    color: color-mix(
+      in srgb,
+      var(--tone-solid, var(--content-tone-default)) 20%,
+      var(--color-text)
+    );
     font-weight: var(--font-weight-body);
   }
 
@@ -116,7 +118,9 @@
 
   .cloud-item {
     color: var(--tone-strong, var(--color-text));
-    transition: color var(--transition-fast), transform var(--transition-fast);
+    transition:
+      var(--transition-color-fast),
+      transform var(--transition-fast);
     cursor: default;
     display: inline-block;
   }
@@ -126,9 +130,20 @@
     transform: scale(0.98);
   }
 
-  .cloud-item.large { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: var(--font-weight-heading); letter-spacing: -0.02em; }
-  .cloud-item.medium { font-size: clamp(1.5rem, 2vw, 2.5rem); font-weight: var(--font-weight-ui); }
-  .cloud-item.small { font-size: clamp(1rem, 1.2vw, 1.5rem); font-weight: var(--font-weight-body); color: var(--tone-muted, var(--color-text-muted)); }
+  .cloud-item.large {
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    font-weight: var(--font-weight-heading);
+    letter-spacing: -0.02em;
+  }
+  .cloud-item.medium {
+    font-size: clamp(1.5rem, 2vw, 2.5rem);
+    font-weight: var(--font-weight-ui);
+  }
+  .cloud-item.small {
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    font-weight: var(--font-weight-body);
+    color: var(--tone-muted, var(--color-text-muted));
+  }
 
   .tool-cloud .cloud-item {
     font-family: var(--font-mono);

@@ -209,7 +209,7 @@ export class LiquidGlassEffect {
     // Sharp directional highlights on the corners/edges, now fading smoothly inward instead of a hard line
     this.directionalEdge = document.createElement('div');
     this.directionalEdge.style.cssText = `
-      position: absolute;
+      position: absolute; 
       inset: 0;
       border-radius: inherit;
       box-shadow: 

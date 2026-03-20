@@ -5,7 +5,7 @@
 <header class="header" id="main-header">
   <div class="header-bg" id="header-bg"></div>
   <div class="header-inner">
-    <div class="logo">
+    <div class="header-actions">
       <div class="frosted-backdrop" id="backdrop-logo"></div>
       <a href="#">HOME</a>
     </div>
@@ -29,8 +29,6 @@
 
 <style>
   .header {
-    --header-content-scale: 1;
-    --header-content-shift-y: 0px;
     position: fixed;
     top: 28px;
     left: 50%;
@@ -47,8 +45,7 @@
       0 -4px 16px inset rgba(0, 0, 0, 0.05);
     background: transparent;
     transition:
-      transform var(--transition-smooth),
-      width var(--transition-smooth);
+      transform var(--transition-smooth);
   }
 
   .header.compact {
@@ -72,15 +69,6 @@
     z-index: 2; /* above the glass filter */
   }
 
-  .logo a {
-    display: inline-block;
-    font-weight: var(--font-weight-ui);
-    letter-spacing: 0.05em;
-    font-size: 1.1rem;
-    will-change: transform;
-  }
-
-  .logo,
   .header-actions {
     flex-shrink: 0;
     position: relative;
@@ -117,15 +105,9 @@
     color: var(--color-text-muted);
   }
 
-  .logo a,
   .section-nav a,
   .contact-link {
-    transform-origin: center;
-    transform: translateY(var(--header-content-shift-y))
-      scale(var(--header-content-scale));
-    transition:
-      transform var(--transition-smooth),
-      color var(--transition-fast);
+    transition: var(--transition-color-fast);
   }
 
   .section-nav a:hover,
@@ -161,9 +143,9 @@
 
 <script>
   import { LiquidGlassEffect } from "../scripts/liquid-glass.js";
-  import { 
+  import {
     getTransparentHeaderGlassOptions,
-    getFrostedHeaderGlassOptions 
+    getFrostedHeaderGlassOptions,
   } from "../scripts/liquid-glass-presets.js";
 
   const HEADER_LENS_XYR = {
@@ -200,7 +182,7 @@
           el,
           getFrostedHeaderGlassOptions({
             xyr: BACKDROP_LENS_XYR,
-          })
+          }),
         );
         el.dataset.liquidGlassReady = "true";
       }
@@ -233,7 +215,7 @@
     const updateSectionNav = () => {
       if (!trackedSections.length) return;
       const marker = window.scrollY + window.innerHeight * 0.42;
-      let activeId = trackedSections[0].section.id;
+      let activeId: string | null = null;
 
       trackedSections.forEach(({ section }) => {
         if (marker >= section.offsetTop) {

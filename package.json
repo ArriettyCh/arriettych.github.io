@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "astro": "^6.0.3",
+    "gsap": "^3.14.2",
     "lenis": "^1.3.19",
     "misans": "^4.1.0"
   }

@@ -12,52 +12,94 @@
     </div>
 
     <div class="section-content">
-      <div class="work-grid">
-        <a class="work-item fade-in-up" data-tone="work-research" href="/detail/work-research/">
-          <div class="image-wrapper bg-placeholder"></div>
-          <div class="caption">
-            <h3>重新理解语言生成</h3>
-            <p>Discrete Flow Matching Language Model (UCLA). 探索不依赖传统自回归范式的语言生成路径。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Problem:</strong> Coupling strategy efficiency.</p>
-              <p><strong>Method:</strong> Optimizing target distributions for smoother flow.</p>
+      <div class="work-grid-wrapper">
+        <div class="work-grid">
+          <a
+            class="work-item fade-in-up"
+            data-tone="work-research"
+            href="/detail/work-research/"
+          >
+            <div class="image-wrapper bg-placeholder"></div>
+            <div class="caption">
+              <h3>重新理解语言生成</h3>
+              <p>
+                Discrete Flow Matching Language Model (UCLA).
+                探索不依赖传统自回归范式的语言生成路径。
+              </p>
+              <div class="hood-details hidden" data-hood>
+                <p><strong>Problem:</strong> Coupling strategy efficiency.</p>
+                <p>
+                  <strong>Method:</strong> Optimizing target distributions for smoother
+                  flow.
+                </p>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
 
-        <a class="work-item fade-in-up" data-tone="work-product" href="/detail/work-product/">
-          <div class="image-wrapper bg-placeholder"></div>
-          <div class="caption">
-            <h3>让照片被自然找回</h3>
-            <p>AI-Native Photo Album. 基于 CLIP 和自然语言搜索的下一代相册体验。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Trade-off:</strong> Latency vs. Embedding precision.</p>
-              <p><strong>Constraint:</strong> Client-side storage limitations.</p>
+          <a
+            class="work-item fade-in-up"
+            data-tone="work-product"
+            href="/detail/work-product/"
+          >
+            <div class="image-wrapper bg-placeholder"></div>
+            <div class="caption">
+              <h3>让照片被自然找回</h3>
+              <p>
+                AI-Native Photo Album. 基于 CLIP
+                和自然语言搜索的下一代相册体验。
+              </p>
+              <div class="hood-details hidden" data-hood>
+                <p>
+                  <strong>Trade-off:</strong> Latency vs. Embedding precision.
+                </p>
+                <p>
+                  <strong>Constraint:</strong> Client-side storage limitations.
+                </p>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
 
-        <a class="work-item fade-in-up" data-tone="work-systems" href="/detail/work-systems/">
-          <div class="image-wrapper bg-placeholder"></div>
-          <div class="caption">
-            <h3>让先进模型走向可用</h3>
-            <p>并行视频采样与流匹配加速 (ZJU). 解决生成模型的工程化与成本瓶颈。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Focus:</strong> Inference speed optimization without degrading FID.</p>
+          <a
+            class="work-item fade-in-up"
+            data-tone="work-systems"
+            href="/detail/work-systems/"
+          >
+            <div class="image-wrapper bg-placeholder"></div>
+            <div class="caption">
+              <h3>让先进模型走向可用</h3>
+              <p>
+                并行视频采样与流匹配加速 (ZJU). 解决生成模型的工程化与成本瓶颈。
+              </p>
+              <div class="hood-details hidden" data-hood>
+                <p>
+                  <strong>Focus:</strong> Inference speed optimization without degrading
+                  FID.
+                </p>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
 
-        <a class="work-item fade-in-up" data-tone="work-benchmark" href="/detail/work-benchmark/">
-          <div class="image-wrapper bg-placeholder"></div>
-          <div class="caption">
-            <h3>建立可靠评估方式</h3>
-            <p>Continual Learning of Agent Benchmark (NUS). 定义如何测量智能体的持续进化能力。</p>
-            <div class="hood-details hidden" data-hood>
-              <p><strong>Framework:</strong> Multi-environment sequential tasks avoiding catastrophic forgetting.</p>
+          <a
+            class="work-item fade-in-up"
+            data-tone="work-benchmark"
+            href="/detail/work-benchmark/"
+          >
+            <div class="image-wrapper bg-placeholder"></div>
+            <div class="caption">
+              <h3>建立可靠评估方式</h3>
+              <p>
+                Continual Learning of Agent Benchmark (NUS).
+                定义如何测量智能体的持续进化能力。
+              </p>
+              <div class="hood-details hidden" data-hood>
+                <p>
+                  <strong>Framework:</strong> Multi-environment sequential tasks avoiding
+                  catastrophic forgetting.
+                </p>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
 
       <div class="work-postscript fade-in-up" data-tone="postscript">
@@ -95,7 +137,7 @@
 
   @media (min-width: 1024px) {
     .section-layout {
-      grid-template-columns: 300px 1fr;
+      grid-template-columns: var(--layout-sidebar-columns);
       gap: var(--space-xl);
     }
 
@@ -114,6 +156,10 @@
   .section-content {
     display: grid;
     gap: var(--space-lg);
+  }
+
+  .work-grid-wrapper {
+    overflow: visible;
   }
 
   .work-grid {
@@ -169,7 +215,8 @@
     grid-template-columns: 1fr;
     gap: var(--space-sm);
     padding-top: var(--space-sm);
-    border-top: 1px solid color-mix(in srgb, var(--tone-border) 85%, transparent);
+    border-top: 1px solid
+      color-mix(in srgb, var(--tone-border) 85%, transparent);
   }
 
   .postscript-meta {
@@ -198,7 +245,7 @@
   }
 
   .postscript-note::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0.3rem;
@@ -221,9 +268,26 @@
     max-width: 62ch;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 1023px) {
     .work-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .work-grid-wrapper {
+      overflow: hidden;
+    }
+
+    .work-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      width: max-content;
+    }
+
+    .work-item {
+      width: clamp(320px, 35vw, 480px);
+      flex-shrink: 0;
     }
 
     .postscript-shell {
@@ -236,3 +300,54 @@
     }
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const initScroll = () => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
+      const wrapper = document.querySelector(
+        ".work-grid-wrapper",
+      ) as HTMLElement;
+      const grid = document.querySelector(".work-grid") as HTMLElement;
+      const stickyTitle = document.querySelector(
+        ".sticky-title",
+      ) as HTMLElement;
+
+      if (wrapper && grid && stickyTitle) {
+        const getScrollAmount = () => {
+          // Calculate how far to move left
+          const gridWidth = grid.scrollWidth;
+          const wrapperWidth = wrapper.offsetWidth;
+          return Math.min(0, -(gridWidth - wrapperWidth));
+        };
+
+        const getHeaderOffset = () => {
+          // Get the exact computed 'top' value from the sticky title to perfectly align the pinning
+          return window.getComputedStyle(stickyTitle).top;
+        };
+
+        gsap.to(grid, {
+          x: getScrollAmount,
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: () => `top ${getHeaderOffset()}`, // dynamically sync with CSS calc()
+            end: () => `+=${getScrollAmount() * -1}`, // scroll distance = width to scroll
+            pin: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      }
+    });
+  };
+
+  // Astro view transitions support (if needed) or regular load
+  initScroll();
+</script>

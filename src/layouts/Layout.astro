@@ -18,6 +18,9 @@ const { title } = Astro.props;
     <meta name="description" content="arriettych personal portfolio" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      document.documentElement.classList.add('has-js');
+    </script>
     <title>{title}</title>
   </head>
   <body>
@@ -30,6 +33,10 @@ const { title } = Astro.props;
 
     <script>
       import Lenis from 'lenis';
+      import gsap from 'gsap';
+      import ScrollTrigger from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
 
       // Initialize Lenis
       const lenis = new Lenis({
@@ -38,12 +45,14 @@ const { title } = Astro.props;
         infinite: false,
       });
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
+      // Synchronize Lenis with GSAP ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
 
-      requestAnimationFrame(raf);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(0);
 
       // Handle anchor links for smooth scrolling with Lenis
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -61,26 +70,35 @@ const { title } = Astro.props;
         });
       });
 
-      // Global intersection observer for smooth fade-in-up animations
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px 0px -10% 0px', // Trigger slightly before it comes into full view
-        threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            // Stop observing once animated in to keep it visible
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
       // Initialize all fade-in elements
       const initAnimations = () => {
-        document.querySelectorAll('.fade-in-up').forEach((el, index) => {
+        const targets = document.querySelectorAll('.fade-in-up');
+        if (!targets.length) return;
+
+        if (typeof IntersectionObserver === 'undefined') {
+          targets.forEach((el) => {
+            el.classList.add('visible');
+          });
+          return;
+        }
+
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px 0px -10% 0px', // Trigger slightly before it comes into full view
+          threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              // Stop observing once animated in to keep it visible
+              observer.unobserve(entry.target);
+            }
+          });
+        }, observerOptions);
+
+        targets.forEach((el) => {
           observer.observe(el);
         });
       };
