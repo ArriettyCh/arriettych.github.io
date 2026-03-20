@@ -3,167 +3,211 @@
 ---
 
 <section id="hero" class="hero">
-  <div class="hero-layout">
-    <div class="hero-sidebar">
-      <div class="sticky-title fade-in-up">
-        <h2 class="section-title">About Me</h2>
-        <p>状态更新与方向</p>
-      </div>
+  <div class="section-layout">
+    <div class="section-sidebar" aria-hidden="true">
+      <p class="hero-scroll-cue fade-in-up">* Research</br>* Product</br>* Taste</p>
     </div>
 
-    <div class="hero-main">
-      <div class="hero-content">
-        <div class="hero-kicker label fade-in-up">
-          Research × Product × Taste
-        </div>
-
-        <h1 class="hero-title fade-in-up">
-          网站开发中，内容是 AI 随便生成的<br />仅作占位，与本人无关<br /><br
-          />我想把前沿 AI 的能力，<br />做成真正有感觉、有价值的产品。
+    <div class="section-content">
+      <div class="hero-intro fade-in-up">
+        <h1 class="hero-title">
+          把前沿 AI 的能力，做成用户真正愿意长期使用的产品。
         </h1>
-
-        <p class="subtitle fade-in-up hero-subtitle">
-          浙江大学计算机在读，辅修金融。正在生成式模型、扩散语言模型与智能体持续学习的交叉地带工作，也持续通过项目、写作与设计练习产品判断和体验表达。
+        <p class="hero-lead">
+          我关注模型能力与产品体验之间的转换过程：从算法边界、系统落地到交互表达。这里记录我正在构建的项目、持续研究的问题，以及对“好产品”判断标准的演化。
         </p>
+      </div>
 
-        <div class="tags flex gap-md fade-in-up hero-tags">
-          <span class="tag">理解模型</span>
-          <span class="tag">产品判断</span>
-          <span class="tag">审美表达</span>
+      <div class="text-grid fade-in-up">
+        <div class="text-col" data-tone="now">
+          <h3>Current Focus</h3>
+          <div class="prose">
+            <p>生成模型与 Agent 系统在真实场景下的可用性与可持续迭代。</p>
+            <p>把研究结论转成可以验证、可以复用、可以被用户感知的产品能力。</p>
+          </div>
+        </div>
+
+        <div class="text-col" data-tone="next">
+          <h3>What You Will See</h3>
+          <div class="prose">
+            <p>精选项目拆解：问题定义、关键取舍、以及最终带来的用户价值。</p>
+            <p>阶段性思考与实验记录：关注趋势，更关注可落地的方法。</p>
+          </div>
         </div>
       </div>
 
-      <div class="quick-facts flex justify-between fade-in-up hero-facts">
-        <span>Zhejiang University, CS & Finance</span>
-        <span>Class of 2027</span>
-        <span>UCLA / NUS Collaboration</span>
-      </div>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    min-height: 100dvh;
-    padding-top: calc(var(--header-height) + var(--space-sm));
-    padding-bottom: 0;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    min-height: 100svh;
+    padding-block: 0;
   }
 
-  @supports not (height: 100dvh) {
+  @supports not (height: 100svh) {
     .hero {
       min-height: 100vh;
     }
   }
 
-  .hero-layout {
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: -2;
+    background:
+      radial-gradient(
+        85% 74% at 14% 18%,
+        color-mix(in srgb, var(--content-tone-work-research) 20%, transparent),
+        transparent 68%
+      ),
+      radial-gradient(
+        66% 56% at 82% 74%,
+        color-mix(in srgb, var(--content-tone-signals-mind) 16%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-bg) 88%, white) 0%,
+        color-mix(in srgb, var(--color-bg) 96%, transparent) 48%,
+        var(--color-bg) 100%
+      );
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.28;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      color-mix(in srgb, var(--color-text-muted) 4%, transparent) 4px
+    );
+  }
+
+  .section-layout {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-md);
-  }
-
-  .hero-sidebar {
-    min-width: 0;
-  }
-
-  .hero-sidebar-probe {
-    width: max-content;
-    padding: 0.2rem 0.55rem;
-    border: 1px dashed var(--color-border);
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: var(--font-weight-ui);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-
-  .hero-main {
-    display: grid;
-    align-content: start;
-    gap: var(--space-md);
-  }
-
-  .hero-content {
     width: 100%;
-    margin-bottom: 0;
-    text-align: left;
+    min-height: 100%;
+    align-content: end;
+    padding-top: calc(var(--header-height) + var(--space-lg));
+    padding-bottom: var(--space-xl);
+  }
+
+  .section-content {
+    display: grid;
+    gap: var(--space-lg);
+    align-content: end;
+  }
+
+  .hero-intro {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: min(72ch, 100%);
   }
 
   .hero-kicker {
-    display: inline-block;
-    padding-block: 0.25rem;
-    margin-bottom: var(--space-sm);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-ui);
+    width: max-content;
+    padding: 0.26rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
   }
 
   .hero-title {
-    transition-delay: 0.1s;
+    font-size: clamp(2.25rem, 5.4vw, 5rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    max-width: 13.5ch;
+    text-wrap: balance;
   }
 
-  .subtitle {
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-sm);
-    max-width: 100%;
-    font-size: 1.1rem;
+  .hero-lead {
+    max-width: 56ch;
+    font-size: clamp(1.04rem, 1.16vw, 1.24rem);
+    color: color-mix(
+      in srgb,
+      var(--content-tone-default) 18%,
+      var(--color-text)
+    );
   }
 
-  .hero-subtitle {
-    transition-delay: 0.2s;
+  .text-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
   }
 
-  .tags {
-    font-weight: var(--font-weight-body);
-    color: var(--color-text);
-  }
-
-  .hero-tags {
-    transition-delay: 0.3s;
-  }
-
-  .tag {
-    position: relative;
-  }
-
-  .tag:not(:last-child)::after {
-    content: "—";
-    position: absolute;
-    right: calc(var(--space-md) * -0.5 - 0.5em);
-    color: var(--color-text-muted);
-  }
-
-  .quick-facts {
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
+  .text-col h3 {
     font-size: 0.85rem;
-    font-weight: var(--font-weight-ui);
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    text-align: left;
+    color: var(--tone-strong, var(--color-text-muted));
+    margin-bottom: var(--space-md);
+    border-bottom: 1px solid var(--tone-border, var(--color-border));
+    padding-bottom: 0.5rem;
   }
 
-  .hero-facts {
-    transition-delay: 0.4s;
+  .prose p {
+    margin-bottom: 1rem;
+    font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+    color: color-mix(
+      in srgb,
+      var(--tone-solid, var(--content-tone-default)) 16%,
+      var(--color-text)
+    );
+  }
+
+  .hero-scroll-cue {
+    margin-top: var(--space-sm);
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-text-muted) 82%, transparent);
   }
 
   @media (min-width: 1024px) {
-    .hero-layout {
+    .section-layout {
       grid-template-columns: var(--layout-sidebar-columns);
       gap: var(--space-xl);
     }
   }
 
   @media (max-width: 768px) {
-    .quick-facts {
-      flex-direction: column;
-      gap: 0.5rem;
+    .section-layout {
+      padding-top: calc(var(--header-height) + var(--space-md));
+      padding-bottom: var(--space-lg);
     }
-    .tag:not(:last-child)::after {
-      display: none;
-    }
-    .tags {
-      gap: 1rem;
-      flex-wrap: wrap;
+
+    .text-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
     }
   }
 </style>
