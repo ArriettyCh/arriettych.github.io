@@ -123,7 +123,7 @@ export class LiquidGlassEffect {
       this.feDisplacementMapFrost = document.createElementNS('http://www.w3.org/2000/svg', 'feDisplacementMap');
       this.feDisplacementMapFrost.setAttribute('in', 'macro_blur');
       this.feDisplacementMapFrost.setAttribute('in2', 'noise');
-      this.feDisplacementMapFrost.setAttribute('scale', '8'); // Mild refraction to maintain the shape
+      this.feDisplacementMapFrost.setAttribute('scale', '4'); // Mild refraction to maintain the shape
       this.feDisplacementMapFrost.setAttribute('xChannelSelector', 'R');
       this.feDisplacementMapFrost.setAttribute('yChannelSelector', 'G');
       this.feDisplacementMapFrost.setAttribute('result', 'micro_scatter');
@@ -132,7 +132,7 @@ export class LiquidGlassEffect {
       // Real frosted glass isn't completely sharp at the microscopic level; light bleeds through the grain
       this.feGaussianBlurSoft = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
       this.feGaussianBlurSoft.setAttribute('in', 'micro_scatter');
-      this.feGaussianBlurSoft.setAttribute('stdDeviation', '0.5'); // Very light feathering to soften the noise
+      this.feGaussianBlurSoft.setAttribute('stdDeviation', '0.6'); // Very light feathering to soften the noise
       this.feGaussianBlurSoft.setAttribute('edgeMode', 'duplicate');
       this.feGaussianBlurSoft.setAttribute('result', 'softened_volume');
 

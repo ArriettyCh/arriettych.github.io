@@ -7,7 +7,7 @@ export const DEFAULT_GLASS_XYR = {
 };
 
 export const TRANSPARENT_GLASS_FILTER_STRENGTH =
-  'blur(0.25px) contrast(1.12) brightness(1.15) saturate(1.15)';
+  'blur(0.25px) contrast(1.15) brightness(1.15) saturate(1.15)';
 
 export function createTransparentHeaderGlassFragment(xyr = DEFAULT_GLASS_XYR) {
   const { x, y, r } = {
@@ -30,6 +30,18 @@ export function getTransparentHeaderGlassOptions(overrides = {}) {
 
   return {
     frosted: false,
+    chromaticAberration: true,
+    filterStrength: TRANSPARENT_GLASS_FILTER_STRENGTH,
+    fragment: createTransparentHeaderGlassFragment(xyr),
+    ...rest,
+  };
+}
+
+export function getFrostedHeaderGlassOptions(overrides = {}) {
+  const { xyr, ...rest } = overrides;
+
+  return {
+    frosted: true,
     chromaticAberration: true,
     filterStrength: TRANSPARENT_GLASS_FILTER_STRENGTH,
     fragment: createTransparentHeaderGlassFragment(xyr),

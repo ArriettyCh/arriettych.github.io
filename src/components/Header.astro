@@ -3,19 +3,25 @@
 ---
 
 <header class="header" id="main-header">
+  <div class="header-bg" id="header-bg"></div>
   <div class="header-inner">
     <div class="logo">
+      <div class="frosted-backdrop" id="backdrop-logo"></div>
       <a href="#">HOME</a>
     </div>
 
-    <nav class="section-nav" aria-label="页面导航">
-      <a href="#selected-work" data-target="selected-work">Selected Work</a>
-      <a href="#beyond-work" data-target="beyond-work">Beyond Work</a>
-      <a href="#signals" data-target="signals">Signals</a>
-      <a href="#now-next" data-target="now-next">Now &amp; Next</a>
-    </nav>
+    <div class="section-nav-wrapper">
+      <nav class="section-nav" aria-label="页面导航">
+        <div class="frosted-backdrop" id="backdrop-nav"></div>
+        <a href="#selected-work" data-target="selected-work">Selected Work</a>
+        <a href="#beyond-work" data-target="beyond-work">Beyond Work</a>
+        <a href="#signals" data-target="signals">Signals</a>
+        <a href="#now-next" data-target="now-next">Now &amp; Next</a>
+      </nav>
+    </div>
 
     <div class="header-actions">
+      <div class="frosted-backdrop" id="backdrop-contact"></div>
       <a href="#contact" class="contact-link">contact()</a>
     </div>
   </div>
@@ -26,7 +32,7 @@
     --header-content-scale: 1;
     --header-content-shift-y: 0px;
     position: fixed;
-    top: 24px;
+    top: 28px;
     left: 50%;
     transform: translateX(-50%);
     width: min(1120px, calc(100vw - (2 * var(--space-md))));
@@ -46,7 +52,14 @@
   }
 
   .header.compact {
-    transform: translateX(-50%) translateY(-18px);
+    transform: translateX(-50%) translateY(-22px);
+  }
+
+  .header-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 0;
   }
 
   .header-inner {
@@ -70,6 +83,14 @@
   .logo,
   .header-actions {
     flex-shrink: 0;
+    position: relative;
+  }
+
+  .section-nav-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
   }
 
   .section-nav {
@@ -77,8 +98,14 @@
     align-items: center;
     justify-content: center;
     gap: clamp(0.92rem, 1.55vw, 1.5rem);
-    flex: 1;
-    min-width: 0;
+    position: relative;
+  }
+
+  .frosted-backdrop {
+    position: absolute;
+    inset: -6px -14px;
+    border-radius: 999px;
+    z-index: -1;
   }
 
   .section-nav a {
@@ -125,7 +152,7 @@
   }
 
   @media (max-width: 960px) {
-    .section-nav {
+    .section-nav-wrapper {
       display: none;
     }
   }
@@ -133,26 +160,50 @@
 
 <script>
   import { LiquidGlassEffect } from "../scripts/liquid-glass.js";
-  import { getTransparentHeaderGlassOptions } from "../scripts/liquid-glass-presets.js";
+  import { 
+    getTransparentHeaderGlassOptions,
+    getFrostedHeaderGlassOptions 
+  } from "../scripts/liquid-glass-presets.js";
 
   const HEADER_LENS_XYR = {
-    x: 0.5,
+    x: 0.6,
     y: 0.2,
-    r: 0.5,
+    r: 0.6,
+  };
+
+  const BACKDROP_LENS_XYR = {
+    x: 0.35,
+    y: 0.3,
+    r: 0.2, // fully rounded pills
   };
 
   // Initialize
   const initHeader = () => {
     const header = document.getElementById("main-header");
-    if (header && header.dataset.liquidGlassReady !== "true") {
+    const headerBg = document.getElementById("header-bg");
+    if (headerBg && headerBg.dataset.liquidGlassReady !== "true") {
       new LiquidGlassEffect(
-        header,
+        headerBg,
         getTransparentHeaderGlassOptions({
           xyr: HEADER_LENS_XYR,
         }),
       );
-      header.dataset.liquidGlassReady = "true";
+      headerBg.dataset.liquidGlassReady = "true";
     }
+
+    const backdropIds = ["backdrop-logo", "backdrop-nav", "backdrop-contact"];
+    backdropIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && el.dataset.liquidGlassReady !== "true") {
+        new LiquidGlassEffect(
+          el,
+          getFrostedHeaderGlassOptions({
+            xyr: BACKDROP_LENS_XYR,
+          })
+        );
+        el.dataset.liquidGlassReady = "true";
+      }
+    });
 
     // Existing scroll tracking logic
     const sectionLinks = Array.from(
