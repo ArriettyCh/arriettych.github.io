@@ -89,6 +89,7 @@
 
   .typography-block h3 {
     font-size: 0.85rem;
+    font-weight: var(--font-weight-ui);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--tone-strong, var(--color-text-muted));
@@ -102,7 +103,7 @@
     font-size: clamp(1.1rem, 1.5vw, 1.5rem);
     line-height: 1.6;
     color: color-mix(in srgb, var(--tone-solid, var(--content-tone-default)) 20%, var(--color-text));
-    font-weight: 400;
+    font-weight: var(--font-weight-body);
   }
 
   /* Word Cloud */
@@ -125,13 +126,14 @@
     transform: scale(0.98);
   }
 
-  .cloud-item.large { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: 400; letter-spacing: -0.02em; }
-  .cloud-item.medium { font-size: clamp(1.5rem, 2vw, 2.5rem); font-weight: 400; }
-  .cloud-item.small { font-size: clamp(1rem, 1.2vw, 1.5rem); font-weight: 300; color: var(--tone-muted, var(--color-text-muted)); }
+  .cloud-item.large { font-size: clamp(2rem, 3vw, 3.5rem); font-weight: var(--font-weight-heading); letter-spacing: -0.02em; }
+  .cloud-item.medium { font-size: clamp(1.5rem, 2vw, 2.5rem); font-weight: var(--font-weight-ui); }
+  .cloud-item.small { font-size: clamp(1rem, 1.2vw, 1.5rem); font-weight: var(--font-weight-body); color: var(--tone-muted, var(--color-text-muted)); }
 
   .tool-cloud .cloud-item {
     font-family: var(--font-mono);
     font-size: clamp(1.2rem, 1.5vw, 2rem);
+    font-weight: var(--font-weight-ui);
     text-transform: lowercase;
     opacity: 0.85;
   }

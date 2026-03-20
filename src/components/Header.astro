@@ -74,7 +74,7 @@
 
   .logo a {
     display: inline-block;
-    font-weight: 500;
+    font-weight: var(--font-weight-ui);
     letter-spacing: 0.05em;
     font-size: 1.1rem;
     will-change: transform;
@@ -110,6 +110,7 @@
 
   .section-nav a {
     font-size: clamp(0.64rem, 0.58rem + 0.22vw, 0.72rem);
+    font-weight: var(--font-weight-ui);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
@@ -143,7 +144,7 @@
     align-items: center;
     font-family: var(--font-mono);
     font-size: clamp(0.64rem, 0.58rem + 0.2vw, 0.72rem);
-    font-weight: 400;
+    font-weight: var(--font-weight-ui);
     letter-spacing: 0.02em;
     text-transform: none;
     white-space: nowrap;
@@ -168,7 +169,7 @@
   const HEADER_LENS_XYR = {
     x: 0.6,
     y: 0.2,
-    r: 0.6,
+    r: 0.55,
   };
 
   const BACKDROP_LENS_XYR = {

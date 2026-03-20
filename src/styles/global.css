@@ -1,8 +1,6 @@
-@import "@fontsource/libre-baskerville/400.css";
-@import "@fontsource/libre-baskerville/500.css";
-@import "@fontsource/libre-baskerville/600.css";
-@import "@fontsource/libre-baskerville/700.css";
-@import "@fontsource-variable/noto-serif-sc/wght.css";
+@import "misans/lib/Normal/MiSans-Regular.min.css";
+@import "misans/lib/Normal/MiSans-Medium.min.css";
+@import "misans/lib/Normal/MiSans-Semibold.min.css";
 
 :root {
   /* Colors - Base (Grayscale for now) */
@@ -54,8 +52,12 @@
     --glass-sheen-feather: 14px;
 
   /* Typography */
-  --font-main: "Libre Baskerville", "Noto Serif SC Variable", "Noto Serif SC", "Songti SC", "STSong", "SimSun", Georgia, "Times New Roman", serif;
-  --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-main: "MiSans", "MiSans VF", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-main);
+  /* Fixed roles: body text -> 330, UI labels/meta -> 380, headings -> 520 */
+  --font-weight-body: 330;
+  --font-weight-ui: 380;
+  --font-weight-heading: 520;
   
   /* Dimensions */
   --toc-width: 240px;
@@ -131,10 +133,12 @@
 
 html {
   font-family: var(--font-main);
+  font-weight: var(--font-weight-body);
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  font-synthesis-weight: none;
   font-kerning: normal;
   text-rendering: optimizeLegibility;
   background-image:
@@ -423,7 +427,7 @@ a {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
+  font-weight: var(--font-weight-heading);
   letter-spacing: -0.02em;
 }
 
@@ -443,6 +447,7 @@ h3 {
 p {
   font-size: clamp(1rem, 1.2vw, 1.125rem);
   color: var(--color-text-muted);
+  font-weight: var(--font-weight-body);
 }
 
 [data-tone] {
@@ -470,7 +475,7 @@ p {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 500;
+  font-weight: var(--font-weight-ui);
 }
 
 /* Section base */
