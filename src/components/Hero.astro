@@ -3,40 +3,37 @@
 ---
 
 <section id="hero" class="hero">
-  <div class="section-layout">
-    <div class="section-sidebar" aria-hidden="true">
-      <p class="hero-scroll-cue fade-in-up">* Research</br>* Product</br>* Taste</p>
+  <div class="hero-shell">
+    <div class="hero-intro fade-in-up">
+      <p class="hero-kicker">Research · Product · Taste</p>
+      <h1 class="hero-title">
+        网站仅作排版示意，内容与任何人无关。
+        
+      </h1>
+      <p class="hero-lead">
+        我关注模型能力与产品体验之间的转换过程：从算法边界、系统落地到交互表达。这里记录我正在构建的项目、持续研究的问题，以及对“好产品”判断标准的演化。
+      </p>
     </div>
 
-    <div class="section-content">
-      <div class="hero-intro fade-in-up">
-        <h1 class="hero-title">
-          把前沿 AI 的能力，做成用户真正愿意长期使用的产品。
-        </h1>
-        <p class="hero-lead">
-          我关注模型能力与产品体验之间的转换过程：从算法边界、系统落地到交互表达。这里记录我正在构建的项目、持续研究的问题，以及对“好产品”判断标准的演化。
-        </p>
-      </div>
-
-      <div class="text-grid fade-in-up">
-        <div class="text-col" data-tone="now">
-          <h3>Current Focus</h3>
-          <div class="prose">
-            <p>生成模型与 Agent 系统在真实场景下的可用性与可持续迭代。</p>
-            <p>把研究结论转成可以验证、可以复用、可以被用户感知的产品能力。</p>
-          </div>
+    <div class="hero-stack fade-in-up">
+      <article class="hero-note">
+        <h3>Current Focus</h3>
+        <div class="prose">
+          <p>生成模型与 Agent 系统在真实场景下的可用性与可持续迭代。</p>
+          <p>把研究结论转成可以验证、可以复用、可以被用户感知的产品能力。</p>
         </div>
+      </article>
 
-        <div class="text-col" data-tone="next">
-          <h3>What You Will See</h3>
-          <div class="prose">
-            <p>精选项目拆解：问题定义、关键取舍、以及最终带来的用户价值。</p>
-            <p>阶段性思考与实验记录：关注趋势，更关注可落地的方法。</p>
-          </div>
+      <article class="hero-note">
+        <h3>What You Will See</h3>
+        <div class="prose">
+          <p>精选项目拆解：问题定义、关键取舍、以及最终带来的用户价值。</p>
+          <p>阶段性思考与实验记录：关注趋势，更关注可落地的方法。</p>
         </div>
-      </div>
-
+      </article>
     </div>
+
+    <p class="hero-scroll-cue fade-in-up">Scroll to Selected Work</p>
   </div>
 </section>
 
@@ -46,7 +43,8 @@
     isolation: isolate;
     overflow: clip;
     min-height: 100svh;
-    padding-block: 0;
+    padding-top: 0;
+    padding-bottom: var(--space-xl);
   }
 
   @supports not (height: 100svh) {
@@ -55,159 +53,115 @@
     }
   }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 100vw;
-    transform: translateX(-50%);
-    z-index: -2;
-    background:
-      radial-gradient(
-        85% 74% at 14% 18%,
-        color-mix(in srgb, var(--content-tone-work-research) 20%, transparent),
-        transparent 68%
-      ),
-      radial-gradient(
-        66% 56% at 82% 74%,
-        color-mix(in srgb, var(--content-tone-signals-mind) 16%, transparent),
-        transparent 70%
-      ),
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--color-bg) 88%, white) 0%,
-        color-mix(in srgb, var(--color-bg) 96%, transparent) 48%,
-        var(--color-bg) 100%
-      );
-  }
-
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    left: 50%;
-    width: 100vw;
-    transform: translateX(-50%);
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.28;
-    background-image: repeating-linear-gradient(
-      0deg,
-      transparent 0,
-      transparent 3px,
-      color-mix(in srgb, var(--color-text-muted) 4%, transparent) 4px
-    );
-  }
-
-  .section-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-    width: 100%;
-    min-height: 100%;
-    align-content: end;
-    padding-top: calc(var(--header-height) + var(--space-lg));
-    padding-bottom: var(--space-xl);
-  }
-
-  .section-content {
+  .hero-shell {
+    position: relative;
     display: grid;
     gap: var(--space-lg);
+    width: 100%;
+    min-height: 100svh;
     align-content: end;
+    padding-top: calc(var(--header-height) + var(--space-md));
+  }
+
+  @supports not (height: 100svh) {
+    .hero-shell {
+      min-height: 100vh;
+    }
   }
 
   .hero-intro {
     display: grid;
-    gap: var(--space-sm);
-    max-width: min(72ch, 100%);
+    gap: var(--space-md);
+    max-width: 100%;
+    padding: 0;
   }
 
   .hero-kicker {
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     color: var(--color-text-muted);
     font-weight: var(--font-weight-ui);
-    width: max-content;
-    padding: 0.26rem 0.7rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
-    background: color-mix(in srgb, var(--color-bg) 72%, transparent);
   }
 
   .hero-title {
-    font-size: clamp(2.25rem, 5.4vw, 5rem);
-    line-height: 1.04;
+    font-size: clamp(2.35rem, 5.6vw, 5.2rem);
+    line-height: 1.03;
     letter-spacing: -0.02em;
-    max-width: 13.5ch;
+    max-width: min(100%, 12em);
     text-wrap: balance;
+    color: var(--color-text);
   }
 
   .hero-lead {
-    max-width: 56ch;
-    font-size: clamp(1.04rem, 1.16vw, 1.24rem);
-    color: color-mix(
-      in srgb,
-      var(--content-tone-default) 18%,
-      var(--color-text)
-    );
+    max-width: min(100%, 46em);
+    font-size: clamp(1.04rem, 1.22vw, 1.24rem);
+    line-height: 1.66;
+    color: var(--color-text-muted);
   }
 
-  .text-grid {
+  .hero-stack {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
-    padding-top: var(--space-md);
-    border-top: 1px solid color-mix(in srgb, var(--color-border) 82%, transparent);
+    gap: var(--space-sm);
+    max-width: 100%;
   }
 
-  .text-col h3 {
+  .hero-note {
+    display: grid;
+    gap: 0.7rem;
+    padding: 0;
+  }
+
+  .hero-note h3 {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--tone-strong, var(--color-text-muted));
-    margin-bottom: var(--space-md);
-    border-bottom: 1px solid var(--tone-border, var(--color-border));
-    padding-bottom: 0.5rem;
+    color: var(--color-text);
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .prose p {
-    margin-bottom: 1rem;
-    font-size: clamp(1.05rem, 1.2vw, 1.25rem);
-    color: color-mix(
-      in srgb,
-      var(--tone-solid, var(--content-tone-default)) 16%,
-      var(--color-text)
-    );
+    margin-bottom: 0.8rem;
+    font-size: clamp(1.02rem, 1.1vw, 1.16rem);
+    line-height: 1.64;
+    color: var(--color-text-muted);
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
   }
 
   .hero-scroll-cue {
-    margin-top: var(--space-sm);
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-family: var(--font-mono);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--color-text-muted) 82%, transparent);
+    color: var(--color-text-muted);
   }
 
   @media (min-width: 1024px) {
-    .section-layout {
+    .hero-shell {
       grid-template-columns: var(--layout-sidebar-columns);
-      gap: var(--space-xl);
+      column-gap: var(--space-xl);
+    }
+
+    .hero-intro,
+    .hero-stack,
+    .hero-scroll-cue {
+      grid-column: 2;
     }
   }
 
   @media (max-width: 768px) {
-    .section-layout {
-      padding-top: calc(var(--header-height) + var(--space-md));
+    .hero {
       padding-bottom: var(--space-lg);
     }
 
-    .text-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-lg);
+    .hero-shell {
+      padding-top: calc(var(--header-height) + var(--space-sm));
+      gap: var(--space-md);
     }
+
   }
 </style>
