@@ -63,7 +63,8 @@
   --toc-width: 240px;
   --header-height: 80px;
   --header-compact-height: 60px;
-  --layout-sidebar-columns: 12% minmax(0, 1fr);
+  --layout-sidebar-width: 12%;
+  --layout-sidebar-gap: 48px;
 
   /* Spacing */
   --space-xs: clamp(0.35rem, 0.2rem + 0.35vw, 0.65rem);

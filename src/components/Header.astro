@@ -7,7 +7,7 @@
   <div class="header-inner">
     <div class="header-actions">
       <div class="frosted-backdrop" id="backdrop-logo"></div>
-      <a href="#">HOME</a>
+      <a href="#" class="home-link">HOME</a>
     </div>
 
     <div class="section-nav-wrapper">
@@ -96,7 +96,8 @@
     z-index: -1;
   }
 
-  .section-nav a {
+  .section-nav a,
+  .home-link {
     font-size: clamp(0.64rem, 0.58rem + 0.22vw, 0.72rem);
     font-weight: var(--font-weight-ui);
     letter-spacing: 0.08em;
@@ -106,12 +107,15 @@
   }
 
   .section-nav a,
+  .home-link,
   .contact-link {
     transition: var(--transition-color-fast);
   }
 
   .section-nav a:hover,
+  .home-link:hover,
   .section-nav a[data-state="active"],
+  .home-link[data-state="active"],
   .contact-link:hover {
     color: var(--color-text);
   }
@@ -192,6 +196,8 @@
     const sectionLinks = Array.from(
       document.querySelectorAll(".section-nav a"),
     ) as HTMLAnchorElement[];
+    const homeLink = document.querySelector(".home-link") as HTMLAnchorElement | null;
+    const heroSection = document.getElementById("hero");
     const trackedSections = sectionLinks
       .map((link) => {
         const id = link.dataset.target;
@@ -213,25 +219,38 @@
     };
 
     const updateSectionNav = () => {
-      if (!trackedSections.length) return;
       const marker = window.scrollY + window.innerHeight * 0.42;
       let activeId: string | null = null;
 
-      trackedSections.forEach(({ section }) => {
-        if (marker >= section.offsetTop) {
-          activeId = section.id;
-        }
-      });
+      if (trackedSections.length) {
+        trackedSections.forEach(({ section }) => {
+          if (marker >= section.offsetTop) {
+            activeId = section.id;
+          }
+        });
 
-      trackedSections.forEach(({ link, section }) => {
-        const isActive = section.id === activeId;
-        link.dataset.state = isActive ? "active" : "inactive";
-        if (isActive) {
-          link.setAttribute("aria-current", "location");
+        trackedSections.forEach(({ link, section }) => {
+          const isActive = section.id === activeId;
+          link.dataset.state = isActive ? "active" : "inactive";
+          if (isActive) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      if (homeLink) {
+        const heroBoundary = trackedSections[0]?.section.offsetTop
+          ?? (heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 0);
+        const isHeroActive = Boolean(heroSection) && window.scrollY < heroBoundary;
+        homeLink.dataset.state = isHeroActive ? "active" : "inactive";
+        if (isHeroActive) {
+          homeLink.setAttribute("aria-current", "location");
         } else {
-          link.removeAttribute("aria-current");
+          homeLink.removeAttribute("aria-current");
         }
-      });
+      }
     };
 
     const handleScroll = () => {

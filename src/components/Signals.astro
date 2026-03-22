@@ -64,8 +64,8 @@
 
   @media (min-width: 1024px) {
     .section-layout {
-      grid-template-columns: var(--layout-sidebar-columns);
-      gap: var(--space-xl);
+      grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
+      column-gap: var(--layout-sidebar-gap);
     }
 
     .sticky-title {
