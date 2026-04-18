@@ -2,6 +2,10 @@
 @import "misans/lib/Normal/MiSans-Medium.min.css";
 @import "misans/lib/Normal/MiSans-Semibold.min.css";
 
+/* Hero-only display serifs. Kept here so the @import ordering is valid
+   (@import must precede all other rules). Consumed only by <Hero />. */
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+SC:wght@400;500;600&display=swap");
+
 :root {
   /* Colors - Base (Grayscale for now) */
   --color-bg: #F6F1E6;
@@ -54,6 +58,8 @@
   /* Typography */
   --font-main: "MiSans", "MiSans VF", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-main);
+  --font-serif-en: "Instrument Serif", "Times New Roman", serif;
+  --font-serif-cn: "Noto Serif SC", "Songti SC", "SimSun", serif;
   /* Fixed roles: body text -> 330, UI labels/meta -> 380, headings -> 520 */
   --font-weight-body: 330;
   --font-weight-ui: 380;
@@ -61,9 +67,9 @@
   
   /* Dimensions */
   --toc-width: 240px;
-  --header-height: 80px;
+  --header-height: 64px;
   --header-compact-height: 60px;
-  --layout-sidebar-width: 12%;
+  --layout-sidebar-width: 14%;
   --layout-sidebar-gap: 48px;
 
   /* Spacing */
@@ -86,8 +92,10 @@
   --transition-bounce: 0.6s var(--ease-spring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+/* Forced dark mode — the site ships dark by default.
+   Kept as a data-attribute selector so a light theme can be re-introduced
+   via <html data-theme="light"> without touching this block. */
+:root[data-theme="dark"], :root {
     --color-bg: #101216;
     --color-text: #EDEDED;
     --color-text-muted: #888888;
@@ -129,7 +137,6 @@
       --glass-edge-opacity: 0.8;
       --glass-sheen-opacity: 0.34;
   }
-}
 
 /* Reset & Base */
 *, *::before, *::after {

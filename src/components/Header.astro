@@ -30,12 +30,13 @@
 <style>
   .header {
     position: fixed;
-    top: 28px;
+    /* Centered pill bar — not edge-to-edge, keeps long-capsule silhouette */
+    top: 12px;
     left: 50%;
     transform: translateX(-50%);
     width: min(1120px, calc(100vw - (2 * var(--space-md))));
-    height: 64px;
-    border-radius: 32px;
+    height: var(--header-height);
+    border-radius: calc(var(--header-height) / 2);
     z-index: 100;
     padding: 0 var(--space-md);
     display: flex;
@@ -44,12 +45,6 @@
       0 4px 12px rgba(0, 0, 0, 0.1),
       0 -4px 16px inset rgba(0, 0, 0, 0.05);
     background: transparent;
-    transition:
-      transform var(--transition-smooth);
-  }
-
-  .header.compact {
-    transform: translateX(-50%) translateY(-22px);
   }
 
   .header-bg {
@@ -166,7 +161,6 @@
 
   // Initialize
   const initHeader = () => {
-    const header = document.getElementById("main-header");
     const headerBg = document.getElementById("header-bg");
     if (headerBg && headerBg.dataset.liquidGlassReady !== "true") {
       new LiquidGlassEffect(
@@ -209,15 +203,6 @@
           Boolean(item.section),
       );
 
-    const setHeaderState = () => {
-      if (!header) return;
-      if (window.scrollY > 100) {
-        header.classList.add("compact");
-      } else {
-        header.classList.remove("compact");
-      }
-    };
-
     const updateSectionNav = () => {
       const marker = window.scrollY + window.innerHeight * 0.42;
       let activeId: string | null = null;
@@ -254,7 +239,6 @@
     };
 
     const handleScroll = () => {
-      setHeaderState();
       updateSectionNav();
     };
 

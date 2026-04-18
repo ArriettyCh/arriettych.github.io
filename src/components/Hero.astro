@@ -1,150 +1,366 @@
 ---
-// Hero Section
+// Hero — a tall, scroll-driven section (no scroll-lock).
+//
+// Strategy:
+//   The hero occupies ~3× viewport height. A sticky inner shell stays pinned
+//   while the user scrolls through it; the slogan types out in sync with
+//   `scrollY` progress (0 → 1 across the hero's height). Because the page
+//   is never frozen and scrollY never "teleports", Header's scroll listener
+//   sees smooth continuous motion and stays in its natural expanded state
+//   throughout the hero. Once the user scrolls past the hero, normal page
+//   flow takes over.
+//
+// Design fixes:
+//   - No liquid-glass here (glass is reserved for nav pills / clickable tiles).
+//   - A fixed-width content column keeps side margins stable regardless of
+//     how many lines the slogan occupies.
 ---
 
-<section id="hero" class="hero">
-  <div class="hero-shell">
-    <div class="hero-intro fade-in-up">
-      <p class="hero-kicker">Research · Product · Taste</p>
-      <h1 class="hero-title">
-        网站仅作排版示意，内容与任何人无关。
-        
-      </h1>
-      <p class="hero-lead">
-        我关注模型能力与产品体验之间的转换过程：从算法边界、系统落地到交互表达。这里记录我正在构建的项目、持续研究的问题，以及对“好产品”判断标准的演化。
-      </p>
-    </div>
+<section id="hero" class="hero" data-screen-label="01 Hero">
+  <!-- Hairline typing progress pinned to viewport top -->
+  <div class="hero-type-progress" aria-hidden="true">
+    <div class="hero-type-progress__bar" id="hero-type-bar"></div>
+  </div>
 
-    <div class="hero-stack fade-in-up">
-      <article class="hero-note">
-        <h3>Current Focus</h3>
-        <div class="prose">
-          <p>生成模型与 Agent 系统在真实场景下的可用性与可持续迭代。</p>
-          <p>把研究结论转成可以验证、可以复用、可以被用户感知的产品能力。</p>
+  <!-- Sticky shell: pinned while scrolling through the hero's extra height -->
+  <div class="hero-sticky">
+    <div class="hero-shell">
+      <div class="hero-column">
+        <div class="hero-triad" aria-hidden="true">
+          <span class="hero-triad__word">Research</span>
+          <span class="hero-triad__sep"></span>
+          <span class="hero-triad__word">Product</span>
+          <span class="hero-triad__sep"></span>
+          <span class="hero-triad__word">Taste</span>
         </div>
-      </article>
 
-      <article class="hero-note">
-        <h3>What You Will See</h3>
-        <div class="prose">
-          <p>精选项目拆解：问题定义、关键取舍、以及最终带来的用户价值。</p>
-          <p>阶段性思考与实验记录：关注趋势，更关注可落地的方法。</p>
+        <h1 class="hero-slogan">
+          <span id="hero-slogan-text"></span><span class="hero-caret" id="hero-caret"></span>
+        </h1>
+
+        <div class="hero-facts">
+          <div class="hero-fact">
+            <strong>Path</strong>
+            <span>ZJU</span><span class="arrow">→</span>
+            <span>UCLA</span><span class="arrow">→</span>
+            <span>NUS</span>
+          </div>
+          <div class="hero-fact">
+            <strong>Focus</strong>
+            <span>Generative models · Agent systems</span>
+          </div>
+          <div class="hero-fact">
+            <strong>Based</strong>
+            <span>Hangzhou / Los Angeles</span>
+          </div>
         </div>
-      </article>
-    </div>
+      </div>
 
+      <div class="hero-scroll-hint" id="hero-scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <span class="line"></span>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
   .hero {
     position: relative;
-    isolation: isolate;
-    overflow: clip;
-    min-height: 100svh;
-    padding-top: 0;
-    padding-bottom: var(--space-xl);
+    /* Flex column child: stay full width of main; do not shrink to min-content. */
+    width: 100%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    /* 3× viewport = 1× pinned reading area + 2× of scroll distance
+       during which the slogan types out. */
+    height: 300svh;
+    /* Override global `section` padding — the hero manages its own
+       horizontal rhythm via .hero-shell below. Without this, the outer
+       section pads once and the inner shell pads again, eating the
+       side margins twice. */
+    padding: 0;
+    max-width: none;
+  }
+  @supports not (height: 300svh) { .hero { height: 300vh; } }
+
+  .hero-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+  @supports not (height: 100svh) { .hero-sticky { height: 100vh; } }
+
+  /* Progress hairline pinned to top of viewport */
+  .hero-type-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    z-index: 101;
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+    pointer-events: none;
+  }
+  .hero-type-progress__bar {
+    height: 100%;
+    background: var(--content-tone-signals-mind);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.12s linear;
   }
 
-  @supports not (height: 100svh) {
-    .hero {
-      min-height: 100vh;
-    }
-  }
-
+  /* Shell — sits inside the sticky viewport.
+     Owns the hero's horizontal rhythm; outer <section> padding has been
+     zeroed above so this is the single source of truth. */
   .hero-shell {
     position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    /* Shared inset: `%` tracks the same containing-block width as the column
+       (not `vw`, which can disagree with inner width when a scrollbar gutter exists). */
+    --hero-pad-inline: clamp(24px, 5%, 88px);
+    padding-inline: var(--hero-pad-inline);
+    padding-top: calc(var(--header-height) + var(--space-md));
+    padding-bottom: var(--space-lg);
+    display: grid;
+    /* One fluid column: avoids implicit `auto` tracks sizing from
+       max-content (typing text would otherwise nudge column width and
+       make wrapped lines appear to drift horizontally). */
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+  }
+
+  /* Fixed-width content column, left-aligned, pinned to the shell's
+     left padding. width is driven entirely by viewport — NEVER by
+     content — so the visual left edge and right edge are constant
+     regardless of how many characters have typed. */
+  .hero-column {
+    min-width: 0;
+    width: 100%;
+    max-width: 960px;
     display: grid;
     gap: var(--space-lg);
+    justify-self: start;
+  }
+
+  /* Research · Product · Taste */
+  .hero-triad {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-family: var(--font-serif-en);
+    font-size: clamp(18px, 1.6vw, 24px);
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+  .hero-triad__word { position: relative; }
+  .hero-triad__word::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--content-tone-signals-mind);
+    transform: translateX(-50%);
+    opacity: 0.7;
+  }
+  .hero-triad__word:nth-of-type(2)::before { background: var(--content-tone-work-product); }
+  .hero-triad__word:nth-of-type(3)::before { background: var(--content-tone-beyond-aesthetics); }
+  .hero-triad__sep {
+    flex: 0 0 auto;
+    width: clamp(48px, 6vw, 96px);
+    height: 1px;
+    background: linear-gradient(to right,
+      color-mix(in srgb, var(--color-border) 100%, transparent),
+      transparent);
+  }
+
+  /* Slogan — min-height reserves 3 lines so the layout doesn't jump as
+     characters appear. */
+  .hero-slogan {
+    font-family: var(--font-serif-cn);
+    font-weight: 500;
+    font-size: clamp(2.6rem, 6vw, 5.6rem);
+    line-height: 1.14;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    /* Avoid optimizeLegibility kerning passes that can nudge glyphs when the
+       string length changes frame-to-frame. */
+    text-rendering: geometricPrecision;
+    min-height: calc(3 * 1.14em);
+    /* Width matches the column. The slogan can wrap naturally inside
+       this fixed-width container; the LEFT edge never moves because
+       this element fills the column from the left. */
+    min-width: 0;
     width: 100%;
-    align-content: start;
-    padding-top: calc(var(--header-height) + var(--space-sm));
-  }
-
-  .hero-intro {
-    display: grid;
-    gap: var(--space-md);
     max-width: 100%;
-    padding: 0;
+    /* Prevent horizontal shift from sub-pixel accent padding */
+    text-align: left;
+  }
+  .hero-slogan .en-accent {
+    font-family: var(--font-serif-en);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    /* Removed left/right padding — any horizontal padding here shifts
+       surrounding glyphs and can cause "drift" as characters type in. */
+  }
+  .hero-caret {
+    display: inline-block;
+    width: 0.08em;
+    height: 0.88em;
+    vertical-align: -0.08em;
+    margin-left: 0.06em;
+    background: var(--color-text);
+    animation: hero-caret-blink 1.1s steps(2, end) infinite;
+  }
+  .hero-caret.done { opacity: 0.6; }
+  @keyframes hero-caret-blink {
+    0%,50% { opacity: 1; }
+    50.01%,100% { opacity: 0; }
   }
 
-  .hero-kicker {
-    font-size: 0.76rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  /* Facts row */
+  .hero-facts {
+    display: flex;
+    gap: clamp(20px, 2.6vw, 40px);
+    flex-wrap: wrap;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+  }
+  .hero-fact { display: flex; align-items: center; gap: 10px; }
+  .hero-fact strong {
+    color: var(--color-text);
     font-weight: var(--font-weight-ui);
-  }
-
-  .hero-title {
-    font-size: clamp(2.35rem, 5.6vw, 5.2rem);
-    line-height: 1.03;
-    letter-spacing: -0.02em;
-    max-width: 100%;
-    text-wrap: balance;
-    color: var(--color-text);
-  }
-
-  .hero-lead {
-    max-width: 100%;
-    font-size: clamp(1.04rem, 1.22vw, 1.24rem);
-    line-height: 1.66;
-    color: var(--color-text-muted);
-  }
-
-  .hero-stack {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-md);
-    align-items: stretch;
-    max-width: 100%;
-  }
-
-  .hero-note {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 0.7rem;
-    padding: 0;
-    height: 100%;
-  }
-
-  .hero-note h3 {
-    font-size: 0.85rem;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text);
-    padding-bottom: 0.45rem;
-    border-bottom: 1px solid var(--color-border);
+    font-size: 0.66rem;
+  }
+  .hero-fact .arrow {
+    color: color-mix(in srgb, var(--color-text-muted) 60%, transparent);
+    margin: 0 4px;
   }
 
-  .prose p {
-    margin-bottom: 0.8rem;
-    font-size: clamp(1.02rem, 1.1vw, 1.16rem);
-    line-height: 1.64;
-    color: var(--color-text-muted);
-  }
-
-  .prose p:last-child {
-    margin-bottom: 0;
-  }
-
-  .hero-scroll-cue {
-    font-size: 0.72rem;
-    font-family: var(--font-mono);
-    letter-spacing: 0.12em;
+  /* Scroll hint — bottom left */
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: clamp(24px, 4vh, 48px);
+    /* Same inset as `.hero-shell` content (see `--hero-pad-inline`). */
+    left: var(--hero-pad-inline);
+    z-index: 3;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: var(--font-weight-ui);
+    transition: opacity 0.45s var(--ease-smooth);
+  }
+  .hero-scroll-hint.hidden { opacity: 0; pointer-events: none; }
+  .hero-scroll-hint .line {
+    display: inline-block;
+    width: 40px; height: 1px;
+    background: color-mix(in srgb, var(--color-text-muted) 60%, transparent);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-scroll-hint .line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--content-tone-signals-mind);
+    transform: translateX(-100%);
+    animation: hero-scroll-sweep 2.8s var(--ease-smooth) infinite;
+  }
+  @keyframes hero-scroll-sweep {
+    0%   { transform: translateX(-100%); }
+    60%  { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
   }
 
-  @media (max-width: 768px) {
-    .hero {
-      padding-bottom: var(--space-lg);
-    }
-
-    .hero-shell {
-      padding-top: calc(var(--header-height) + var(--space-sm));
-      gap: var(--space-md);
-    }
-
+  @media (max-width: 720px) {
+    .hero-scroll-hint { display: none; }
+    .hero-facts { gap: 16px; }
+    .hero { height: 260svh; }
   }
 </style>
+
+<script>
+  // Scroll-driven slogan typing, tied to the hero section's scroll progress.
+  const SLOGAN = '在模型能力和用户体验之间，寻找一条有判断力的路径。';
+  const ACCENT_PHRASE = '有判断力';
+  // Progress window (0..1 of hero scroll distance): type starts at 0.05,
+  // completes at 0.85. Gives the user idle headspace at both ends.
+  const TYPE_START = 0.05;
+  const TYPE_END = 0.85;
+
+  const initHero = () => {
+    const hero = document.getElementById('hero');
+    const sloganText = document.getElementById('hero-slogan-text');
+    const caret = document.getElementById('hero-caret');
+    const typeBar = document.getElementById('hero-type-bar');
+    const scrollHint = document.getElementById('hero-scroll-hint');
+    if (!hero || !sloganText) return;
+
+    const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const renderSliced = (s: string) => {
+      const i = s.indexOf(ACCENT_PHRASE);
+      if (i === -1) return esc(s);
+      return esc(s.slice(0, i)) +
+        `<span class="en-accent">${esc(s.slice(i, i + ACCENT_PHRASE.length))}</span>` +
+        esc(s.slice(i + ACCENT_PHRASE.length));
+    };
+
+    const TOTAL = SLOGAN.length;
+    let lastN = -1;
+    let rafPending = false;
+
+    const compute = () => {
+      rafPending = false;
+      const rect = hero.getBoundingClientRect();
+      // progress: 0 when hero top is at viewport top,
+      //           1 when (hero height - viewport height) has been scrolled past
+      const scrollable = rect.height - window.innerHeight;
+      const scrolled = -rect.top;
+      let p = scrollable > 0 ? scrolled / scrollable : 0;
+      if (p < 0) p = 0;
+      if (p > 1) p = 1;
+
+      // Map progress to typing window
+      let t = (p - TYPE_START) / (TYPE_END - TYPE_START);
+      if (t < 0) t = 0;
+      if (t > 1) t = 1;
+
+      const n = Math.round(t * TOTAL);
+      if (n !== lastN) {
+        sloganText.innerHTML = renderSliced(SLOGAN.slice(0, n));
+        lastN = n;
+        if (caret) caret.classList.toggle('done', n >= TOTAL);
+      }
+      if (typeBar) typeBar.style.transform = `scaleX(${t})`;
+
+      // Scroll hint fades out after the user starts typing
+      if (scrollHint) {
+        const fadeOut = p > 0.08;
+        scrollHint.classList.toggle('hidden', fadeOut);
+      }
+    };
+
+    const onScroll = () => {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  };
+
+  initHero();
+</script>

@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SignalMountainHeroDemo from '../components/SignalMountainHeroDemo.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import BeyondWork from '../components/BeyondWork.astro';
+import Signals from '../components/Signals.astro';
+import NowNext from '../components/NowNext.astro';
+---
+
+<Layout title="Arriettych | Signal Mountain Hero Demo">
+  <div class="content-wrapper hero-demo-page">
+    <SignalMountainHeroDemo />
+    <SelectedWork />
+    <BeyondWork />
+    <Signals />
+    <NowNext />
+  </div>
+</Layout>
+
+<style>
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: var(--space-lg);
+  }
+
+  :global(html),
+  :global(body) {
+    background-color: var(--color-bg);
+    background-image: none;
+  }
+
+  :global(.hero-demo-page .bg-placeholder) {
+    --glass-underlay: none;
+    background: color-mix(in srgb, var(--tone-solid, var(--content-tone-default)) 14%, var(--color-bg));
+  }
+
+  :global(.hero-demo-page .postscript-note::before) {
+    background: color-mix(in srgb, var(--tone-border) 78%, transparent);
+  }
+</style>
